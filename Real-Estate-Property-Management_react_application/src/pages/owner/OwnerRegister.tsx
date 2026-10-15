@@ -111,7 +111,7 @@ const OwnerRegister: React.FC = () => {
       bgcolor: "#ffffff",
     }}
   >
-    {/* Header */}
+ 
     <Box
       sx={{
         position: "relative",
@@ -220,7 +220,7 @@ const OwnerRegister: React.FC = () => {
       </Box>
     </Box>
 
-    {/* Form Content */}
+    
     <Box sx={{ p: { xs: 2.5, sm: 5 } }}>
       <Box
         sx={{
@@ -257,7 +257,7 @@ const OwnerRegister: React.FC = () => {
       </Box>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Profile Image */}
+        
         <Box
           sx={{
             display: "flex",
@@ -344,7 +344,7 @@ const OwnerRegister: React.FC = () => {
           </Box>
         </Box>
 
-        {/* Personal Information */}
+      
         <Box sx={{ mb: 4 }}>
           <Typography
             variant="subtitle1"
@@ -400,7 +400,7 @@ const OwnerRegister: React.FC = () => {
           </Box>
         </Box>
 
-        {/* Address Information */}
+       
         <Box sx={{ mb: 4 }}>
           <Typography
             variant="subtitle1"
@@ -471,7 +471,7 @@ const OwnerRegister: React.FC = () => {
           </Box>
         </Box>
 
-        {/* Account Security */}
+       
         <Box sx={{ mb: 4 }}>
           <Typography
             variant="subtitle1"
@@ -520,7 +520,7 @@ const OwnerRegister: React.FC = () => {
           </Box>
         </Box>
 
-        {/* Submit Button */}
+      
         <LoadingButton
           type="submit"
           fullWidth
@@ -551,7 +551,7 @@ const OwnerRegister: React.FC = () => {
         </LoadingButton>
       </form>
 
-      {/* Login Link */}
+   
       <Box
         sx={{
           textAlign: "center",

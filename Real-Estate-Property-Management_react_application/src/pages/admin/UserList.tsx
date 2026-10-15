@@ -67,10 +67,6 @@ const UserList: React.FC = () => {
   const [verifiedFilter, setVerifiedFilter] = useState<string>("");
   const [viewOpen, setViewOpen] = useState<boolean>(false);
 
-  // =====================================================
-  // FETCH USERS
-  // =====================================================
-
   useEffect(() => {
     const params = {
       page: page + 1,
@@ -89,10 +85,6 @@ const UserList: React.FC = () => {
       dispatch(clearSelectedUser());
     };
   }, [dispatch, page, rowsPerPage, statusFilter, verifiedFilter]);
-
-  // =====================================================
-  // SEARCH
-  // =====================================================
 
   const handleSearch = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -113,17 +105,9 @@ const UserList: React.FC = () => {
     dispatch(getAllUsers(params));
   };
 
-  // =====================================================
-  // STATUS CHANGE
-  // =====================================================
-
   const handleStatusChange = (id: string, status: AccountStatus): void => {
     dispatch(updateUserStatus({ id, status }));
   };
-
-  // =====================================================
-  // DELETE USER
-  // =====================================================
 
   const handleDelete = (id: string): void => {
     if (window.confirm("Are you sure you want to delete this user?")) {
@@ -131,27 +115,15 @@ const UserList: React.FC = () => {
     }
   };
 
-  // =====================================================
-  // VIEW USER
-  // =====================================================
-
   const handleView = async (id: string): Promise<void> => {
     await dispatch(getUserById(id));
     setViewOpen(true);
   };
 
-  // =====================================================
-  // CLOSE VIEW
-  // =====================================================
-
   const handleCloseView = (): void => {
     setViewOpen(false);
     dispatch(clearSelectedUser());
   };
-
-  // =====================================================
-  // RENDER
-  // =====================================================
 
   return (
     <MainLayout>
@@ -161,8 +133,6 @@ const UserList: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
-
         <Box
           sx={{
             display: "flex",
@@ -188,8 +158,6 @@ const UserList: React.FC = () => {
             variant="outlined"
           />
         </Box>
-
-        {/* ================= FILTERS ================= */}
 
         <Box
           sx={{
@@ -251,8 +219,6 @@ const UserList: React.FC = () => {
           </FormControl>
         </Box>
 
-        {/* ================= TABLE ================= */}
-
         {loading ? (
           <Loader message="Loading users..." />
         ) : (
@@ -280,8 +246,6 @@ const UserList: React.FC = () => {
                   ) : (
                     users.map((u) => (
                       <TableRow key={u._id} hover>
-                        {/* USER */}
-
                         <TableCell>
                           <Box
                             sx={{
@@ -311,15 +275,9 @@ const UserList: React.FC = () => {
                           </Box>
                         </TableCell>
 
-                        {/* EMAIL */}
-
                         <TableCell>{u.email}</TableCell>
 
-                        {/* PHONE */}
-
                         <TableCell>{u.phone}</TableCell>
-
-                        {/* VERIFIED */}
 
                         <TableCell>
                           <Chip
@@ -328,8 +286,6 @@ const UserList: React.FC = () => {
                             size="small"
                           />
                         </TableCell>
-
-                        {/* STATUS */}
 
                         <TableCell>
                           <Chip
@@ -344,8 +300,6 @@ const UserList: React.FC = () => {
                             size="small"
                           />
                         </TableCell>
-
-                        {/* ACTIONS */}
 
                         <TableCell align="center">
                           <Tooltip title="View">
@@ -399,8 +353,6 @@ const UserList: React.FC = () => {
               </Table>
             </TableContainer>
 
-            {/* PAGINATION */}
-
             <TablePagination
               component="div"
               count={pagination?.totalUsers ?? 0}
@@ -416,10 +368,6 @@ const UserList: React.FC = () => {
           </>
         )}
       </Paper>
-
-      {/* =====================================================
-          VIEW USER DIALOG
-      ===================================================== */}
 
       <Dialog open={viewOpen} onClose={handleCloseView} maxWidth="sm" fullWidth>
         <DialogTitle
@@ -447,8 +395,6 @@ const UserList: React.FC = () => {
                 mt: 0.5,
               }}
             >
-              {/* USER IMAGE */}
-
               <Box
                 sx={{
                   width: "100%",
@@ -467,8 +413,6 @@ const UserList: React.FC = () => {
                   {user.name?.charAt(0).toUpperCase()}
                 </Avatar>
               </Box>
-
-              {/* NAME */}
 
               <Box
                 sx={{
@@ -497,8 +441,6 @@ const UserList: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* EMAIL */}
-
               <Box
                 sx={{
                   width: {
@@ -525,8 +467,6 @@ const UserList: React.FC = () => {
                   {user.email}
                 </Typography>
               </Box>
-
-              {/* PHONE */}
 
               <Box
                 sx={{
@@ -555,8 +495,6 @@ const UserList: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* ROLE */}
-
               <Box
                 sx={{
                   width: {
@@ -583,8 +521,6 @@ const UserList: React.FC = () => {
                   {user.role}
                 </Typography>
               </Box>
-
-              {/* STATUS */}
 
               <Box
                 sx={{
@@ -615,8 +551,6 @@ const UserList: React.FC = () => {
                   />
                 </Box>
               </Box>
-
-              {/* EMAIL VERIFIED */}
 
               <Box
                 sx={{

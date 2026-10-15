@@ -10,10 +10,10 @@ import type {
   DeleteReviewResponse,
 } from "../typescript/type/review.types";
 
-const BASE = "/v6/api"; // adjust to your mount prefix
+const BASE = "/v6/api"; 
 
 const reviewService = {
-  // ---------------- CREATE (customer) ----------------
+  
   createReview: async (
     data: CreateReviewData
   ): Promise<ReviewMutationResponse> => {
@@ -24,7 +24,7 @@ const reviewService = {
     return response.data;
   },
 
-  // ---------------- MY REVIEWS (customer) ----------------
+ 
   getMyReviews: async (): Promise<GetReviewsResponse> => {
     const response = await api.get<GetReviewsResponse>(
       `${BASE}/reviews/my`
@@ -32,7 +32,7 @@ const reviewService = {
     return response.data;
   },
 
-  // ---------------- UPDATE (customer) ----------------
+  
   updateReview: async (
     data: UpdateReviewData
   ): Promise<ReviewMutationResponse> => {
@@ -43,7 +43,7 @@ const reviewService = {
     return response.data;
   },
 
-  // ---------------- PROPERTY REVIEWS (public) ----------------
+  
   getPropertyReviews: async (
     propertyId: string
   ): Promise<GetPropertyReviewsResponse> => {
@@ -53,7 +53,7 @@ const reviewService = {
     return response.data;
   },
 
-  // ---------------- ALL REVIEWS (admin) ----------------
+ 
   getAllReviews: async (params?: {
     status?: string;
     rating?: number;
@@ -66,7 +66,7 @@ const reviewService = {
     return response.data;
   },
 
-  // ---------------- PENDING REVIEWS (admin) ----------------
+ 
   getPendingReviews: async (): Promise<GetReviewsResponse> => {
     const response = await api.get<GetReviewsResponse>(
       `${BASE}/reviews/admin/pending`
@@ -74,7 +74,7 @@ const reviewService = {
     return response.data;
   },
 
-  // ---------------- ACTION (admin) ----------------
+  
   reviewAction: async (
     data: ReviewActionData
   ): Promise<ReviewMutationResponse> => {
@@ -85,7 +85,7 @@ const reviewService = {
     return response.data;
   },
 
-  // ---------------- BY ID ----------------
+ 
   getReviewById: async (id: string): Promise<GetReviewResponse> => {
     const response = await api.get<GetReviewResponse>(
       `${BASE}/reviews/${id}`
@@ -93,7 +93,7 @@ const reviewService = {
     return response.data;
   },
 
-  // ---------------- DELETE ----------------
+
   deleteReview: async (id: string): Promise<DeleteReviewResponse> => {
     const response = await api.delete<DeleteReviewResponse>(
       `${BASE}/reviews/${id}`
@@ -101,7 +101,7 @@ const reviewService = {
     return response.data;
   },
 
-  // ---------------- OWNER — my property reviews ----------------
+ 
 getOwnerReviews: async (): Promise<GetReviewsResponse> => {
   const response = await api.get<GetReviewsResponse>(
     `${BASE}/reviews/owner/my-properties`
@@ -109,7 +109,7 @@ getOwnerReviews: async (): Promise<GetReviewsResponse> => {
   return response.data;
 },
 
-// ---------------- AGENT — my property reviews ----------------
+
 getAgentReviews: async (): Promise<GetReviewsResponse> => {
   const response = await api.get<GetReviewsResponse>(
     `${BASE}/reviews/agent/my-properties`
@@ -117,7 +117,7 @@ getAgentReviews: async (): Promise<GetReviewsResponse> => {
   return response.data;
 },
 
-// ---------------- OWNER/AGENT — reply to review ----------------
+
 replyToReview: async (
   id: string,
   reply: string
@@ -129,7 +129,7 @@ replyToReview: async (
   return response.data;
 },
 
-// ---------------- OWNER/AGENT — update status ----------------
+
 updateReviewStatusByOwner: async (
   id: string,
   status: "approved" | "rejected",

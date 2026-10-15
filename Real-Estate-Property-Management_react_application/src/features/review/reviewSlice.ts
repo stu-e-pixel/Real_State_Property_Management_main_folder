@@ -23,10 +23,6 @@ const initialState: ReviewState = {
   error: null,
 };
 
-// =====================================================
-// THUNKS
-// =====================================================
-
 export const createReview = createAsyncThunk<
   ReviewMutationResponse,
   CreateReviewData,
@@ -218,28 +214,20 @@ export const updateReviewStatusByOwner = createAsyncThunk<
     return await reviewService.updateReviewStatusByOwner(
       data.id,
       data.status,
-      data.reason
+      data.reason,
     );
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to update review status"
+      err.response?.data?.message || "Failed to update review status",
     );
   }
 });
-
-// =====================================================
-// HELPERS
-// =====================================================
 
 const replaceReview = (state: ReviewState, updated: Review): void => {
   const index = state.reviews.findIndex((r) => r._id === updated._id);
   if (index !== -1) state.reviews[index] = updated;
 };
-
-// =====================================================
-// SLICE
-// =====================================================
 
 const reviewSlice = createSlice({
   name: "review",
@@ -258,7 +246,7 @@ const reviewSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // -------- CREATE --------
+
       .addCase(createReview.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -276,7 +264,6 @@ const reviewSlice = createSlice({
         toast.error(action.payload ?? "Failed to submit review");
       })
 
-      // -------- MY --------
       .addCase(getMyReviews.pending, (state) => {
         state.loading = true;
       })
@@ -289,7 +276,6 @@ const reviewSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch reviews");
       })
 
-      // -------- PROPERTY --------
       .addCase(getPropertyReviews.pending, (state) => {
         state.loading = true;
       })
@@ -303,7 +289,6 @@ const reviewSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch property reviews");
       })
 
-      // -------- ALL (ADMIN) --------
       .addCase(getAllReviews.pending, (state) => {
         state.loading = true;
       })
@@ -316,7 +301,6 @@ const reviewSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch reviews");
       })
 
-      // -------- PENDING (ADMIN) --------
       .addCase(getPendingReviews.pending, (state) => {
         state.loading = true;
       })
@@ -329,7 +313,6 @@ const reviewSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch pending reviews");
       })
 
-      // -------- ACTION (APPROVE/REJECT) --------
       .addCase(reviewAction.pending, (state) => {
         state.loading = true;
       })
@@ -338,7 +321,6 @@ const reviewSlice = createSlice({
         if (action.payload.review) {
           replaceReview(state, action.payload.review);
 
-          // If it was pending and got actioned, remove from pending list view
           if (state.reviews.length > 0) {
             state.reviews = state.reviews.map((r) =>
               r._id === action.payload.review?._id ? action.payload.review! : r,
@@ -352,7 +334,6 @@ const reviewSlice = createSlice({
         toast.error(action.payload ?? "Failed to process action");
       })
 
-      // -------- BY ID --------
       .addCase(getReviewById.pending, (state) => {
         state.loading = true;
       })
@@ -368,7 +349,6 @@ const reviewSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch review");
       })
 
-      // -------- UPDATE --------
       .addCase(updateReview.pending, (state) => {
         state.loading = true;
       })
@@ -384,7 +364,6 @@ const reviewSlice = createSlice({
         toast.error(action.payload ?? "Failed to update review");
       })
 
-      // -------- DELETE --------
       .addCase(deleteReview.fulfilled, (state, action) => {
         state.reviews = state.reviews.filter((r) => r._id !== action.payload);
         toast.success("Review deleted successfully");
@@ -437,19 +416,19 @@ const reviewSlice = createSlice({
       })
 
       .addCase(updateReviewStatusByOwner.pending, (state) => {
-  state.loading = true;
-})
-.addCase(updateReviewStatusByOwner.fulfilled, (state, action) => {
-  state.loading = false;
-  if (action.payload.review) {
-    replaceReview(state, action.payload.review);
-  }
-  toast.success(action.payload.message || "Status updated");
-})
-.addCase(updateReviewStatusByOwner.rejected, (state, action) => {
-  state.loading = false;
-  toast.error(action.payload ?? "Failed to update status");
-});
+        state.loading = true;
+      })
+      .addCase(updateReviewStatusByOwner.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.review) {
+          replaceReview(state, action.payload.review);
+        }
+        toast.success(action.payload.message || "Status updated");
+      })
+      .addCase(updateReviewStatusByOwner.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload ?? "Failed to update status");
+      });
   },
 });
 

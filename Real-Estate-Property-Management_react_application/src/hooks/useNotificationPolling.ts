@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "./useAppDispatch";
 import { fetchUnreadCount } from "../features/notification/notificationSlice";
 
 interface PollingOptions {
-  interval?: number; // default 30000 (30s)
+  interval?: number;
   enabled?: boolean;
 }
 
@@ -18,15 +18,12 @@ export const useNotificationPolling = ({
   useEffect(() => {
     if (!enabled || !isAuthenticated) return;
 
-    // Immediate first fetch
     dispatch(fetchUnreadCount());
 
-    // Start interval
     intervalRef.current = setInterval(() => {
       dispatch(fetchUnreadCount());
     }, interval);
 
-    // Pause when tab is hidden, resume when visible
     const handleVisibilityChange = () => {
       if (document.hidden) {
         if (intervalRef.current) clearInterval(intervalRef.current);

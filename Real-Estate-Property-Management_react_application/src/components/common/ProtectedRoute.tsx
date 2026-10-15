@@ -27,10 +27,7 @@ const getRoleFromToken = (token: string): string | null => {
   }
 };
 
-/**
- * Get the "home" route for each role after login.
- * Used when a wrong role tries to access a route.
- */
+
 const getRoleHome = (role: string): string => {
   switch (role) {
     case "admin":
@@ -49,31 +46,31 @@ const getRoleHome = (role: string): string => {
 const ProtectedRoute = ({ allowedRole, allowedRoles }: ProtectedRouteProps) => {
   const { accessToken } = getAuthCookie();
 
-  // Not logged in
+  
   if (!accessToken) {
     return <Navigate to="/login" replace />;
   }
 
-  // Decode role from token
+  
   const role = getRoleFromToken(accessToken);
 
   if (!role) {
     return <Navigate to="/login" replace />;
   }
 
-  // Build the list of allowed roles (supports both single & multiple)
+  
   const roles: Role[] = allowedRoles
     ? allowedRoles
     : allowedRole
     ? [allowedRole]
     : [];
 
-  // If a role restriction exists and the user's role isn't allowed → redirect home
+  
   if (roles.length > 0 && !roles.includes(role as Role)) {
     return <Navigate to={getRoleHome(role)} replace />;
   }
 
-  // Authorized — render nested routes
+  
   return <Outlet />;
 };
 

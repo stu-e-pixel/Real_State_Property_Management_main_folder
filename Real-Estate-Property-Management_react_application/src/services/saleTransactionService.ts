@@ -7,10 +7,10 @@ import type {
   SaleTransactionMutationResponse,
 } from "../typescript/type/saleTransaction.types";
 
-const BASE = "/v12/api"; // adjust to your mount prefix
+const BASE = "/v12/api"; 
 
 const saleTransactionService = {
-  // ---------------- CREATE (owner/agent) ----------------
+ 
   createSaleTransaction: async (
     data: CreateSaleTransactionData
   ): Promise<SaleTransactionMutationResponse> => {
@@ -21,7 +21,7 @@ const saleTransactionService = {
     return response.data;
   },
 
-  // ---------------- MY TRANSACTIONS (any role) ----------------
+ 
   getMySaleTransactions: async (): Promise<GetSaleTransactionsResponse> => {
     const response = await api.get<GetSaleTransactionsResponse>(
       `${BASE}/my-transactions`
@@ -29,7 +29,7 @@ const saleTransactionService = {
     return response.data;
   },
 
-  // ---------------- SINGLE ----------------
+
   getSaleTransactionById: async (
     id: string
   ): Promise<GetSaleTransactionResponse> => {
@@ -39,7 +39,7 @@ const saleTransactionService = {
     return response.data;
   },
 
-  // ---------------- UPDATE (owner/agent) ----------------
+  
   updateSaleTransaction: async (
     data: UpdateSaleTransactionData
   ): Promise<SaleTransactionMutationResponse> => {

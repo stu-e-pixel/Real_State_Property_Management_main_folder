@@ -55,9 +55,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
     (state) => state.auth.user
   );
 
-  // =====================================================
-  // FORM
-  // =====================================================
+ 
 
   const {
     control,
@@ -75,9 +73,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
     },
   });
 
-  // =====================================================
-  // PREFILL USER DATA
-  // =====================================================
+  
 
   useEffect(() => {
     if (!open) {
@@ -92,9 +88,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
     });
   }, [open, user, reset]);
 
-  // =====================================================
-  // SUBMIT INQUIRY
-  // =====================================================
+ 
 
   const onSubmit = async (
     data: InquiryFormValues
@@ -117,9 +111,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
     }
   };
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+
 
   return (
     <Dialog
@@ -128,9 +120,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
       maxWidth="sm"
       fullWidth
     >
-      {/* =====================================================
-          TITLE
-      ===================================================== */}
+      
 
       <DialogTitle
         sx={{
@@ -161,14 +151,10 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
 
       <Divider />
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
+      
 
       <DialogContent>
-        {/* =====================================================
-            PROPERTY SNAPSHOT
-        ===================================================== */}
+       
 
         <Box
           sx={{
@@ -181,7 +167,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
             borderRadius: 2,
           }}
         >
-          {/* Property Image */}
+      
 
           <Avatar
             src={
@@ -198,7 +184,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
             <Home />
           </Avatar>
 
-          {/* Property Details */}
+     
 
           <Box
             sx={{
@@ -242,9 +228,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
           </Box>
         </Box>
 
-        {/* =====================================================
-            FORM
-        ===================================================== */}
+        
 
         <Box
           component="form"
@@ -256,8 +240,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
             gap: 2,
           }}
         >
-          {/* Name + Email */}
-
+          
           <Box
             sx={{
               display: "flex",
@@ -265,7 +248,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
               gap: 2,
             }}
           >
-            {/* Name */}
+            
 
             <Box
               sx={{
@@ -283,7 +266,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
               />
             </Box>
 
-            {/* Email */}
+            
 
             <Box
               sx={{
@@ -303,7 +286,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
             </Box>
           </Box>
 
-          {/* Phone */}
+          
 
           <Box>
             <FormInput<InquiryFormValues>
@@ -314,7 +297,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
             />
           </Box>
 
-          {/* Message */}
+          
 
           <Box>
             <FormInput<InquiryFormValues>
@@ -329,9 +312,7 @@ const MyInquiryModels: React.FC<InquiryModalProps> = ({
         </Box>
       </DialogContent>
 
-      {/* =====================================================
-          ACTIONS
-      ===================================================== */}
+      
 
       <DialogActions
         sx={{

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type{PayloadAction} from "@reduxjs/toolkit"
+import type { PayloadAction } from "@reduxjs/toolkit";
 import favoriteService from "../../services/favoriteService";
 import type {
   FavoriteState,
@@ -16,19 +16,13 @@ const initialState: FavoriteState = {
   favoritePropertyIds: [],
 };
 
-// =====================================================
-// HELPERS
-// =====================================================
-
 const extractPropertyIds = (favorites: Favorite[]): string[] =>
-  favorites.map((f) => {
-    if (typeof f.property === "string") return f.property;
-    return f.property?._id ?? "";
-  }).filter(Boolean);
-
-// =====================================================
-// THUNKS
-// =====================================================
+  favorites
+    .map((f) => {
+      if (typeof f.property === "string") return f.property;
+      return f.property?._id ?? "";
+    })
+    .filter(Boolean);
 
 export const addFavorite = createAsyncThunk<
   FavoriteMutationResponse,
@@ -40,7 +34,7 @@ export const addFavorite = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to add to favorites"
+      err.response?.data?.message || "Failed to add to favorites",
     );
   }
 });
@@ -56,7 +50,7 @@ export const removeFavorite = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to remove from favorites"
+      err.response?.data?.message || "Failed to remove from favorites",
     );
   }
 });
@@ -71,14 +65,10 @@ export const getMyFavorites = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to fetch favorites"
+      err.response?.data?.message || "Failed to fetch favorites",
     );
   }
 });
-
-// =====================================================
-// SLICE
-// =====================================================
 
 const favoriteSlice = createSlice({
   name: "favorite",
@@ -87,7 +77,7 @@ const favoriteSlice = createSlice({
     clearFavoriteError: (state) => {
       state.error = null;
     },
-    // Optimistic toggle — updates favoritePropertyIds immediately
+
     toggleFavoriteLocally: (state, action: PayloadAction<string>) => {
       const id = action.payload;
       const idx = state.favoritePropertyIds.indexOf(id);
@@ -104,7 +94,7 @@ const favoriteSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // -------- ADD --------
+
       .addCase(addFavorite.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -133,25 +123,20 @@ const favoriteSlice = createSlice({
         toast.error(action.payload ?? "Failed to add to favorites");
       })
 
-      // -------- REMOVE --------
       .addCase(removeFavorite.pending, (state) => {
         state.loading = true;
       })
       .addCase(removeFavorite.fulfilled, (state, action) => {
         state.loading = false;
 
-        // Remove from favorites array
         state.favorites = state.favorites.filter((f) => {
           const propId =
-            typeof f.property === "string"
-              ? f.property
-              : f.property?._id;
+            typeof f.property === "string" ? f.property : f.property?._id;
           return propId !== action.payload;
         });
 
-        // Remove from ID set
         state.favoritePropertyIds = state.favoritePropertyIds.filter(
-          (id) => id !== action.payload
+          (id) => id !== action.payload,
         );
 
         toast.success("Removed from favorites");
@@ -161,14 +146,15 @@ const favoriteSlice = createSlice({
         toast.error(action.payload ?? "Failed to remove from favorites");
       })
 
-      // -------- MY FAVORITES --------
       .addCase(getMyFavorites.pending, (state) => {
         state.loading = true;
       })
       .addCase(getMyFavorites.fulfilled, (state, action) => {
         state.loading = false;
         state.favorites = action.payload.data ?? [];
-        state.favoritePropertyIds = extractPropertyIds(action.payload.data ?? []);
+        state.favoritePropertyIds = extractPropertyIds(
+          action.payload.data ?? [],
+        );
       })
       .addCase(getMyFavorites.rejected, (state, action) => {
         state.loading = false;
@@ -177,9 +163,6 @@ const favoriteSlice = createSlice({
   },
 });
 
-export const {
-  clearFavoriteError,
-  toggleFavoriteLocally,
-  clearFavorites,
-} = favoriteSlice.actions;
+export const { clearFavoriteError, toggleFavoriteLocally, clearFavorites } =
+  favoriteSlice.actions;
 export default favoriteSlice.reducer;

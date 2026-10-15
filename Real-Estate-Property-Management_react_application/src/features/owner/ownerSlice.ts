@@ -192,8 +192,6 @@ const ownerSlice = createSlice({
         toast.success("Owner deleted successfully!");
       })
 
-      
-
       .addCase(getOwnerProfile.pending, (state) => {
         state.loading = true;
         state.error = null;

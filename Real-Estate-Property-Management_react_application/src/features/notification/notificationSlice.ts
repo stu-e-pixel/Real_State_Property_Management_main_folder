@@ -14,17 +14,14 @@ const initialState: NotificationState = {
   pagination: null,
 };
 
-// =====================================================
-// THUNKS
-// =====================================================
-
 export const fetchNotifications = createAsyncThunk<
   {
     data: AppNotification[];
     unreadCount: number;
     pagination: NotificationPagination;
   },
-  { page?: number; limit?: number; isRead?: boolean; type?: string } | undefined,
+  | { page?: number; limit?: number; isRead?: boolean; type?: string }
+  | undefined,
   { rejectValue: string }
 >("notification/fetch", async (params, { rejectWithValue }) => {
   try {
@@ -37,7 +34,7 @@ export const fetchNotifications = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to load notifications"
+      err.response?.data?.message || "Failed to load notifications",
     );
   }
 });
@@ -53,7 +50,7 @@ export const fetchUnreadCount = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to fetch count"
+      err.response?.data?.message || "Failed to fetch count",
     );
   }
 });
@@ -112,10 +109,6 @@ export const clearAllNotifications = createAsyncThunk<
   }
 });
 
-// =====================================================
-// SLICE
-// =====================================================
-
 const notificationSlice = createSlice({
   name: "notification",
   initialState,
@@ -127,7 +120,7 @@ const notificationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // -------- FETCH --------
+
       .addCase(fetchNotifications.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -143,12 +136,10 @@ const notificationSlice = createSlice({
         state.error = action.payload ?? null;
       })
 
-      // -------- UNREAD COUNT --------
       .addCase(fetchUnreadCount.fulfilled, (state, action) => {
         state.unreadCount = action.payload;
       })
 
-      // -------- MARK ONE READ --------
       .addCase(markNotificationAsRead.fulfilled, (state, action) => {
         const n = state.notifications.find((x) => x._id === action.payload);
         if (n && !n.isRead) {
@@ -158,7 +149,6 @@ const notificationSlice = createSlice({
         }
       })
 
-      // -------- MARK ALL READ --------
       .addCase(markAllAsRead.fulfilled, (state) => {
         state.notifications = state.notifications.map((n) => ({
           ...n,
@@ -168,18 +158,16 @@ const notificationSlice = createSlice({
         state.unreadCount = 0;
       })
 
-      // -------- DELETE --------
       .addCase(deleteNotification.fulfilled, (state, action) => {
         const n = state.notifications.find((x) => x._id === action.payload);
         if (n && !n.isRead) {
           state.unreadCount = Math.max(0, state.unreadCount - 1);
         }
         state.notifications = state.notifications.filter(
-          (x) => x._id !== action.payload
+          (x) => x._id !== action.payload,
         );
       })
 
-      // -------- CLEAR ALL --------
       .addCase(clearAllNotifications.fulfilled, (state) => {
         state.notifications = [];
         state.unreadCount = 0;
@@ -187,8 +175,6 @@ const notificationSlice = createSlice({
   },
 });
 
-export const {
-  clearNotificationError,
-  resetNotifications,
-} = notificationSlice.actions;
+export const { clearNotificationError, resetNotifications } =
+  notificationSlice.actions;
 export default notificationSlice.reducer;

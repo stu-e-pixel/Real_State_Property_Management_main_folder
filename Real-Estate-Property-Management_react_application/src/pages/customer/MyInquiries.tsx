@@ -102,7 +102,7 @@ const MyInquiries: React.FC = () => {
     },
   });
 
-  // ================= FETCH =================
+  
 
   useEffect(() => {
     dispatch(getMyInquiries());
@@ -112,7 +112,7 @@ const MyInquiries: React.FC = () => {
     };
   }, [dispatch]);
 
-  // ================= VIEW =================
+
 
   const handleView = async (id: string): Promise<void> => {
     await dispatch(getInquiryById(id));
@@ -124,7 +124,7 @@ const MyInquiries: React.FC = () => {
     dispatch(clearSelectedInquiry());
   };
 
-  // ================= EDIT =================
+  
 
   const openEdit = (i: Inquiry): void => {
     setEditTarget(i);
@@ -164,7 +164,7 @@ const MyInquiries: React.FC = () => {
     }
   };
 
-  // ================= DELETE =================
+ 
 
   const handleDelete = (id: string): void => {
     if (window.confirm("Delete this inquiry?")) {
@@ -180,7 +180,7 @@ const MyInquiries: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
+       
 
         <Box
           sx={{
@@ -225,7 +225,7 @@ const MyInquiries: React.FC = () => {
           }}
         />
 
-        {/* ================= CONTENT ================= */}
+        
 
         {loading && inquiries.length === 0 ? (
           <Loader message="Loading inquiries..." />
@@ -395,9 +395,6 @@ const MyInquiries: React.FC = () => {
         )}
       </Paper>
 
-      {/* =====================================================
-          VIEW DIALOG
-      ===================================================== */}
 
       <Dialog
         open={viewOpen}
@@ -445,7 +442,7 @@ const MyInquiries: React.FC = () => {
                 gap: 2,
               }}
             >
-              {/* Property */}
+              
 
               <Box>
                 <Typography
@@ -469,7 +466,7 @@ const MyInquiries: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* Message */}
+              
 
               <Box>
                 <Typography
@@ -491,7 +488,6 @@ const MyInquiries: React.FC = () => {
                 </Alert>
               </Box>
 
-              {/* Status */}
 
               <Box>
                 <Typography
@@ -519,7 +515,7 @@ const MyInquiries: React.FC = () => {
                 </Box>
               </Box>
 
-              {/* Reply */}
+  
 
               {inquiry.reply && (
                 <Box>
@@ -579,9 +575,7 @@ const MyInquiries: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* =====================================================
-          EDIT DIALOG
-      ===================================================== */}
+     
 
       <Dialog
         open={editOpen}

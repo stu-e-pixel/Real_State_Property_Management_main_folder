@@ -16,7 +16,7 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
 
     if (value === undefined || value === null || value === "") return;
 
-    // ---------- Images (multiple) ----------
+    
     if (key === "images") {
       if (value instanceof FileList) {
         Array.from(value).forEach((file) => formData.append("images", file));
@@ -28,7 +28,7 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
       return;
     }
 
-    // ---------- Amenities (array → repeat) ----------
+   
     if (key === "amenities") {
       if (Array.isArray(value)) {
         value.forEach((a) => formData.append("amenities", String(a)));
@@ -42,7 +42,7 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
       return;
     }
 
-    // ---------- Location (nested object) ----------
+   
     if (key === "location" && typeof value === "object") {
       const loc = value as { type: string; coordinates: number[] };
       formData.append("location[type]", loc.type);
@@ -51,7 +51,7 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
       return;
     }
 
-    // ---------- Everything else ----------
+   
     if (typeof value === "object") {
       formData.append(key, JSON.stringify(value));
     } else {
@@ -63,7 +63,7 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
 };
 
 const propertyService = {
-  // ---------------- CREATE (owner) ----------------
+ 
   createProperty: async (
     data: CreatePropertyData
   ): Promise<PropertyResponse> => {
@@ -84,7 +84,7 @@ const propertyService = {
   return response.data;
 },
 
-  // ---------------- UPDATE (owner) ----------------
+  
   updateProperty: async (
     id: string,
     data: UpdatePropertyData
@@ -99,7 +99,7 @@ const propertyService = {
     return response.data;
   },
 
-  // ---------------- GET ALL (role-based) ----------------
+ 
   getAllProperties: async (params: {
     page?: number;
     limit?: number;
@@ -114,7 +114,7 @@ const propertyService = {
     return response.data;
   },
 
-  // ---------------- SOFT DELETE (owner) ----------------
+ 
   softDeleteProperty: async (id: string): Promise<DeletePropertyResponse> => {
     const response = await api.delete<DeletePropertyResponse>(
       `/v2/api/softdeleteproperty/${id}`
@@ -122,7 +122,7 @@ const propertyService = {
     return response.data;
   },
 
-  // ---------------- RESTORE (owner) ----------------
+  
   restoreProperty: async (id: string): Promise<PropertyResponse> => {
     const response = await api.patch<PropertyResponse>(
       `/v2/api/retrivedeletedproperty/${id}`
@@ -130,7 +130,7 @@ const propertyService = {
     return response.data;
   },
 
-  // ---------------- PERMANENT DELETE (owner) ----------------
+  
   permanentDeleteProperty: async (
     id: string
   ): Promise<DeletePropertyResponse> => {
@@ -140,7 +140,7 @@ const propertyService = {
     return response.data;
   },
 
-  // ---------------- MY APPROVED (agent) ----------------
+  
 getMyApprovedProperties: async (params: {
   search?: string;
   purpose?: string;
@@ -154,14 +154,14 @@ getMyApprovedProperties: async (params: {
   return response.data;
 },
 
-  // ---------------- APPROVE (admin) ----------------
+  
   approveProperty: async (
   id: string,
   rejectionReason?: string
 ): Promise<PropertyResponse> => {
   const response = await api.patch<PropertyResponse>(
     `/v2/api/approveproperty/${id}`,
-    { rejectionReason } // optional
+    { rejectionReason } 
   );
   return response.data;
 },

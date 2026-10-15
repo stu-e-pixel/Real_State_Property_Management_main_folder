@@ -76,26 +76,25 @@ const PAYMENT_STATUS_COLORS: Record<
 };
 
 const isPopulatedProperty = (
-  value: Property | string | undefined
+  value: Property | string | undefined,
 ): value is Property =>
   !!value && typeof value === "object" && "title" in value;
 
 const isPopulatedUser = (
-  value: PopulatedUserLite | string | null | undefined
+  value: PopulatedUserLite | string | null | undefined,
 ): value is PopulatedUserLite =>
   !!value && typeof value === "object" && "name" in value;
 
 const formatCurrency = (amount: number): string =>
   `₹${amount.toLocaleString()}`;
 
-const formatStatus = (status: string): string =>
-  status.replace(/_/g, " ");
+const formatStatus = (status: string): string => status.replace(/_/g, " ");
 
 const ManageSaleTransactions: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { transactions, transaction, loading } = useAppSelector(
-    (state) => state.saleTransaction
+    (state) => state.saleTransaction,
   );
 
   const [tab, setTab] = useState<string>("all");
@@ -157,7 +156,7 @@ const ManageSaleTransactions: React.FC = () => {
   };
 
   const submitEdit = async (
-    data: UpdateTransactionFormValues
+    data: UpdateTransactionFormValues,
   ): Promise<void> => {
     if (!editTarget) return;
 
@@ -168,7 +167,7 @@ const ManageSaleTransactions: React.FC = () => {
         paymentStatus: data.paymentStatus,
         amountPaid: Number(data.amountPaid),
         notes: data.notes,
-      })
+      }),
     );
 
     if (updateSaleTransaction.fulfilled.match(result)) {
@@ -178,7 +177,7 @@ const ManageSaleTransactions: React.FC = () => {
 
   const openMenu = (
     event: MouseEvent<HTMLElement>,
-    tx: SaleTransaction
+    tx: SaleTransaction,
   ): void => {
     setMenuAnchor(event.currentTarget);
     setMenuTx(tx);
@@ -200,24 +199,20 @@ const ManageSaleTransactions: React.FC = () => {
   const filtered =
     tab === "all"
       ? transactions
-      : transactions.filter(
-          (tx) => tx.transactionStatus === tab
-        );
+      : transactions.filter((tx) => tx.transactionStatus === tab);
 
   const counts = {
     all: transactions.length,
-    initiated: transactions.filter(
-      (tx) => tx.transactionStatus === "initiated"
-    ).length,
+    initiated: transactions.filter((tx) => tx.transactionStatus === "initiated")
+      .length,
     agreement_signed: transactions.filter(
-      (tx) => tx.transactionStatus === "agreement_signed"
+      (tx) => tx.transactionStatus === "agreement_signed",
     ).length,
     payment_pending: transactions.filter(
-      (tx) => tx.transactionStatus === "payment_pending"
+      (tx) => tx.transactionStatus === "payment_pending",
     ).length,
-    completed: transactions.filter(
-      (tx) => tx.transactionStatus === "completed"
-    ).length,
+    completed: transactions.filter((tx) => tx.transactionStatus === "completed")
+      .length,
   };
 
   const getProperty = (tx: SaleTransaction): Property | null => {
@@ -226,9 +221,7 @@ const ManageSaleTransactions: React.FC = () => {
     return null;
   };
 
-  const getBuyer = (
-    tx: SaleTransaction
-  ): PopulatedUserLite | null => {
+  const getBuyer = (tx: SaleTransaction): PopulatedUserLite | null => {
     if (isPopulatedUser(tx.buyer)) return tx.buyer;
     if (tx.buyerDetails) return tx.buyerDetails;
     return null;
@@ -257,17 +250,11 @@ const ManageSaleTransactions: React.FC = () => {
           }}
         >
           <Box>
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: 700 }}
-            >
+            <Typography variant="h5" sx={{ fontWeight: 700 }}>
               Sale Transactions
             </Typography>
 
-            <Typography
-              variant="body2"
-              color="text.secondary"
-            >
+            <Typography variant="body2" color="text.secondary">
               Manage active sale transactions.
             </Typography>
           </Box>
@@ -290,10 +277,7 @@ const ManageSaleTransactions: React.FC = () => {
           sx={{ mb: 3 }}
         >
           <Tab value="all" label={`All (${counts.all})`} />
-          <Tab
-            value="initiated"
-            label={`Initiated (${counts.initiated})`}
-          />
+          <Tab value="initiated" label={`Initiated (${counts.initiated})`} />
           <Tab
             value="agreement_signed"
             label={`Agreement (${counts.agreement_signed})`}
@@ -302,13 +286,9 @@ const ManageSaleTransactions: React.FC = () => {
             value="payment_pending"
             label={`Payment (${counts.payment_pending})`}
           />
-          <Tab
-            value="completed"
-            label={`Completed (${counts.completed})`}
-          />
+          <Tab value="completed" label={`Completed (${counts.completed})`} />
         </Tabs>
 
-        {/* Transactions */}
         {loading && transactions.length === 0 ? (
           <Box
             sx={{
@@ -372,11 +352,8 @@ const ManageSaleTransactions: React.FC = () => {
               const progressPercent =
                 tx.agreedPrice > 0
                   ? Math.min(
-                      Math.max(
-                        (tx.amountPaid / tx.agreedPrice) * 100,
-                        0
-                      ),
-                      100
+                      Math.max((tx.amountPaid / tx.agreedPrice) * 100, 0),
+                      100,
                     )
                   : 0;
 
@@ -426,10 +403,7 @@ const ManageSaleTransactions: React.FC = () => {
                             {property?.title ?? "Property"}
                           </Typography>
 
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                          >
+                          <Typography variant="caption" color="text.secondary">
                             {property
                               ? `${property.propertyType} • ${property.purpose}`
                               : "—"}
@@ -439,14 +413,12 @@ const ManageSaleTransactions: React.FC = () => {
                         <Chip
                           label={formatStatus(tx.transactionStatus)}
                           color={
-                            TX_STATUS_COLORS[tx.transactionStatus] ??
-                            "default"
+                            TX_STATUS_COLORS[tx.transactionStatus] ?? "default"
                           }
                           size="small"
                         />
                       </Box>
 
-                      {/* Buyer Information */}
                       {buyer && (
                         <Box
                           sx={{
@@ -485,7 +457,6 @@ const ManageSaleTransactions: React.FC = () => {
                         </Box>
                       )}
 
-                      {/* Pricing and Payment Progress */}
                       <Box
                         sx={{
                           display: "flex",
@@ -500,17 +471,11 @@ const ManageSaleTransactions: React.FC = () => {
                             gap: 2,
                           }}
                         >
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                          >
+                          <Typography variant="caption" color="text.secondary">
                             Agreed
                           </Typography>
 
-                          <Typography
-                            variant="body2"
-                            sx={{ fontWeight: 700 }}
-                          >
+                          <Typography variant="body2" sx={{ fontWeight: 700 }}>
                             {formatCurrency(tx.agreedPrice)}
                           </Typography>
                         </Box>
@@ -522,10 +487,7 @@ const ManageSaleTransactions: React.FC = () => {
                             gap: 2,
                           }}
                         >
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                          >
+                          <Typography variant="caption" color="text.secondary">
                             Paid
                           </Typography>
 
@@ -555,10 +517,7 @@ const ManageSaleTransactions: React.FC = () => {
                             gap: 1,
                           }}
                         >
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                          >
+                          <Typography variant="caption" color="text.secondary">
                             {progressPercent.toFixed(0)}%
                           </Typography>
 
@@ -576,9 +535,7 @@ const ManageSaleTransactions: React.FC = () => {
 
                     <Divider />
 
-                    <CardActions
-                      sx={{ justifyContent: "space-between" }}
-                    >
+                    <CardActions sx={{ justifyContent: "space-between" }}>
                       <Tooltip title="View transaction">
                         <IconButton
                           size="small"
@@ -608,7 +565,6 @@ const ManageSaleTransactions: React.FC = () => {
         )}
       </Paper>
 
-      {/* Transaction Action Menu */}
       <Menu
         anchorEl={menuAnchor}
         open={Boolean(menuAnchor)}
@@ -622,7 +578,6 @@ const ManageSaleTransactions: React.FC = () => {
         </MenuItem>
       </Menu>
 
-      {/* View Transaction Dialog */}
       <Dialog
         open={viewOpen}
         onClose={closeView}
@@ -642,7 +597,6 @@ const ManageSaleTransactions: React.FC = () => {
           }}
         >
           Transaction Details
-
           <IconButton
             onClick={closeView}
             size="small"
@@ -666,27 +620,18 @@ const ManageSaleTransactions: React.FC = () => {
               }}
             >
               <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Property
                 </Typography>
 
-                <Typography
-                  variant="body1"
-                  sx={{ fontWeight: 700 }}
-                >
+                <Typography variant="body1" sx={{ fontWeight: 700 }}>
                   {getProperty(transaction)?.title ?? "Property"}
                 </Typography>
               </Box>
 
               {getBuyer(transaction) && (
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                  >
+                  <Typography variant="caption" color="text.secondary">
                     Buyer
                   </Typography>
 
@@ -709,17 +654,11 @@ const ManageSaleTransactions: React.FC = () => {
                     </Avatar>
 
                     <Box sx={{ minWidth: 0 }}>
-                      <Typography
-                        variant="body2"
-                        sx={{ fontWeight: 600 }}
-                      >
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
                         {getBuyer(transaction)?.name}
                       </Typography>
 
-                      <Typography
-                        variant="caption"
-                        color="text.secondary"
-                      >
+                      <Typography variant="caption" color="text.secondary">
                         {getBuyer(transaction)?.email}
                       </Typography>
                     </Box>
@@ -735,26 +674,17 @@ const ManageSaleTransactions: React.FC = () => {
                 }}
               >
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                  >
+                  <Typography variant="caption" color="text.secondary">
                     Agreed Price
                   </Typography>
 
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: 700 }}
-                  >
+                  <Typography variant="h6" sx={{ fontWeight: 700 }}>
                     {formatCurrency(transaction.agreedPrice)}
                   </Typography>
                 </Box>
 
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                  >
+                  <Typography variant="caption" color="text.secondary">
                     Amount Paid
                   </Typography>
 
@@ -776,22 +706,16 @@ const ManageSaleTransactions: React.FC = () => {
                 }}
               >
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                  >
+                  <Typography variant="caption" color="text.secondary">
                     Transaction
                   </Typography>
 
                   <Box sx={{ mt: 0.5 }}>
                     <Chip
-                      label={formatStatus(
-                        transaction.transactionStatus
-                      )}
+                      label={formatStatus(transaction.transactionStatus)}
                       color={
-                        TX_STATUS_COLORS[
-                          transaction.transactionStatus
-                        ] ?? "default"
+                        TX_STATUS_COLORS[transaction.transactionStatus] ??
+                        "default"
                       }
                       size="small"
                     />
@@ -799,10 +723,7 @@ const ManageSaleTransactions: React.FC = () => {
                 </Box>
 
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                  >
+                  <Typography variant="caption" color="text.secondary">
                     Payment
                   </Typography>
 
@@ -810,9 +731,8 @@ const ManageSaleTransactions: React.FC = () => {
                     <Chip
                       label={transaction.paymentStatus}
                       color={
-                        PAYMENT_STATUS_COLORS[
-                          transaction.paymentStatus
-                        ] ?? "default"
+                        PAYMENT_STATUS_COLORS[transaction.paymentStatus] ??
+                        "default"
                       }
                       size="small"
                     />
@@ -822,16 +742,11 @@ const ManageSaleTransactions: React.FC = () => {
 
               {transaction.notes && (
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                  >
+                  <Typography variant="caption" color="text.secondary">
                     Notes
                   </Typography>
 
-                  <Typography variant="body2">
-                    {transaction.notes}
-                  </Typography>
+                  <Typography variant="body2">{transaction.notes}</Typography>
                 </Box>
               )}
             </Box>
@@ -847,7 +762,6 @@ const ManageSaleTransactions: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Edit Transaction Dialog */}
       <Dialog
         open={editOpen}
         onClose={closeEdit}

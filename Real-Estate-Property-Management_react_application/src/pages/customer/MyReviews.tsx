@@ -21,12 +21,7 @@ import {
   Tab,
   TextField,
 } from "@mui/material";
-import {
-  Star,
-  Delete,
-  Edit,
-  Home,
-} from "@mui/icons-material";
+import { Star, Delete, Edit, Home } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -38,18 +33,11 @@ import {
   updateReview,
   deleteReview,
 } from "../../features/review/reviewSlice";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../hooks/useAppDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import type {
   Review,
   ReviewFormValues,
 } from "../../typescript/type/review.types";
-
-// =====================================================
-// STATUS COLORS
-// =====================================================
 
 const STATUS_COLORS: Record<
   string,
@@ -60,13 +48,7 @@ const STATUS_COLORS: Record<
   rejected: "error",
 };
 
-// =====================================================
-// TYPE GUARDS
-// =====================================================
-
-const getPropertyTitle = (
-  property: Review["property"],
-): string => {
+const getPropertyTitle = (property: Review["property"]): string => {
   if (
     typeof property === "object" &&
     property !== null &&
@@ -79,16 +61,10 @@ const getPropertyTitle = (
   return "Property";
 };
 
-// =====================================================
-// PAGE
-// =====================================================
-
 const MyReviews = () => {
   const dispatch = useAppDispatch();
 
-  const { reviews, loading } = useAppSelector(
-    (state) => state.review,
-  );
+  const { reviews, loading } = useAppSelector((state) => state.review);
 
   const [tab, setTab] = useState<string>("all");
   const [editOpen, setEditOpen] = useState(false);
@@ -113,10 +89,6 @@ const MyReviews = () => {
     dispatch(getMyReviews());
   }, [dispatch]);
 
-  // =====================================================
-  // EDIT REVIEW
-  // =====================================================
-
   const openEdit = (review: Review): void => {
     setEditTarget(review);
 
@@ -140,9 +112,7 @@ const MyReviews = () => {
     });
   };
 
-  const submitEdit = async (
-    data: ReviewFormValues,
-  ): Promise<void> => {
+  const submitEdit = async (data: ReviewFormValues): Promise<void> => {
     if (!editTarget || saving) return;
 
     setSaving(true);
@@ -170,10 +140,6 @@ const MyReviews = () => {
     }
   };
 
-  // =====================================================
-  // DELETE REVIEW
-  // =====================================================
-
   const handleDelete = async (id: string): Promise<void> => {
     if (
       deletingIds.includes(id) ||
@@ -193,31 +159,15 @@ const MyReviews = () => {
     }
   };
 
-  // =====================================================
-  // FILTERS AND COUNTS
-  // =====================================================
-
   const filteredReviews =
-    tab === "all"
-      ? reviews
-      : reviews.filter((review) => review.status === tab);
+    tab === "all" ? reviews : reviews.filter((review) => review.status === tab);
 
   const counts = {
     all: reviews.length,
-    pending: reviews.filter(
-      (review) => review.status === "pending",
-    ).length,
-    approved: reviews.filter(
-      (review) => review.status === "approved",
-    ).length,
-    rejected: reviews.filter(
-      (review) => review.status === "rejected",
-    ).length,
+    pending: reviews.filter((review) => review.status === "pending").length,
+    approved: reviews.filter((review) => review.status === "approved").length,
+    rejected: reviews.filter((review) => review.status === "rejected").length,
   };
-
-  // =====================================================
-  // RENDER
-  // =====================================================
 
   return (
     <MainLayout>
@@ -227,7 +177,6 @@ const MyReviews = () => {
           borderRadius: 3,
         }}
       >
-        {/* Header */}
         <Box
           sx={{
             display: "flex",
@@ -239,17 +188,11 @@ const MyReviews = () => {
           }}
         >
           <Box>
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: 700 }}
-            >
+            <Typography variant="h5" sx={{ fontWeight: 700 }}>
               My Reviews
             </Typography>
 
-            <Typography
-              variant="body2"
-              color="text.secondary"
-            >
+            <Typography variant="body2" color="text.secondary">
               Reviews you've submitted for properties
             </Typography>
           </Box>
@@ -264,7 +207,6 @@ const MyReviews = () => {
 
         <Divider sx={{ mb: 2 }} />
 
-        {/* Status Tabs */}
         <Tabs
           value={tab}
           onChange={(_event, value: string) => setTab(value)}
@@ -273,21 +215,11 @@ const MyReviews = () => {
           sx={{ mb: 3 }}
         >
           <Tab value="all" label={`All (${counts.all})`} />
-          <Tab
-            value="pending"
-            label={`Pending (${counts.pending})`}
-          />
-          <Tab
-            value="approved"
-            label={`Approved (${counts.approved})`}
-          />
-          <Tab
-            value="rejected"
-            label={`Rejected (${counts.rejected})`}
-          />
+          <Tab value="pending" label={`Pending (${counts.pending})`} />
+          <Tab value="approved" label={`Approved (${counts.approved})`} />
+          <Tab value="rejected" label={`Rejected (${counts.rejected})`} />
         </Tabs>
 
-        {/* Loading State */}
         {loading && reviews.length === 0 ? (
           <Box
             sx={{
@@ -306,7 +238,6 @@ const MyReviews = () => {
             ))}
           </Box>
         ) : filteredReviews.length === 0 ? (
-          /* Empty State */
           <Box
             sx={{
               py: 8,
@@ -326,7 +257,6 @@ const MyReviews = () => {
             </Typography>
           </Box>
         ) : (
-          /* Reviews List */
           <Box
             sx={{
               display: "flex",
@@ -354,7 +284,6 @@ const MyReviews = () => {
                   }}
                 >
                   <CardContent sx={{ flex: 1 }}>
-                    {/* Property and Status */}
                     <Box
                       sx={{
                         display: "flex",
@@ -373,10 +302,7 @@ const MyReviews = () => {
                           flex: 1,
                         }}
                       >
-                        <Home
-                          fontSize="small"
-                          color="action"
-                        />
+                        <Home fontSize="small" color="action" />
 
                         <Typography
                           variant="subtitle2"
@@ -389,15 +315,11 @@ const MyReviews = () => {
 
                       <Chip
                         label={review.status}
-                        color={
-                          STATUS_COLORS[review.status] ??
-                          "default"
-                        }
+                        color={STATUS_COLORS[review.status] ?? "default"}
                         size="small"
                       />
                     </Box>
 
-                    {/* Rating */}
                     <Rating
                       value={review.rating}
                       readOnly
@@ -405,7 +327,6 @@ const MyReviews = () => {
                       sx={{ mb: 1 }}
                     />
 
-                    {/* Comment */}
                     <Typography
                       variant="body2"
                       color="text.secondary"
@@ -421,7 +342,6 @@ const MyReviews = () => {
                       {review.comment}
                     </Typography>
 
-                    {/* Admin Rejection Reason */}
                     {review.reason && (
                       <Box sx={{ mt: 1 }}>
                         <Chip
@@ -440,7 +360,6 @@ const MyReviews = () => {
                       </Box>
                     )}
 
-                    {/* Created Date */}
                     <Typography
                       variant="caption"
                       color="text.secondary"
@@ -455,7 +374,6 @@ const MyReviews = () => {
 
                   <Divider />
 
-                  {/* Actions */}
                   <CardActions
                     sx={{
                       justifyContent: "flex-end",
@@ -469,7 +387,9 @@ const MyReviews = () => {
                             size="small"
                             color="primary"
                             onClick={() => openEdit(review)}
-                            disabled={saving || deletingIds.includes(review._id)}
+                            disabled={
+                              saving || deletingIds.includes(review._id)
+                            }
                             aria-label="Edit review"
                           >
                             <Edit fontSize="small" />
@@ -499,7 +419,6 @@ const MyReviews = () => {
         )}
       </Paper>
 
-      {/* Edit Review Dialog */}
       <Dialog
         open={editOpen}
         onClose={closeEdit}
@@ -511,11 +430,7 @@ const MyReviews = () => {
           },
         }}
       >
-        <DialogTitle
-          sx={{ fontWeight: 700 }}
-        >
-          Edit Review
-        </DialogTitle>
+        <DialogTitle sx={{ fontWeight: 700 }}>Edit Review</DialogTitle>
 
         <Divider />
 
@@ -526,7 +441,6 @@ const MyReviews = () => {
               id="edit-review-form"
               onSubmit={handleSubmit(submitEdit)}
             >
-              {/* Rating Field */}
               <Box sx={{ mb: 3 }}>
                 <Typography
                   variant="subtitle2"
@@ -546,9 +460,7 @@ const MyReviews = () => {
                       <Rating
                         name={field.name}
                         value={field.value}
-                        onChange={(_event, value) =>
-                          field.onChange(value ?? 0)
-                        }
+                        onChange={(_event, value) => field.onChange(value ?? 0)}
                         onBlur={field.onBlur}
                         ref={field.ref}
                         size="large"
@@ -571,7 +483,6 @@ const MyReviews = () => {
                 />
               </Box>
 
-              {/* Comment Field */}
               <Typography
                 variant="subtitle2"
                 sx={{
@@ -594,9 +505,7 @@ const MyReviews = () => {
                     placeholder="Share your experience..."
                     error={!!error}
                     helperText={error?.message}
-                    slotProps={{
-                      
-                    }}
+                    slotProps={{}}
                   />
                 )}
               />
@@ -610,10 +519,7 @@ const MyReviews = () => {
             gap: 1,
           }}
         >
-          <Button
-            onClick={closeEdit}
-            disabled={saving || isSubmitting}
-          >
+          <Button onClick={closeEdit} disabled={saving || isSubmitting}>
             Cancel
           </Button>
 

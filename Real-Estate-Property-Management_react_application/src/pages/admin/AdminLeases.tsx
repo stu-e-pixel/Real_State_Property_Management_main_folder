@@ -268,8 +268,6 @@ const AdminLeases: React.FC = () => {
           </Box>
         </Paper>
 
-        {/* SUMMARY CARDS */}
-
         <Box
           sx={{
             display: "flex",
@@ -373,8 +371,6 @@ const AdminLeases: React.FC = () => {
           ))}
         </Box>
 
-        {/* LEASE TABLE */}
-
         <Paper
           elevation={0}
           sx={{
@@ -430,8 +426,6 @@ const AdminLeases: React.FC = () => {
           </Box>
 
           <Divider sx={{ mb: 2.5, borderColor: "#edf2f7" }} />
-
-          {/* SEARCH */}
 
           <Box
             sx={{
@@ -490,8 +484,6 @@ const AdminLeases: React.FC = () => {
               <Refresh />
             </IconButton>
           </Box>
-
-          {/* TABLE */}
 
           {loading && leases.length === 0 ? (
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>

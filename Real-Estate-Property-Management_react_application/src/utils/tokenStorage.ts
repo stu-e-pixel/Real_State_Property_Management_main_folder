@@ -1,34 +1,32 @@
 import Cookies from "js-cookie";
 import type { User, UserModel } from "../typescript/type/auth.types";
 
-// Cookie keys
+
 const TOKEN_KEY = "accessToken";
 const REFRESH_TOKEN_KEY = "refreshToken";
 const USER_KEY = "user";
 const MODEL_KEY = "model";
 
-// Cookie options
+
 const COOKIE_OPTIONS: Cookies.CookieAttributes = {
-  expires: 7,                    // 7 days
-  secure: true,                  // HTTPS only (set false for localhost HTTP dev)
-  sameSite: "strict",            // CSRF protection
+  expires: 7,                    
+  secure: true,                  
+  sameSite: "strict",            
   path: "/",
 };
 
 const ACCESS_TOKEN_OPTIONS: Cookies.CookieAttributes = {
   ...COOKIE_OPTIONS,
-  expires: 1,                    // Access token: 1 day
+  expires: 1,                    
 };
 
 const REFRESH_TOKEN_OPTIONS: Cookies.CookieAttributes = {
   ...COOKIE_OPTIONS,
-  expires: 7,                    // Refresh token: 7 days
+  expires: 7,                    
 };
 
 export const tokenStorage = {
-  // =====================================================
-  // TOKENS
-  // =====================================================
+  
 
   setTokens: (accessToken: string, refreshToken?: string): void => {
     Cookies.set(TOKEN_KEY, accessToken, ACCESS_TOKEN_OPTIONS);
@@ -45,9 +43,7 @@ export const tokenStorage = {
     return Cookies.get(REFRESH_TOKEN_KEY) ?? null;
   },
 
-  // =====================================================
-  // USER
-  // =====================================================
+  
 
   setUser: (user: User, model?: UserModel | null): void => {
     Cookies.set(USER_KEY, JSON.stringify(user), COOKIE_OPTIONS);
@@ -72,9 +68,7 @@ export const tokenStorage = {
     return (Cookies.get(MODEL_KEY) as UserModel | undefined) ?? null;
   },
 
-  // =====================================================
-  // CLEAR
-  // =====================================================
+  
 
   clearAll: (): void => {
     Cookies.remove(TOKEN_KEY, { path: "/" });

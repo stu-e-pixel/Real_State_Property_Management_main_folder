@@ -38,7 +38,7 @@ const Register: React.FC = () => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  // React Hook Form
+  
   const { control, handleSubmit } = useForm<AuthFormValues>({
     resolver: yupResolver(registerSchema),
 
@@ -51,7 +51,7 @@ const Register: React.FC = () => {
     },
   });
 
-  // Image selection
+  
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
 
@@ -68,7 +68,7 @@ const Register: React.FC = () => {
     }
   };
 
-  // Submit registration
+
   const onSubmit = async (data: AuthFormValues): Promise<void> => {
     const registerData: RegisterData = {
       ...data,
@@ -131,7 +131,7 @@ const Register: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      {/* Decorative circles */}
+      
       <Box
         sx={{
           position: "absolute",
@@ -156,7 +156,7 @@ const Register: React.FC = () => {
         }}
       />
 
-      {/* Brand */}
+      
       <Box sx={{ position: "relative", zIndex: 1 }}>
         <Box
           sx={{
@@ -220,7 +220,7 @@ const Register: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* Benefits */}
+     
       <Box sx={{ position: "relative", zIndex: 1 }}>
         {[
           "Explore properties that fit your needs",
@@ -279,7 +279,7 @@ const Register: React.FC = () => {
       </Box>
     </Box>
 
-    {/* RIGHT REGISTRATION PANEL */}
+    
     <Box
       sx={{
         flex: 1,
@@ -287,7 +287,7 @@ const Register: React.FC = () => {
         p: { xs: 3, sm: 4, md: 5 },
       }}
     >
-      {/* Header */}
+     
       <Box sx={{ mb: 3 }}>
         <Box
           sx={{
@@ -332,7 +332,7 @@ const Register: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* Profile Image */}
+      
       <Box
         sx={{
           display: "flex",
@@ -418,7 +418,7 @@ const Register: React.FC = () => {
         </Box>
       </Box>
 
-      {/* Registration Form */}
+      
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -510,7 +510,7 @@ const Register: React.FC = () => {
         </Box>
       </Box>
 
-      {/* Login Link */}
+    
       <Box
         sx={{
           display: "flex",

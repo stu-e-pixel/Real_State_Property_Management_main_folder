@@ -166,7 +166,7 @@ const MySaleTransactions: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* Header */}
+      
         <Box
           sx={{
             display: "flex",
@@ -202,7 +202,7 @@ const MySaleTransactions: React.FC = () => {
 
         <Divider sx={{ mb: 2 }} />
 
-        {/* Tabs */}
+       
         <Tabs
           value={tab}
           onChange={(_event, value: string) => setTab(value)}
@@ -229,7 +229,7 @@ const MySaleTransactions: React.FC = () => {
           />
         </Tabs>
 
-        {/* Content */}
+       
         {loading && transactions.length === 0 ? (
           <Box
             sx={{
@@ -321,7 +321,7 @@ const MySaleTransactions: React.FC = () => {
                     }}
                   >
                     <CardContent sx={{ flex: 1 }}>
-                      {/* Property Header */}
+                     
                       <Box
                         sx={{
                           display: "flex",
@@ -368,7 +368,7 @@ const MySaleTransactions: React.FC = () => {
                         />
                       </Box>
 
-                      {/* Buyer Information */}
+                     
                       {buyer && (
                         <Box
                           sx={{
@@ -407,7 +407,7 @@ const MySaleTransactions: React.FC = () => {
                         </Box>
                       )}
 
-                      {/* Price and Payment Progress */}
+                      
                       <Box
                         sx={{
                           display: "flex",
@@ -549,7 +549,7 @@ const MySaleTransactions: React.FC = () => {
         )}
       </Paper>
 
-      {/* Transaction Details Dialog */}
+     
       <Dialog
         open={viewOpen}
         onClose={closeView}
@@ -592,7 +592,7 @@ const MySaleTransactions: React.FC = () => {
                 gap: 2,
               }}
             >
-              {/* Property */}
+             
               <Box>
                 <Typography
                   variant="caption"
@@ -609,7 +609,7 @@ const MySaleTransactions: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* Buyer */}
+             
               {getBuyer(transaction) && (
                 <Box>
                   <Typography
@@ -656,7 +656,6 @@ const MySaleTransactions: React.FC = () => {
                 </Box>
               )}
 
-              {/* Prices */}
               <Box
                 sx={{
                   display: "flex",
@@ -698,7 +697,6 @@ const MySaleTransactions: React.FC = () => {
                 </Box>
               </Box>
 
-              {/* Statuses */}
               <Box
                 sx={{
                   display: "flex",
@@ -751,7 +749,6 @@ const MySaleTransactions: React.FC = () => {
                 </Box>
               </Box>
 
-              {/* Dates */}
               {transaction.agreementDate && (
                 <Box>
                   <Typography

@@ -43,10 +43,6 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import toast from "react-hot-toast";
 
-// =====================================================
-// CONFIG
-// =====================================================
-
 const QUICK_LINKS = [
   { label: "Home", to: "/" },
   { label: "Browse Properties", to: "/properties" },
@@ -154,10 +150,6 @@ const SOCIAL_LINKS = [
   },
 ];
 
-// =====================================================
-// COMPONENT
-// =====================================================
-
 const CustomerFooter: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [subscribing, setSubscribing] = useState<boolean>(false);
@@ -178,7 +170,6 @@ const CustomerFooter: React.FC = () => {
 
     setSubscribing(true);
 
-    // Simulate API call
     setTimeout(() => {
       setSubscribing(false);
       setEmail("");
@@ -199,10 +190,6 @@ const CustomerFooter: React.FC = () => {
       }}
     >
       <Container maxWidth="lg">
-        {/* =====================================================
-            TOP SECTION
-        ===================================================== */}
-
         <Box
           sx={{
             display: "flex",
@@ -211,10 +198,6 @@ const CustomerFooter: React.FC = () => {
             mb: 5,
           }}
         >
-          {/* =====================================================
-              BRAND + NEWSLETTER
-          ===================================================== */}
-
           <Box
             sx={{
               width: {
@@ -223,7 +206,6 @@ const CustomerFooter: React.FC = () => {
               },
             }}
           >
-            {/* Brand */}
             <Box
               sx={{
                 display: "flex",
@@ -265,7 +247,6 @@ const CustomerFooter: React.FC = () => {
               </Box>
             </Box>
 
-            {/* Description */}
             <Typography
               variant="body2"
               sx={{
@@ -279,7 +260,6 @@ const CustomerFooter: React.FC = () => {
               listings across the country.
             </Typography>
 
-            {/* Newsletter Title */}
             <Typography
               variant="subtitle2"
               sx={{
@@ -291,7 +271,6 @@ const CustomerFooter: React.FC = () => {
               Subscribe to our newsletter
             </Typography>
 
-            {/* Newsletter Form */}
             <Box
               component="form"
               onSubmit={handleSubscribe}
@@ -363,7 +342,6 @@ const CustomerFooter: React.FC = () => {
               </Button>
             </Box>
 
-            {/* Verified Text */}
             <Box
               sx={{
                 display: "flex",
@@ -380,10 +358,6 @@ const CustomerFooter: React.FC = () => {
               </Typography>
             </Box>
           </Box>
-
-          {/* =====================================================
-              QUICK LINKS
-          ===================================================== */}
 
           <Box
             sx={{
@@ -444,10 +418,6 @@ const CustomerFooter: React.FC = () => {
               ))}
             </Box>
           </Box>
-
-          {/* =====================================================
-              PROPERTY CATEGORIES
-          ===================================================== */}
 
           <Box
             sx={{
@@ -510,10 +480,6 @@ const CustomerFooter: React.FC = () => {
             </Box>
           </Box>
 
-          {/* =====================================================
-              SUPPORT
-          ===================================================== */}
-
           <Box
             sx={{
               width: {
@@ -575,10 +541,6 @@ const CustomerFooter: React.FC = () => {
             </Box>
           </Box>
 
-          {/* =====================================================
-              CONTACT
-          ===================================================== */}
-
           <Box
             sx={{
               width: {
@@ -636,7 +598,6 @@ const CustomerFooter: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* Phone */}
               <Box
                 sx={{
                   display: "flex",
@@ -663,7 +624,6 @@ const CustomerFooter: React.FC = () => {
                 </Link>
               </Box>
 
-              {/* Email */}
               <Box
                 sx={{
                   display: "flex",
@@ -690,7 +650,6 @@ const CustomerFooter: React.FC = () => {
                 </Link>
               </Box>
 
-              {/* Social Icons */}
               <Box sx={{ mt: 1 }}>
                 <Typography
                   variant="caption"
@@ -744,10 +703,6 @@ const CustomerFooter: React.FC = () => {
             </Box>
           </Box>
         </Box>
-
-        {/* =====================================================
-            TRUST BADGES
-        ===================================================== */}
 
         <Box
           sx={{
@@ -811,7 +766,6 @@ const CustomerFooter: React.FC = () => {
               </Box>
             </Box>
 
-            {/* Support */}
             <Box
               sx={{
                 width: {
@@ -857,7 +811,6 @@ const CustomerFooter: React.FC = () => {
               </Box>
             </Box>
 
-            {/* Secure */}
             <Box
               sx={{
                 width: {
@@ -905,10 +858,6 @@ const CustomerFooter: React.FC = () => {
           </Box>
         </Box>
 
-        {/* =====================================================
-            BOTTOM BAR
-        ===================================================== */}
-
         <Divider
           sx={{
             borderColor: "#334155",
@@ -925,7 +874,6 @@ const CustomerFooter: React.FC = () => {
             gap: 2,
           }}
         >
-          {/* Copyright */}
           <Typography
             variant="caption"
             sx={{
@@ -935,7 +883,6 @@ const CustomerFooter: React.FC = () => {
             © {new Date().getFullYear()} RealEstate. All rights reserved.
           </Typography>
 
-          {/* Bottom Links */}
           <Box
             sx={{
               display: "flex",
@@ -1009,7 +956,6 @@ const CustomerFooter: React.FC = () => {
             </Link>
           </Box>
 
-          {/* Language */}
           <Chip
             label="🇺🇸 English"
             size="small"

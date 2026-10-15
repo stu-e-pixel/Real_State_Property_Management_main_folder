@@ -25,17 +25,13 @@ import {
 const OwnerProfile: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  /* =====================================================
-     GET OWNER STATE
-  ===================================================== */
+ 
 
   const { profile, loading } = useAppSelector(
     (state) => state.owner,
   );
 
-  /* =====================================================
-     LOAD OWNER PROFILE
-  ===================================================== */
+ 
 
   useEffect(() => {
     dispatch(getOwnerProfile());
@@ -45,9 +41,7 @@ const OwnerProfile: React.FC = () => {
     };
   }, [dispatch]);
 
-  /* =====================================================
-     UPDATE OWNER PROFILE
-  ===================================================== */
+ 
 
   const handleSubmit = (
   data: Owner,
@@ -63,9 +57,7 @@ const OwnerProfile: React.FC = () => {
   );
 };
 
-  /* =====================================================
-     RENDER
-  ===================================================== */
+  
 
   return (
     <MainLayout>

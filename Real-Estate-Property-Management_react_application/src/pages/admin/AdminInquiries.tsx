@@ -56,13 +56,9 @@ const AdminInquiries: React.FC = () => {
 
   const [search, setSearch] = useState<string>("");
 
-  // ================= FETCH =================
-
   useEffect(() => {
     dispatch(getAllInquiries());
   }, [dispatch]);
-
-  // ================= SEARCH =================
 
   const searchTerm = search.trim().toLowerCase();
 
@@ -82,8 +78,6 @@ const AdminInquiries: React.FC = () => {
     );
   });
 
-  // ================= REFRESH =================
-
   const handleRefresh = (): void => {
     dispatch(getAllInquiries());
   };
@@ -100,8 +94,6 @@ const AdminInquiries: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
-
         <Box
           sx={{
             display: "flex",
@@ -145,8 +137,6 @@ const AdminInquiries: React.FC = () => {
           }}
         />
 
-        {/* ================= SEARCH AND REFRESH ================= */}
-
         <Box
           sx={{
             display: "flex",
@@ -181,8 +171,6 @@ const AdminInquiries: React.FC = () => {
             <Refresh />
           </IconButton>
         </Box>
-
-        {/* ================= CONTENT ================= */}
 
         {loading && inquiries.length === 0 ? (
           <Loader message="Loading inquiries..." />
@@ -227,8 +215,6 @@ const AdminInquiries: React.FC = () => {
               <TableBody>
                 {filtered.map((i) => (
                   <TableRow key={i._id} hover>
-                    {/* Customer */}
-
                     <TableCell>
                       <Box
                         sx={{
@@ -258,8 +244,6 @@ const AdminInquiries: React.FC = () => {
                       </Box>
                     </TableCell>
 
-                    {/* Property */}
-
                     <TableCell>
                       <Typography
                         variant="body2"
@@ -274,8 +258,6 @@ const AdminInquiries: React.FC = () => {
                       </Typography>
                     </TableCell>
 
-                    {/* Agent */}
-
                     <TableCell>
                       <Typography
                         variant="body2"
@@ -287,8 +269,6 @@ const AdminInquiries: React.FC = () => {
                         {isPopulatedUser(i.agent) ? i.agent.name : "—"}
                       </Typography>
                     </TableCell>
-
-                    {/* Message */}
 
                     <TableCell>
                       <Typography
@@ -302,8 +282,6 @@ const AdminInquiries: React.FC = () => {
                       </Typography>
                     </TableCell>
 
-                    {/* Status */}
-
                     <TableCell>
                       <Chip
                         label={i.status}
@@ -311,8 +289,6 @@ const AdminInquiries: React.FC = () => {
                         size="small"
                       />
                     </TableCell>
-
-                    {/* Date */}
 
                     <TableCell>
                       <Typography

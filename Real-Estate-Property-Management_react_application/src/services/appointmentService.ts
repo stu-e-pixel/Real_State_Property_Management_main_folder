@@ -9,7 +9,7 @@ import type {
 } from "../typescript/type/appointment.types";
 
 const appointmentService = {
-  // ---------------- CREATE (customer) ----------------
+ 
   createAppointment: async (
     data: CreateAppointmentData
   ): Promise<AppointmentMutationResponse> => {
@@ -20,7 +20,7 @@ const appointmentService = {
     return response.data;
   },
 
-  // ---------------- CUSTOMER: MY APPOINTMENTS ----------------
+  
   getMyAppointments: async (): Promise<GetAppointmentsResponse> => {
     const response = await api.get<GetAppointmentsResponse>(
       "/v5/api/customer/appointments"
@@ -28,7 +28,7 @@ const appointmentService = {
     return response.data;
   },
 
-  // ---------------- AGENT: ASSIGNED APPOINTMENTS ----------------
+  
   getAgentAppointments: async (): Promise<GetAppointmentsResponse> => {
     const response = await api.get<GetAppointmentsResponse>(
       "/v5/api/agent/appointments"
@@ -36,7 +36,7 @@ const appointmentService = {
     return response.data;
   },
 
-  // ---------------- OWNER: PROPERTY APPOINTMENTS ----------------
+ 
   getOwnerAppointments: async (): Promise<GetAppointmentsResponse> => {
     const response = await api.get<GetAppointmentsResponse>(
       "/v5/api/owner/appointemnts/property"
@@ -44,7 +44,7 @@ const appointmentService = {
     return response.data;
   },
 
-  // ---------------- SINGLE ----------------
+ 
   getAppointmentById: async (
     id: string
   ): Promise<GetAppointmentResponse> => {
@@ -54,7 +54,7 @@ const appointmentService = {
     return response.data;
   },
 
-  // ---------------- ACTION (agent/owner) ----------------
+  
   appointmentAction: async (
     data: AppointmentActionData
   ): Promise<AppointmentMutationResponse> => {
@@ -65,7 +65,7 @@ const appointmentService = {
     return response.data;
   },
 
-  // ---------------- CANCEL ----------------
+ 
   cancelAppointment: async (
     data: CancelAppointmentData
   ): Promise<AppointmentMutationResponse> => {
@@ -76,7 +76,7 @@ const appointmentService = {
     return response.data;
   },
 
-  // ---------------- ALL APPOINTMENTS (admin) ----------------
+  
 getAllAppointments: async (): Promise<GetAppointmentsResponse> => {
   const response = await api.get<GetAppointmentsResponse>(
     "/v5/api/appointment/all"

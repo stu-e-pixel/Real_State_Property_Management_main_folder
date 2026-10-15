@@ -47,9 +47,7 @@ import {
 } from "../../features/notification/notificationSlice";
 import type { AppNotification } from "../../typescript/type/notification.types";
 
-// =====================================================
-// META MAP (same as bell)
-// =====================================================
+
 
 const getNotificationMeta = (type: string) => {
   const map: Record<string, { icon: React.ReactNode; color: string }> = {
@@ -86,9 +84,7 @@ const formatTime = (dateStr: string): string => {
   return date.toLocaleString();
 };
 
-// =====================================================
-// PAGE
-// =====================================================
+
 
 const AllNotifications: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -101,9 +97,6 @@ const AllNotifications: React.FC = () => {
   const [tab, setTab] = useState<"all" | "unread" | "read">("all");
   const [page, setPage] = useState(1);
 
-  // =====================================================
-  // FETCH
-  // =====================================================
 
   useEffect(() => {
     const params: { page: number; limit: number; isRead?: boolean } = {
@@ -117,9 +110,7 @@ const AllNotifications: React.FC = () => {
     dispatch(fetchNotifications(params));
   }, [dispatch, page, tab]);
 
-  // =====================================================
-  // HANDLERS
-  // =====================================================
+  
 
   const handleNotificationClick = (n: AppNotification) => {
     if (!n.isRead) dispatch(markNotificationAsRead(n._id));
@@ -147,9 +138,7 @@ const AllNotifications: React.FC = () => {
     }
   };
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -207,7 +196,7 @@ const AllNotifications: React.FC = () => {
 
         <Divider sx={{ mb: 2 }} />
 
-        {/* TABS */}
+        
         <Tabs
           value={tab}
           onChange={(_e, v) => {
@@ -224,7 +213,7 @@ const AllNotifications: React.FC = () => {
           <Tab value="read" label="Read" />
         </Tabs>
 
-        {/* BODY */}
+        
         {loading && notifications.length === 0 ? (
           <Stack spacing={1}>
             {[1, 2, 3, 4, 5].map((i) => (

@@ -54,12 +54,10 @@ const RentalApplicationModal: React.FC<RentalApplicationModalProps> = ({
       occupation: "",
       message: "",
     },
-    mode: "onChange",     // ✅ changed
+    mode: "onChange",     
   });
 
-  // ❌ REMOVED the useEffect reset — defaultValues already handles initial state
-  // If you need to reset when reopening, use a stable check:
-  // (see note below)
+  
 
   const onSubmit = async (
     data: RentalApplicationFormValues

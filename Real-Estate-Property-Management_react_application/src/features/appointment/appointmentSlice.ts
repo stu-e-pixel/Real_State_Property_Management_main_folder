@@ -20,10 +20,6 @@ const initialState: AppointmentState = {
   error: null,
 };
 
-// =====================================================
-// THUNKS
-// =====================================================
-
 export const createAppointment = createAsyncThunk<
   AppointmentMutationResponse,
   CreateAppointmentData,
@@ -144,9 +140,7 @@ export const getAllAppointments = createAsyncThunk<
   }
 });
 
-// =====================================================
-// HELPERS
-// =====================================================
+
 
 const replaceAppointment = (
   state: AppointmentState,
@@ -156,9 +150,7 @@ const replaceAppointment = (
   if (index !== -1) state.appointments[index] = updated;
 };
 
-// =====================================================
-// SLICE
-// =====================================================
+
 
 const appointmentSlice = createSlice({
   name: "appointment",
@@ -173,7 +165,7 @@ const appointmentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // -------- CREATE --------
+    
       .addCase(createAppointment.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -191,7 +183,7 @@ const appointmentSlice = createSlice({
         toast.error(action.payload ?? "Failed to book appointment");
       })
 
-      // -------- MY --------
+      
       .addCase(getMyAppointments.pending, (state) => {
         state.loading = true;
       })
@@ -207,7 +199,7 @@ const appointmentSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch appointments");
       })
 
-      // -------- AGENT --------
+     
       .addCase(getAgentAppointments.pending, (state) => {
         state.loading = true;
       })
@@ -223,7 +215,7 @@ const appointmentSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch appointments");
       })
 
-      // -------- OWNER --------
+      
       .addCase(getOwnerAppointments.pending, (state) => {
         state.loading = true;
       })
@@ -239,7 +231,7 @@ const appointmentSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch appointments");
       })
 
-      // -------- SINGLE --------
+      
       .addCase(getAppointmentById.pending, (state) => {
         state.loading = true;
       })
@@ -255,7 +247,7 @@ const appointmentSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch appointment");
       })
 
-      // -------- ACTION --------
+     
       .addCase(appointmentAction.pending, (state) => {
         state.loading = true;
       })
@@ -270,7 +262,7 @@ const appointmentSlice = createSlice({
         toast.error(action.payload ?? "Failed to perform action");
       })
 
-      // -------- CANCEL --------
+      
       .addCase(cancelAppointment.pending, (state) => {
         state.loading = true;
       })

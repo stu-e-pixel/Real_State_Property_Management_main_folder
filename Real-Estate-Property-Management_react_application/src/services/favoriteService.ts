@@ -5,10 +5,9 @@ import type {
   RemoveFavoriteResponse,
 } from "../typescript/type/favorite.types";
 
-const BASE = "/v3/api"; // adjust to your mount prefix
-
+const BASE = "/v3/api"; 
 const favoriteService = {
-  // ---------------- ADD ----------------
+  
   addFavorite: async (
     propertyId: string
   ): Promise<FavoriteMutationResponse> => {
@@ -18,7 +17,7 @@ const favoriteService = {
     return response.data;
   },
 
-  // ---------------- REMOVE ----------------
+
   removeFavorite: async (
     propertyId: string
   ): Promise<RemoveFavoriteResponse> => {
@@ -28,7 +27,7 @@ const favoriteService = {
     return response.data;
   },
 
-  // ---------------- MY FAVORITES ----------------
+  
   getMyFavorites: async (): Promise<GetFavoritesResponse> => {
     const response = await api.get<GetFavoritesResponse>(
       `${BASE}/findFavorite`

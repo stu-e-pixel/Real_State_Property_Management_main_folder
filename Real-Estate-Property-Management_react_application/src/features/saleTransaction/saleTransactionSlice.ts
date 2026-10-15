@@ -18,10 +18,6 @@ const initialState: SaleTransactionState = {
   error: null,
 };
 
-// =====================================================
-// THUNKS
-// =====================================================
-
 export const createSaleTransaction = createAsyncThunk<
   SaleTransactionMutationResponse,
   CreateSaleTransactionData,
@@ -97,10 +93,6 @@ export const getAllSaleTransactionsAdmin = createAsyncThunk<
   }
 });
 
-// =====================================================
-// HELPERS
-// =====================================================
-
 const replaceTransaction = (
   state: SaleTransactionState,
   updated: SaleTransaction,
@@ -108,10 +100,6 @@ const replaceTransaction = (
   const index = state.transactions.findIndex((t) => t._id === updated._id);
   if (index !== -1) state.transactions[index] = updated;
 };
-
-// =====================================================
-// SLICE
-// =====================================================
 
 const saleTransactionSlice = createSlice({
   name: "saleTransaction",
@@ -126,7 +114,7 @@ const saleTransactionSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // -------- CREATE --------
+
       .addCase(createSaleTransaction.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -144,7 +132,6 @@ const saleTransactionSlice = createSlice({
         toast.error(action.payload ?? "Failed to create transaction");
       })
 
-      // -------- MY --------
       .addCase(getMySaleTransactions.pending, (state) => {
         state.loading = true;
       })
@@ -157,7 +144,6 @@ const saleTransactionSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch transactions");
       })
 
-      // -------- BY ID --------
       .addCase(getSaleTransactionById.pending, (state) => {
         state.loading = true;
       })
@@ -170,7 +156,6 @@ const saleTransactionSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch transaction");
       })
 
-      // -------- UPDATE --------
       .addCase(updateSaleTransaction.pending, (state) => {
         state.loading = true;
       })

@@ -2,9 +2,7 @@
 import type { Property } from "./property.types";
 import type { PopulatedUserLite } from "./inquiry.types";
 
-// =====================================================
-// ENUMS
-// =====================================================
+
 
 export type SaleOfferStatus =
   | "pending"
@@ -18,9 +16,7 @@ export type SaleOfferAction = "accept" | "reject" | "counter";
 
 export type OfferActorModel = "User" | "Owner" | "Agent";
 
-// =====================================================
-// ENTITY
-// =====================================================
+
 
 export interface CounterOffer {
   _id: string;
@@ -48,9 +44,7 @@ export interface SaleOffer {
   updatedAt: string;
 }
 
-// =====================================================
-// PAYLOADS
-// =====================================================
+
 
 export interface CreateSaleOfferData {
   propertyId: string;
@@ -65,9 +59,6 @@ export interface RespondToSaleOfferData {
   message?: string;
 }
 
-// =====================================================
-// RESPONSES
-// =====================================================
 
 export interface GetSaleOffersResponse {
   success: boolean;
@@ -93,9 +84,7 @@ export interface DeleteSaleOfferResponse {
   message: string;
 }
 
-// =====================================================
-// STATE
-// =====================================================
+
 
 export interface SaleOfferState {
   saleOffers: SaleOffer[];
@@ -104,9 +93,7 @@ export interface SaleOfferState {
   error: string | null;
 }
 
-// =====================================================
-// FORM VALUES
-// =====================================================
+
 
 export interface SaleOfferFormValues {
   offerPrice: number;

@@ -2,24 +2,18 @@ import type { Property } from "./property.types";
 import type { PopulatedUserLite } from "./inquiry.types";
 import type { RentalApplication } from "./rental.types";
 
-// =====================================================
-// ENUMS
-// =====================================================
+
 
 export type LeaseStatus = "active" | "expired" | "terminated";
 
-// =====================================================
-// AGREEMENT DOCUMENT
-// =====================================================
+
 
 export interface AgreementDocument {
   url: string;
   public_id: string;
 }
 
-// =====================================================
-// ENTITY (canonical, non-aggregated)
-// =====================================================
+
 
 export interface Lease {
   _id: string;
@@ -39,9 +33,7 @@ export interface Lease {
   updatedAt: string;
 }
 
-// =====================================================
-// AGGREGATED LEASE (from owner aggregation)
-// =====================================================
+
 
 export interface AggregatedLease {
   _id: string;
@@ -61,9 +53,7 @@ export interface AggregatedLease {
   updatedAt: string;
 }
 
-// =====================================================
-// PAYLOADS
-// =====================================================
+
 
 export interface CreateLeaseData {
   rentalApplication: string;
@@ -92,9 +82,7 @@ export interface ExpireLeaseData {
   id: string;
 }
 
-// =====================================================
-// RESPONSES
-// =====================================================
+
 
 export interface GetLeasesResponse {
   success: boolean;
@@ -129,9 +117,7 @@ export interface DeleteLeaseResponse {
   message: string;
 }
 
-// =====================================================
-// STATE
-// =====================================================
+
 
 export interface LeaseState {
   leases: Lease[];
@@ -141,9 +127,7 @@ export interface LeaseState {
   error: string | null;
 }
 
-// =====================================================
-// FORM VALUES
-// =====================================================
+
 
 export interface LeaseFormValues {
   rentalApplication: string;

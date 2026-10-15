@@ -63,7 +63,6 @@ const LandingNavbar = () => {
             gap: 2,
           }}
         >
-          {/* Brand */}
           <Box
             component={Link}
             to="/"
@@ -126,7 +125,6 @@ const LandingNavbar = () => {
             </Box>
           </Box>
 
-          {/* Desktop Navigation */}
           {!isMobile && (
             <Box
               component="nav"
@@ -187,7 +185,6 @@ const LandingNavbar = () => {
             </Box>
           )}
 
-          {/* Mobile Menu Button */}
           {isMobile && (
             <IconButton
               aria-label="Open navigation menu"
@@ -210,7 +207,6 @@ const LandingNavbar = () => {
         </Toolbar>
       </Container>
 
-      {/* Mobile Drawer */}
       <Drawer
         anchor="right"
         open={drawerOpen}
@@ -234,7 +230,6 @@ const LandingNavbar = () => {
             p: 2.5,
           }}
         >
-          {/* Drawer Header */}
           <Box
             sx={{
               display: "flex",
@@ -307,7 +302,6 @@ const LandingNavbar = () => {
 
           <Divider sx={{ borderColor: "#e2e8f0", mb: 2 }} />
 
-          {/* Navigation Links */}
           <List disablePadding>
             {NAV_ITEMS.map((item) => (
               <ListItem key={item.path} disablePadding sx={{ mb: 0.5 }}>
@@ -337,9 +331,7 @@ const LandingNavbar = () => {
                       },
                     }}
                   />
-                  <ArrowForward
-                    sx={{ fontSize: 17, color: "#94a3b8" }}
-                  />
+                  <ArrowForward sx={{ fontSize: 17, color: "#94a3b8" }} />
                 </ListItemButton>
               </ListItem>
             ))}
@@ -347,7 +339,6 @@ const LandingNavbar = () => {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          {/* Sign In */}
           <Box
             sx={{
               mt: 3,

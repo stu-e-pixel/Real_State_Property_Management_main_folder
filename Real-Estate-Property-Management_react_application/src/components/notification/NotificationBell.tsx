@@ -45,10 +45,6 @@ import {
 } from "../../features/notification/notificationSlice";
 import type { AppNotification } from "../../typescript/type/notification.types";
 
-// =====================================================
-// META MAP
-// =====================================================
-
 const getNotificationMeta = (type: string) => {
   const map: Record<string, { icon: React.ReactNode; color: string }> = {
     inquiry_created: { icon: <Email />, color: "#8b5cf6" },
@@ -81,10 +77,6 @@ const getNotificationMeta = (type: string) => {
   return map[type] || { icon: <Info />, color: "#6b7280" };
 };
 
-// =====================================================
-// TIME FORMATTER
-// =====================================================
-
 const formatTime = (dateStr: string): string => {
   const date = new Date(dateStr);
   const now = new Date();
@@ -101,35 +93,23 @@ const formatTime = (dateStr: string): string => {
   return date.toLocaleDateString();
 };
 
-// =====================================================
-// COMPONENT
-// =====================================================
-
 const NotificationBell: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { notifications, unreadCount, loading } = useAppSelector(
-    (state) => state.notification
+    (state) => state.notification,
   );
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
 
-  // =====================================================
-  // FETCH WHEN MENU OPENS
-  // =====================================================
-
   useEffect(() => {
     if (open) {
       dispatch(fetchNotifications({ page: 1, limit: 20 }));
     }
   }, [open, dispatch]);
-
-  // =====================================================
-  // HANDLERS
-  // =====================================================
 
   const handleOpen = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
@@ -155,10 +135,7 @@ const NotificationBell: React.FC = () => {
     dispatch(markAllAsRead());
   };
 
-  const handleDelete = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    id: string
-  ) => {
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     e.stopPropagation();
     dispatch(deleteNotification(id));
   };
@@ -196,7 +173,6 @@ const NotificationBell: React.FC = () => {
           },
         }}
       >
-        {/* HEADER */}
         <Box
           sx={{
             p: 2,
@@ -208,9 +184,7 @@ const NotificationBell: React.FC = () => {
           }}
         >
           <Box>
-            <Typography>
-              Notifications
-            </Typography>
+            <Typography>Notifications</Typography>
             {unreadCount > 0 && (
               <Box
                 sx={{
@@ -251,13 +225,12 @@ const NotificationBell: React.FC = () => {
           </Stack>
         </Box>
 
-        {/* BODY */}
         {loading && notifications.length === 0 ? (
           <Box>
             <CircularProgress size={32} />
           </Box>
         ) : notifications.length === 0 ? (
-          <Box >
+          <Box>
             <NotificationsIcon
               sx={{ fontSize: 48, color: "text.disabled", mb: 1 }}
             />
@@ -315,14 +288,8 @@ const NotificationBell: React.FC = () => {
                   <ListItemText
                     sx={{ pr: 3 }}
                     primary={
-                      <Box
-                        
-                      >
-                        <Typography
-                          
-                        >
-                          {n.title}
-                        </Typography>
+                      <Box>
+                        <Typography>{n.title}</Typography>
                         {!n.isRead && (
                           <Box
                             sx={{
@@ -363,7 +330,6 @@ const NotificationBell: React.FC = () => {
           </List>
         )}
 
-        {/* FOOTER */}
         {notifications.length > 0 && (
           <>
             <Divider />

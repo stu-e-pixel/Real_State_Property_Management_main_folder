@@ -88,7 +88,7 @@ const ForgotPassword: React.FC = () => {
           </Typography>
         </Box>
 
-        {/* Form */}
+       
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormInput<ForgotPasswordFormValues>
             name="email"
@@ -112,7 +112,7 @@ const ForgotPassword: React.FC = () => {
           </LoadingButton>
         </form>
 
-        {/* Back to Login */}
+       
         <Typography
           variant="body2"
           sx={{

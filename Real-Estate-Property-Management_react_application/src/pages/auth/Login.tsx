@@ -31,21 +31,21 @@ const Login: React.FC = () => {
     },
   });
 
-  // Redirect if already authenticated
+
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/admin/dashboard");
     }
   }, [isAuthenticated, navigate]);
 
-  // Clear auth error when leaving the page
+ 
   useEffect(() => {
     return () => {
       dispatch(clearError());
     };
   }, [dispatch]);
 
-  // Login submit
+
   const onSubmit = async (data: LoginFormValues): Promise<void> => {
     const result = await dispatch(login(data)).unwrap();
     
@@ -91,7 +91,7 @@ const Login: React.FC = () => {
       boxShadow: "0 24px 70px rgba(15, 23, 42, 0.12)",
     }}
   >
-    {/* LEFT BRAND PANEL */}
+   
     <Box
       sx={{
         width: { xs: "100%", md: "42%" },
@@ -107,7 +107,7 @@ const Login: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      {/* Decorative circles */}
+     
       <Box
         sx={{
           position: "absolute",
@@ -132,7 +132,7 @@ const Login: React.FC = () => {
         }}
       />
 
-      {/* Brand */}
+      
       <Box sx={{ position: "relative", zIndex: 1 }}>
         <Box
           sx={{
@@ -198,7 +198,7 @@ const Login: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* Benefits */}
+     
       <Box sx={{ position: "relative", zIndex: 1 }}>
         {[
           "Explore properties that match your needs",
@@ -251,7 +251,7 @@ const Login: React.FC = () => {
       </Box>
     </Box>
 
-    {/* RIGHT LOGIN PANEL */}
+    
     <Box
       sx={{
         flex: 1,
@@ -262,7 +262,7 @@ const Login: React.FC = () => {
         justifyContent: "center",
       }}
     >
-      {/* Header */}
+     
       <Box sx={{ mb: 4 }}>
         <Box
           sx={{
@@ -348,7 +348,7 @@ const Login: React.FC = () => {
             type="password"
           />
 
-          {/* Forgot Password */}
+          
           <Box
             sx={{
               display: "flex",
@@ -374,7 +374,7 @@ const Login: React.FC = () => {
             </Link>
           </Box>
 
-          {/* Login Button */}
+          
           <LoadingButton
             type="submit"
             fullWidth
@@ -407,7 +407,7 @@ const Login: React.FC = () => {
         </Box>
       </Box>
 
-      {/* Registration Divider */}
+      
       <Box
         sx={{
           display: "flex",
@@ -433,7 +433,7 @@ const Login: React.FC = () => {
         <Divider sx={{ flex: 1, borderColor: "#e2e8f0" }} />
       </Box>
 
-      {/* Customer Registration */}
+      
       <Box
         sx={{
           p: 2,
@@ -488,7 +488,7 @@ const Login: React.FC = () => {
         </Button>
       </Box>
 
-      {/* Agent and Owner Registration */}
+      
       <Box sx={{ mt: 3 }}>
         <Typography
           component="p"
@@ -548,7 +548,7 @@ const Login: React.FC = () => {
         </Box>
       </Box>
 
-      {/* Footer */}
+  
       <Typography
         component="p"
         sx={{

@@ -40,9 +40,7 @@ import { getSaleOfferByOwner } from "../../features/saleOffer/saleOfferSlice";
 import { getOwnerReviews } from "../../features/review/reviewSlice";
 import { IndianRupee } from "lucide-react";
 
-// =====================================================
-// TYPES
-// =====================================================
+
 
 interface StatCardProps {
   icon: React.ReactNode;
@@ -60,9 +58,7 @@ interface QuickAction {
   color: string;
 }
 
-// =====================================================
-// HELPERS
-// =====================================================
+
 
 const formatDate = (date: string | Date | undefined) => {
   if (!date) return "—";
@@ -88,9 +84,7 @@ const getInitial = (name?: string) => {
   return name?.trim()?.charAt(0)?.toUpperCase() || "?";
 };
 
-// =====================================================
-// STAT CARD
-// =====================================================
+
 
 const StatCard: React.FC<StatCardProps> = ({
   icon,
@@ -213,9 +207,7 @@ const StatCard: React.FC<StatCardProps> = ({
   );
 };
 
-// =====================================================
-// SECTION HEADER
-// =====================================================
+
 
 interface SectionHeaderProps {
   icon: React.ReactNode;
@@ -282,9 +274,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   );
 };
 
-// =====================================================
-// EMPTY STATE
-// =====================================================
+
 
 const EmptyState: React.FC<{ message: string }> = ({ message }) => (
   <Box
@@ -303,9 +293,7 @@ const EmptyState: React.FC<{ message: string }> = ({ message }) => (
   </Box>
 );
 
-// =====================================================
-// OWNER DASHBOARD
-// =====================================================
+
 
 const OwnerDashboard: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -323,7 +311,7 @@ const OwnerDashboard: React.FC = () => {
   const { saleOffers } = useAppSelector((state) => state.saleOffer);
   const { reviews } = useAppSelector((state) => state.review);
 
-  // Fetch dashboard data
+
   useEffect(() => {
     dispatch(getOwnerProperties());
     dispatch(getOwnerInquiries());
@@ -332,14 +320,14 @@ const OwnerDashboard: React.FC = () => {
     dispatch(getOwnerReviews());
   }, [dispatch]);
 
-  // Safe array values
+ 
   const propertyList = properties ?? [];
   const inquiryList = inquiries ?? [];
   const appointmentList = appointments ?? [];
   const offerList = saleOffers ?? [];
   const reviewList = reviews ?? [];
 
-  // Property statistics
+  
   const totalProperties = propertyList.length;
 
   const approvedProperties = propertyList.filter(
@@ -364,21 +352,21 @@ const OwnerDashboard: React.FC = () => {
       ? `₹${(totalValue / 1_000_000).toFixed(2)}M`
       : "₹0";
 
-  // Inquiry statistics
+ 
   const totalInquiries = inquiryList.length;
 
   const pendingInquiries = inquiryList.filter(
     (inquiry) => inquiry.status === "pending"
   ).length;
 
-  // Appointment statistics
+
   const totalAppointments = appointmentList.length;
 
   const activeAppointments = appointmentList.filter((appointment) =>
     ["pending", "confirmed", "rescheduled"].includes(appointment.status)
   ).length;
 
-  // Offer statistics
+ 
   const totalOffers = offerList.length;
 
   const activeOffers = offerList.filter((offer) =>
@@ -389,7 +377,7 @@ const OwnerDashboard: React.FC = () => {
     (offer) => offer.status === "accepted"
   ).length;
 
-  // Review statistics
+ 
   const totalReviews = reviewList.length;
 
   const avgRating =
@@ -400,7 +388,7 @@ const OwnerDashboard: React.FC = () => {
         ).toFixed(1)
       : "—";
 
-  // Recent activity
+
   const recentInquiries = [...inquiryList]
     .sort(
       (a, b) =>
@@ -417,7 +405,7 @@ const OwnerDashboard: React.FC = () => {
     )
     .slice(0, 3);
 
-  // Dashboard cards
+ 
   const primaryStats: StatCardProps[] = [
     {
       icon: <Apartment />,
@@ -527,7 +515,7 @@ const OwnerDashboard: React.FC = () => {
     },
   ];
 
-  // Render
+ 
   return (
     <Box
       sx={{
@@ -537,7 +525,7 @@ const OwnerDashboard: React.FC = () => {
         pb: 4,
       }}
     >
-      {/* WELCOME BANNER */}
+    
       <Paper
         elevation={0}
         sx={{
@@ -551,7 +539,7 @@ const OwnerDashboard: React.FC = () => {
             "linear-gradient(125deg, #0f172a 0%, #134e4a 62%, #047857 100%)",
         }}
       >
-        {/* Decorative circles */}
+       
         <Box
           sx={{
             position: "absolute",
@@ -745,7 +733,7 @@ const OwnerDashboard: React.FC = () => {
         </Box>
       </Paper>
 
-      {/* PRIMARY STATISTICS */}
+     
       <Box sx={{ mb: 3 }}>
         <Box sx={{ mb: 2 }}>
           <Typography
@@ -776,7 +764,7 @@ const OwnerDashboard: React.FC = () => {
         </Box>
       </Box>
 
-      {/* SECONDARY STATISTICS */}
+     
       <Box sx={{ mb: 4 }}>
         <Box sx={{ mb: 2 }}>
           <Typography
@@ -807,7 +795,7 @@ const OwnerDashboard: React.FC = () => {
         </Box>
       </Box>
 
-      {/* RECENT ACTIVITY */}
+    
       <Box
         sx={{
           display: "grid",
@@ -819,7 +807,7 @@ const OwnerDashboard: React.FC = () => {
           alignItems: "stretch",
         }}
       >
-        {/* RECENT INQUIRIES */}
+     
         <Paper
           elevation={0}
           sx={{
@@ -951,7 +939,7 @@ const OwnerDashboard: React.FC = () => {
           )}
         </Paper>
 
-        {/* RECENT SALE OFFERS */}
+       
         <Paper
           elevation={0}
           sx={{
@@ -1082,7 +1070,7 @@ const OwnerDashboard: React.FC = () => {
         </Paper>
       </Box>
 
-      {/* QUICK ACTIONS */}
+    
       <Paper
         elevation={0}
         sx={{

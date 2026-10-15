@@ -98,7 +98,7 @@ const MyLeases: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* Header */}
+        
         <Box
           sx={{
             display: "flex",
@@ -137,7 +137,7 @@ const MyLeases: React.FC = () => {
           }}
         />
 
-        {/* Tabs */}
+
         <Tabs
           value={tab}
           onChange={(_e, value) => setTab(value)}
@@ -156,7 +156,7 @@ const MyLeases: React.FC = () => {
           <Tab value="terminated" label={`Terminated (${counts.terminated})`} />
         </Tabs>
 
-        {/* Loading */}
+       
         {loading && leases.length === 0 ? (
           <Box
             sx={{
@@ -186,7 +186,7 @@ const MyLeases: React.FC = () => {
             ))}
           </Box>
         ) : filtered.length === 0 ? (
-          /* Empty state */
+          
           <Box
             sx={{
               textAlign: "center",
@@ -206,7 +206,7 @@ const MyLeases: React.FC = () => {
             </Typography>
           </Box>
         ) : (
-          /* Lease cards */
+          
           <Box
             sx={{
               display: "flex",
@@ -237,7 +237,7 @@ const MyLeases: React.FC = () => {
                       flex: 1,
                     }}
                   >
-                    {/* Property header */}
+                    
                     <Box
                       sx={{
                         display: "flex",
@@ -301,7 +301,7 @@ const MyLeases: React.FC = () => {
                       />
                     </Box>
 
-                    {/* Lease information */}
+                   
                     <Box
                       sx={{
                         display: "flex",
@@ -358,7 +358,7 @@ const MyLeases: React.FC = () => {
                       </Box>
                     </Box>
 
-                    {/* Termination reason */}
+                    
                     {l.terminationReason && (
                       <Alert
                         severity="error"
@@ -398,7 +398,7 @@ const MyLeases: React.FC = () => {
         )}
       </Paper>
 
-      {/* ================= VIEW DIALOG ================= */}
+      
       <Dialog
         open={viewOpen}
         onClose={closeView}
@@ -438,7 +438,7 @@ const MyLeases: React.FC = () => {
                 gap: 2,
               }}
             >
-              {/* Property */}
+              
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Property
@@ -456,7 +456,7 @@ const MyLeases: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* Period */}
+              
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Period
@@ -468,7 +468,7 @@ const MyLeases: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* Monthly rent */}
+              
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Monthly Rent
@@ -479,7 +479,7 @@ const MyLeases: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* Security deposit */}
+              
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Security Deposit
@@ -490,7 +490,7 @@ const MyLeases: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* Status */}
+              
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Status
@@ -538,7 +538,7 @@ const MyLeases: React.FC = () => {
                 </Box>
               )}
 
-              {/* Termination reason */}
+              
               {lease.terminationReason && (
                 <Alert severity="error">
                   <b>Termination reason:</b> {lease.terminationReason}

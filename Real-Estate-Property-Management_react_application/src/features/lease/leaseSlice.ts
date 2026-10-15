@@ -23,10 +23,6 @@ const initialState: LeaseState = {
   error: null,
 };
 
-// =====================================================
-// THUNKS
-// =====================================================
-
 export const createLease = createAsyncThunk<
   LeaseMutationResponse,
   CreateLeaseData,
@@ -178,18 +174,10 @@ export const deleteLease = createAsyncThunk<
   }
 });
 
-// =====================================================
-// HELPERS
-// =====================================================
-
 const replaceLease = (state: LeaseState, updated: Lease): void => {
   const index = state.leases.findIndex((l) => l._id === updated._id);
   if (index !== -1) state.leases[index] = updated;
 };
-
-// =====================================================
-// SLICE
-// =====================================================
 
 const leaseSlice = createSlice({
   name: "lease",
@@ -204,7 +192,7 @@ const leaseSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // CREATE
+
       .addCase(createLease.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -221,7 +209,6 @@ const leaseSlice = createSlice({
         toast.error(action.payload ?? "Failed to create lease");
       })
 
-      // ALL
       .addCase(getAllLeases.pending, (state) => {
         state.loading = true;
       })
@@ -234,7 +221,6 @@ const leaseSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch leases");
       })
 
-      // MY
       .addCase(getMyLeases.pending, (state) => {
         state.loading = true;
       })
@@ -247,14 +233,12 @@ const leaseSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch your leases");
       })
 
-      // OWNER (aggregated)
       .addCase(getOwnerLeases.pending, (state) => {
         state.loading = true;
       })
       .addCase(getOwnerLeases.fulfilled, (state, action) => {
         state.loading = false;
 
-        // ✅ Transform AggregatedLease → Lease shape
         const transformed: Lease[] = (action.payload.data ?? []).map(
           (agg: any) => ({
             _id: agg._id,
@@ -283,7 +267,6 @@ const leaseSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch owner leases");
       })
 
-      // AGENT
       .addCase(getAgentLeases.pending, (state) => {
         state.loading = true;
       })
@@ -296,7 +279,6 @@ const leaseSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch agent leases");
       })
 
-      // BY ID
       .addCase(getLeaseById.pending, (state) => {
         state.loading = true;
       })
@@ -309,7 +291,6 @@ const leaseSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch lease");
       })
 
-      // UPDATE
       .addCase(updateLease.fulfilled, (state, action) => {
         const updated = action.payload.data ?? action.payload.lease;
         if (updated) replaceLease(state, updated);
@@ -320,7 +301,6 @@ const leaseSlice = createSlice({
         toast.error(action.payload ?? "Failed to update lease");
       })
 
-      // TERMINATE
       .addCase(terminateLease.fulfilled, (state, action) => {
         const updated = action.payload.data ?? action.payload.lease;
         if (updated) replaceLease(state, updated);
@@ -331,7 +311,6 @@ const leaseSlice = createSlice({
         toast.error(action.payload ?? "Failed to terminate lease");
       })
 
-      // EXPIRE
       .addCase(expireLease.fulfilled, (state, action) => {
         const updated = action.payload.data ?? action.payload.lease;
         if (updated) replaceLease(state, updated);
@@ -342,7 +321,6 @@ const leaseSlice = createSlice({
         toast.error(action.payload ?? "Failed to expire lease");
       })
 
-      // DELETE
       .addCase(deleteLease.fulfilled, (state, action) => {
         state.leases = state.leases.filter((l) => l._id !== action.payload);
         toast.success("Lease deleted successfully!");

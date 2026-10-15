@@ -26,13 +26,7 @@ import {
   LinearProgress,
   Tooltip,
 } from "@mui/material";
-import {
-  Search,
-  Refresh,
-  Visibility,
-  Close,
-  Home,
-} from "@mui/icons-material";
+import { Search, Refresh, Visibility, Close, Home } from "@mui/icons-material";
 
 import MainLayout from "../../components/layout/MainLayout";
 import {
@@ -44,10 +38,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import type { SaleTransaction } from "../../typescript/type/saleTransaction.types";
 import type { Property } from "../../typescript/type/property.types";
 import type { PopulatedUserLite } from "../../typescript/type/inquiry.types";
-
-// =====================================================
-// CONFIG
-// =====================================================
 
 const TX_STATUS_COLORS: Record<
   string,
@@ -74,41 +64,28 @@ const PAYMENT_STATUS_COLORS: Record<
 const formatCurrency = (amount: number): string =>
   `₹${(amount ?? 0).toLocaleString()}`;
 
-const formatStatus = (status: string): string =>
-  status.replace(/_/g, " ");
-
-// =====================================================
-// TYPE GUARDS
-// =====================================================
+const formatStatus = (status: string): string => status.replace(/_/g, " ");
 
 const isPopulatedProperty = (
-  value: Property | string | undefined
+  value: Property | string | undefined,
 ): value is Property =>
   !!value && typeof value === "object" && "title" in value;
 
 const isPopulatedUser = (
-  value: PopulatedUserLite | string | null | undefined
+  value: PopulatedUserLite | string | null | undefined,
 ): value is PopulatedUserLite =>
   !!value && typeof value === "object" && "name" in value;
-
-// =====================================================
-// PAGE
-// =====================================================
 
 const AdminSaleTransactions = () => {
   const dispatch = useAppDispatch();
 
   const { transactions, transaction, loading } = useAppSelector(
-    (state) => state.saleTransaction
+    (state) => state.saleTransaction,
   );
 
   const [search, setSearch] = useState("");
   const [tab, setTab] = useState("all");
   const [viewOpen, setViewOpen] = useState(false);
-
-  // =====================================================
-  // FETCH
-  // =====================================================
 
   useEffect(() => {
     dispatch(getAllSaleTransactionsAdmin());
@@ -122,10 +99,6 @@ const AdminSaleTransactions = () => {
     dispatch(getAllSaleTransactionsAdmin());
   };
 
-  // =====================================================
-  // VIEW
-  // =====================================================
-
   const handleView = async (id: string): Promise<void> => {
     const result = await dispatch(getSaleTransactionById(id));
 
@@ -138,10 +111,6 @@ const AdminSaleTransactions = () => {
     setViewOpen(false);
     dispatch(clearSelectedTransaction());
   };
-
-  // =====================================================
-  // HELPERS
-  // =====================================================
 
   const getProperty = (tx: SaleTransaction): Property | null => {
     if (isPopulatedProperty(tx.property)) {
@@ -175,18 +144,12 @@ const AdminSaleTransactions = () => {
     return tx.agentDetails ?? null;
   };
 
-  // =====================================================
-  // FILTER
-  // =====================================================
-
   const searchTerm = search.trim().toLowerCase();
 
   const tabFiltered =
     tab === "all"
       ? transactions
-      : transactions.filter(
-          (tx) => tx.transactionStatus === tab
-        );
+      : transactions.filter((tx) => tx.transactionStatus === tab);
 
   const filtered = tabFiltered.filter((tx) => {
     if (!searchTerm) return true;
@@ -208,32 +171,21 @@ const AdminSaleTransactions = () => {
     );
   });
 
-  // =====================================================
-  // COUNTS
-  // =====================================================
-
   const counts = {
     all: transactions.length,
-    initiated: transactions.filter(
-      (tx) => tx.transactionStatus === "initiated"
-    ).length,
+    initiated: transactions.filter((tx) => tx.transactionStatus === "initiated")
+      .length,
     agreement_signed: transactions.filter(
-      (tx) => tx.transactionStatus === "agreement_signed"
+      (tx) => tx.transactionStatus === "agreement_signed",
     ).length,
     payment_pending: transactions.filter(
-      (tx) => tx.transactionStatus === "payment_pending"
+      (tx) => tx.transactionStatus === "payment_pending",
     ).length,
-    completed: transactions.filter(
-      (tx) => tx.transactionStatus === "completed"
-    ).length,
-    cancelled: transactions.filter(
-      (tx) => tx.transactionStatus === "cancelled"
-    ).length,
+    completed: transactions.filter((tx) => tx.transactionStatus === "completed")
+      .length,
+    cancelled: transactions.filter((tx) => tx.transactionStatus === "cancelled")
+      .length,
   };
-
-  // =====================================================
-  // RENDER
-  // =====================================================
 
   return (
     <MainLayout>
@@ -243,8 +195,6 @@ const AdminSaleTransactions = () => {
           borderRadius: 3,
         }}
       >
-        {/* HEADER */}
-
         <Box
           sx={{
             display: "flex",
@@ -295,8 +245,6 @@ const AdminSaleTransactions = () => {
 
         <Divider sx={{ mb: 2 }} />
 
-        {/* TABS */}
-
         <Tabs
           value={tab}
           onChange={(_event, value: string) => setTab(value)}
@@ -305,10 +253,7 @@ const AdminSaleTransactions = () => {
           sx={{ mb: 3 }}
         >
           <Tab value="all" label={`All (${counts.all})`} />
-          <Tab
-            value="initiated"
-            label={`Initiated (${counts.initiated})`}
-          />
+          <Tab value="initiated" label={`Initiated (${counts.initiated})`} />
           <Tab
             value="agreement_signed"
             label={`Agreement (${counts.agreement_signed})`}
@@ -317,17 +262,9 @@ const AdminSaleTransactions = () => {
             value="payment_pending"
             label={`Payment (${counts.payment_pending})`}
           />
-          <Tab
-            value="completed"
-            label={`Completed (${counts.completed})`}
-          />
-          <Tab
-            value="cancelled"
-            label={`Cancelled (${counts.cancelled})`}
-          />
+          <Tab value="completed" label={`Completed (${counts.completed})`} />
+          <Tab value="cancelled" label={`Cancelled (${counts.cancelled})`} />
         </Tabs>
-
-        {/* SEARCH AND REFRESH */}
 
         <Box
           sx={{
@@ -366,8 +303,6 @@ const AdminSaleTransactions = () => {
             </span>
           </Tooltip>
         </Box>
-
-        {/* CONTENT */}
 
         {loading && transactions.length === 0 ? (
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
@@ -417,18 +352,13 @@ const AdminSaleTransactions = () => {
                   const progressPercent =
                     tx.agreedPrice > 0
                       ? Math.min(
-                          Math.max(
-                            (tx.amountPaid / tx.agreedPrice) * 100,
-                            0
-                          ),
-                          100
+                          Math.max((tx.amountPaid / tx.agreedPrice) * 100, 0),
+                          100,
                         )
                       : 0;
 
                   return (
                     <TableRow key={tx._id} hover>
-                      {/* PROPERTY */}
-
                       <TableCell>
                         <Box
                           sx={{
@@ -455,8 +385,6 @@ const AdminSaleTransactions = () => {
                           </Typography>
                         </Box>
                       </TableCell>
-
-                      {/* BUYER */}
 
                       <TableCell>
                         {buyer ? (
@@ -488,8 +416,6 @@ const AdminSaleTransactions = () => {
                         </Typography>
                       </TableCell>
 
-                      {/* AGENT */}
-
                       <TableCell>
                         {agent ? (
                           <Chip
@@ -499,27 +425,17 @@ const AdminSaleTransactions = () => {
                             variant="outlined"
                           />
                         ) : (
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                          >
+                          <Typography variant="caption" color="text.secondary">
                             Direct (no agent)
                           </Typography>
                         )}
                       </TableCell>
 
-                      {/* AGREED PRICE */}
-
                       <TableCell>
-                        <Typography
-                          variant="body2"
-                          sx={{ fontWeight: 700 }}
-                        >
+                        <Typography variant="body2" sx={{ fontWeight: 700 }}>
                           {formatCurrency(tx.agreedPrice)}
                         </Typography>
                       </TableCell>
-
-                      {/* PAYMENT */}
 
                       <TableCell>
                         <Box
@@ -548,29 +464,21 @@ const AdminSaleTransactions = () => {
                             }}
                           />
 
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                          >
+                          <Typography variant="caption" color="text.secondary">
                             {formatCurrency(tx.amountPaid)} paid
                           </Typography>
                         </Box>
                       </TableCell>
 
-                      {/* TRANSACTION STATUS */}
-
                       <TableCell>
                         <Chip
                           label={formatStatus(tx.transactionStatus)}
                           color={
-                            TX_STATUS_COLORS[tx.transactionStatus] ??
-                            "default"
+                            TX_STATUS_COLORS[tx.transactionStatus] ?? "default"
                           }
                           size="small"
                         />
                       </TableCell>
-
-                      {/* ACTIONS */}
 
                       <TableCell align="center">
                         <Tooltip title="View details">
@@ -593,8 +501,6 @@ const AdminSaleTransactions = () => {
         )}
       </Paper>
 
-      {/* VIEW DIALOG */}
-
       <Dialog
         open={viewOpen}
         onClose={closeView}
@@ -614,7 +520,6 @@ const AdminSaleTransactions = () => {
           }}
         >
           Transaction Details
-
           <IconButton onClick={closeView} size="small">
             <Close />
           </IconButton>
@@ -627,8 +532,6 @@ const AdminSaleTransactions = () => {
             <Skeleton variant="rounded" height={300} />
           ) : transaction ? (
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
-              {/* PROPERTY */}
-
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Property
@@ -651,10 +554,7 @@ const AdminSaleTransactions = () => {
                   </Avatar>
 
                   <Box>
-                    <Typography
-                      variant="body1"
-                      sx={{ fontWeight: 700 }}
-                    >
+                    <Typography variant="body1" sx={{ fontWeight: 700 }}>
                       {getProperty(transaction)?.title ?? "Property"}
                     </Typography>
 
@@ -667,8 +567,6 @@ const AdminSaleTransactions = () => {
               </Box>
 
               <Divider />
-
-              {/* PARTICIPANTS */}
 
               <Box
                 sx={{
@@ -699,17 +597,11 @@ const AdminSaleTransactions = () => {
                       </Avatar>
 
                       <Box>
-                        <Typography
-                          variant="body2"
-                          sx={{ fontWeight: 600 }}
-                        >
+                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
                           {getBuyer(transaction)?.name}
                         </Typography>
 
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                        >
+                        <Typography variant="caption" color="text.secondary">
                           {getBuyer(transaction)?.email}
                         </Typography>
                       </Box>
@@ -739,17 +631,11 @@ const AdminSaleTransactions = () => {
                       </Avatar>
 
                       <Box>
-                        <Typography
-                          variant="body2"
-                          sx={{ fontWeight: 600 }}
-                        >
+                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
                           {getOwner(transaction)?.name}
                         </Typography>
 
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                        >
+                        <Typography variant="caption" color="text.secondary">
                           {getOwner(transaction)?.email}
                         </Typography>
                       </Box>
@@ -779,17 +665,11 @@ const AdminSaleTransactions = () => {
                       </Avatar>
 
                       <Box>
-                        <Typography
-                          variant="body2"
-                          sx={{ fontWeight: 600 }}
-                        >
+                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
                           {getAgent(transaction)?.name}
                         </Typography>
 
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                        >
+                        <Typography variant="caption" color="text.secondary">
                           {getAgent(transaction)?.email}
                         </Typography>
                       </Box>
@@ -799,8 +679,6 @@ const AdminSaleTransactions = () => {
               </Box>
 
               <Divider />
-
-              {/* PAYMENT DETAILS */}
 
               <Box
                 sx={{
@@ -842,14 +720,12 @@ const AdminSaleTransactions = () => {
                     {formatCurrency(
                       Math.max(
                         transaction.agreedPrice - transaction.amountPaid,
-                        0
-                      )
+                        0,
+                      ),
                     )}
                   </Typography>
                 </Box>
               </Box>
-
-              {/* STATUSES */}
 
               <Box
                 sx={{
@@ -893,17 +769,13 @@ const AdminSaleTransactions = () => {
                 </Box>
               </Box>
 
-              {/* NOTES */}
-
               {transaction.notes && (
                 <Box>
                   <Typography variant="caption" color="text.secondary">
                     Notes
                   </Typography>
 
-                  <Typography variant="body2">
-                    {transaction.notes}
-                  </Typography>
+                  <Typography variant="body2">{transaction.notes}</Typography>
                 </Box>
               )}
             </Box>

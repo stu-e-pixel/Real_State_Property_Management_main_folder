@@ -635,7 +635,6 @@ const AdminDashboard: React.FC = () => {
         </Stack>
       </Paper>
 
-      {/* Platform overview */}
       <SectionTitle
         title="Platform overview"
         subtitle="A live snapshot of your real-estate platform."
@@ -658,7 +657,6 @@ const AdminDashboard: React.FC = () => {
         ))}
       </Box>
 
-      {/* Business metrics */}
       <SectionTitle
         title="Business insights"
         subtitle="Property portfolio and customer feedback at a glance."
@@ -709,7 +707,6 @@ const AdminDashboard: React.FC = () => {
         />
       </Box>
 
-      {/* Moderation queue */}
       <SectionTitle
         title="Moderation center"
         subtitle="Handle items that need your attention."
@@ -1025,7 +1022,6 @@ const AdminDashboard: React.FC = () => {
         </Paper>
       </Box>
 
-      {/* Quick actions */}
       <Paper elevation={0} sx={panelSx}>
         <SectionTitle
           title="Quick actions"

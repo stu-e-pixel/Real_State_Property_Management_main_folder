@@ -62,10 +62,6 @@ import type {
 
 import type { Property } from "../../typescript/type/property.types";
 
-// =====================================================
-// CONFIG
-// =====================================================
-
 const STATUS_COLORS: Record<
   string,
   "default" | "info" | "success" | "warning"
@@ -84,26 +80,18 @@ const STATUS_OPTIONS: { value: InquiryStatus; label: string }[] = [
 ];
 
 const isPopulatedProperty = (
-  val: Property | string | undefined
+  val: Property | string | undefined,
 ): val is Property => !!val && typeof val === "object" && "title" in val;
-
-// =====================================================
-// PROPS
-// =====================================================
 
 interface AgentInquiriesProps {
   mode: "agent" | "owner";
 }
 
-// =====================================================
-// COMPONENT
-// =====================================================
-
 const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
   const dispatch = useAppDispatch();
 
   const { inquiries, inquiry, loading } = useAppSelector(
-    (state) => state.inquiry
+    (state) => state.inquiry,
   );
 
   const [tab, setTab] = useState<string>("all");
@@ -118,8 +106,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
     },
   });
 
-  // ================= FETCH =================
-
   useEffect(() => {
     if (mode === "agent") {
       dispatch(getAgentInquiries());
@@ -132,8 +118,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
     };
   }, [dispatch, mode]);
 
-  // ================= VIEW =================
-
   const handleView = async (id: string): Promise<void> => {
     await dispatch(getInquiryById(id));
     setViewOpen(true);
@@ -143,8 +127,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
     setViewOpen(false);
     dispatch(clearSelectedInquiry());
   };
-
-  // ================= REPLY =================
 
   const openReply = (i: Inquiry): void => {
     setReplyTarget(i);
@@ -173,7 +155,7 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
       replyToInquiry({
         id: replyTarget._id,
         data,
-      })
+      }),
     );
 
     if (replyToInquiry.fulfilled.match(result)) {
@@ -185,23 +167,17 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
     }
   };
 
-  // ================= STATUS =================
-
   const handleStatusChange = (id: string, status: InquiryStatus): void => {
     dispatch(
       updateInquiryStatus({
         id,
         status,
-      })
+      }),
     );
   };
 
-  // ================= FILTER =================
-
   const filtered =
     tab === "all" ? inquiries : inquiries.filter((i) => i.status === tab);
-
-  // ================= COUNTS =================
 
   const counts = {
     all: inquiries.length,
@@ -215,8 +191,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
     closed: inquiries.filter((i) => i.status === "closed").length,
   };
 
-  // ================= HEADER TEXT =================
-
   const headerTitle =
     mode === "agent" ? "Customer Inquiries" : "Customer Inquiries";
 
@@ -224,8 +198,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
     mode === "agent"
       ? "Inquiries for the properties assigned to you"
       : "Inquiries for your properties without an assigned agent";
-
-  // ================= RENDER =================
 
   return (
     <MainLayout>
@@ -235,8 +207,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
-
         <Box
           sx={{
             display: "flex",
@@ -301,8 +271,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
           }}
         />
 
-        {/* ================= TABS ================= */}
-
         <Tabs
           value={tab}
           onChange={(_event, value) => setTab(value)}
@@ -322,8 +290,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
 
           <Tab value="closed" label={`Closed (${counts.closed})`} />
         </Tabs>
-
-        {/* ================= CONTENT ================= */}
 
         {loading && inquiries.length === 0 ? (
           <Loader message="Loading inquiries..." />
@@ -373,8 +339,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                       flex: 1,
                     }}
                   >
-                    {/* ================= CUSTOMER ================= */}
-
                     <Box
                       sx={{
                         display: "flex",
@@ -449,8 +413,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                       />
                     </Box>
 
-                    {/* ================= PROPERTY ================= */}
-
                     {isPopulatedProperty(i.property) && (
                       <Box
                         sx={{
@@ -476,8 +438,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                       </Box>
                     )}
 
-                    {/* ================= MESSAGE ================= */}
-
                     <Typography
                       variant="body2"
                       sx={{
@@ -492,8 +452,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                       {i.message}
                     </Typography>
 
-                    {/* ================= REPLY ================= */}
-
                     {i.reply && (
                       <Alert
                         severity="success"
@@ -506,8 +464,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                         </Typography>
                       </Alert>
                     )}
-
-                    {/* ================= DATE ================= */}
 
                     <Typography
                       variant="caption"
@@ -522,8 +478,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                   </CardContent>
 
                   <Divider />
-
-                  {/* ================= CARD ACTIONS ================= */}
 
                   <CardActions
                     sx={{
@@ -543,7 +497,7 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                         onChange={(event) =>
                           handleStatusChange(
                             i._id,
-                            event.target.value as InquiryStatus
+                            event.target.value as InquiryStatus,
                           )
                         }
                       >
@@ -590,10 +544,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
         )}
       </Paper>
 
-      {/* =====================================================
-          VIEW DIALOG
-      ===================================================== */}
-
       <Dialog open={viewOpen} onClose={closeView} maxWidth="sm" fullWidth>
         <DialogTitle
           sx={{
@@ -635,8 +585,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                 gap: 2,
               }}
             >
-              {/* From */}
-
               <Box>
                 <Typography
                   variant="caption"
@@ -656,8 +604,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                   {inquiry.name}
                 </Typography>
               </Box>
-
-              {/* Contact Information */}
 
               <Box
                 sx={{
@@ -711,8 +657,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                 )}
               </Box>
 
-              {/* Message */}
-
               <Box>
                 <Divider
                   sx={{
@@ -738,8 +682,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
                   {inquiry.message}
                 </Alert>
               </Box>
-
-              {/* Reply */}
 
               {inquiry.reply && (
                 <Box>
@@ -772,10 +714,6 @@ const AgentInquiries: React.FC<AgentInquiriesProps> = ({ mode }) => {
           <Button onClick={closeView}>Close</Button>
         </DialogActions>
       </Dialog>
-
-      {/* =====================================================
-          REPLY DIALOG
-      ===================================================== */}
 
       <Dialog open={replyOpen} onClose={closeReply} maxWidth="sm" fullWidth>
         <DialogTitle

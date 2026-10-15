@@ -6,9 +6,7 @@ const pagination  = require("../../utils/pagination");
 
 class AgentController  {
 
-  // =====================================================
-  // CREATE AGENT
-  // =====================================================
+  
 
   async createAgent(req, res) {
   try {
@@ -30,9 +28,7 @@ class AgentController  {
 
     const normalizedEmail = email.toLowerCase().trim();
 
-    // ==========================================
-    // 4. Check existing agent by email
-    // ==========================================
+   
 
     const existingAgent = await Agent.findOne({
       email: normalizedEmail,

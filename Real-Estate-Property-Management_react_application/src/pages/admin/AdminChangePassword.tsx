@@ -107,7 +107,7 @@ const AdminChangePassword: React.FC = () => {
             type="password"
           />
 
-          {/* Submit Button */}
+          
           <LoadingButton
             type="submit"
             variant="contained"

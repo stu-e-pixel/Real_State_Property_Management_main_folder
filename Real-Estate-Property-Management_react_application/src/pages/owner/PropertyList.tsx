@@ -68,18 +68,7 @@ const PropertyList: React.FC = () => {
   const isOwner = user?.role === "owner";
   const isAdmin = user?.role === "admin";
 
-  /*
-   * ============================================================
-   * FETCH DATA
-   * ============================================================
-   *
-   * useCallback keeps fetchData stable until its dependencies
-   * change.
-   *
-   * This fixes:
-   *
-   * "Cannot access variable before it is declared"
-   */
+  
   const fetchData = useCallback((): void => {
     dispatch(
       getAllProperties({
@@ -108,34 +97,20 @@ const PropertyList: React.FC = () => {
     filters.maxPrice,
   ]);
 
-  /*
-   * Fetch properties whenever pagination/search/filter
-   * dependencies change.
-   */
+  
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  /*
-   * ============================================================
-   * SEARCH
-   * ============================================================
-   */
+  
   const handleSearch = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    /*
-     * Changing page to 0 will cause useEffect to run again
-     * and fetch the data using the new page.
-     */
+   
     setPage(0);
   };
 
-  /*
-   * ============================================================
-   * ACTIONS
-   * ============================================================
-   */
+  
 
   const handleApprove = async (id: string): Promise<void> => {
     const result = await dispatch(approveProperty(id));
@@ -159,11 +134,7 @@ const PropertyList: React.FC = () => {
     }
   };
 
-  /*
-   * ============================================================
-   * VIEW DIALOG
-   * ============================================================
-   */
+  
 
   const openView = (property: Property): void => {
     setSelected(property);
@@ -175,11 +146,7 @@ const PropertyList: React.FC = () => {
     setSelected(null);
   };
 
-  /*
-   * ============================================================
-   * UI
-   * ============================================================
-   */
+  
 
   return (
     <MainLayout>
@@ -189,7 +156,7 @@ const PropertyList: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
+       
 
         <Box
           sx={{
@@ -237,7 +204,7 @@ const PropertyList: React.FC = () => {
           )}
         </Box>
 
-        {/* ================= FILTERS ================= */}
+      
 
         <Box
           sx={{
@@ -311,7 +278,7 @@ const PropertyList: React.FC = () => {
           </Button>
         </Box>
 
-        {/* ================= PROPERTY LIST ================= */}
+      
 
         {loading ? (
           <Loader message="Loading properties..." />
@@ -379,7 +346,7 @@ const PropertyList: React.FC = () => {
                       flexGrow: 1,
                     }}
                   >
-                    {/* PURPOSE + APPROVAL STATUS */}
+                   
 
                     <Box
                       sx={{
@@ -411,7 +378,7 @@ const PropertyList: React.FC = () => {
                       />
                     </Box>
 
-                    {/* TITLE */}
+                  
 
                     <Typography
                       variant="h6"
@@ -423,7 +390,7 @@ const PropertyList: React.FC = () => {
                       {property.title}
                     </Typography>
 
-                    {/* DESCRIPTION */}
+                 
 
                     <Typography
                       variant="body2"
@@ -440,7 +407,7 @@ const PropertyList: React.FC = () => {
                       {property.description}
                     </Typography>
 
-                    {/* PRICE */}
+                   
 
                     <Typography
                       variant="h6"
@@ -452,7 +419,7 @@ const PropertyList: React.FC = () => {
                       ₹{property.price.toLocaleString()}
                     </Typography>
 
-                    {/* PROPERTY FEATURES */}
+                   
 
                     <Box
                       sx={{
@@ -506,7 +473,7 @@ const PropertyList: React.FC = () => {
                       </Box>
                     </Box>
 
-                    {/* LOCATION */}
+                    
 
                     <Box
                       sx={{
@@ -532,7 +499,7 @@ const PropertyList: React.FC = () => {
 
                   <Divider />
 
-                  {/* ACTIONS */}
+                  
 
                   <CardActions
                     sx={{
@@ -556,7 +523,7 @@ const PropertyList: React.FC = () => {
                         gap: 0.5,
                       }}
                     >
-                      {/* ADMIN APPROVE */}
+                      
 
                       {isAdmin && property.approvalStatus === "Pending" && (
                         <Tooltip title="Approve">
@@ -570,7 +537,7 @@ const PropertyList: React.FC = () => {
                         </Tooltip>
                       )}
 
-                      {/* OWNER ACTIONS */}
+                      
 
                       {isOwner && (
                         <>
@@ -603,7 +570,7 @@ const PropertyList: React.FC = () => {
           </Box>
         )}
 
-        {/* ================= PAGINATION ================= */}
+        
 
         {pagination && (
           <TablePagination
@@ -621,9 +588,7 @@ const PropertyList: React.FC = () => {
         )}
       </Paper>
 
-      {/* ============================================================
-          VIEW DIALOG
-          ============================================================ */}
+  
 
       <Dialog open={viewOpen} onClose={closeView} maxWidth="md" fullWidth>
         {selected && (
@@ -652,7 +617,7 @@ const PropertyList: React.FC = () => {
             <Divider />
 
             <DialogContent>
-              {/* IMAGES */}
+
 
               {selected.images?.length > 0 && (
                 <Box
@@ -682,7 +647,7 @@ const PropertyList: React.FC = () => {
                 </Box>
               )}
 
-              {/* DESCRIPTION */}
+
 
               <Box
                 sx={{
@@ -708,7 +673,6 @@ const PropertyList: React.FC = () => {
                 </Typography>
               </Box>
 
-              {/* DETAILS */}
 
               <Box
                 sx={{
@@ -812,7 +776,7 @@ const PropertyList: React.FC = () => {
                 </Box>
               </Box>
 
-              {/* AMENITIES */}
+            
 
               {selected.amenities?.length > 0 && (
                 <Box

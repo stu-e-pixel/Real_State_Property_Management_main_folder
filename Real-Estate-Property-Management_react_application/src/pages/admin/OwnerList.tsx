@@ -67,8 +67,6 @@ const OwnerList: React.FC = () => {
 
     setPage(0);
 
-    // If already on page 0, changing page won't trigger useEffect.
-    // So manually fetch the searched data.
     if (page === 0) {
       const params = {
         page: 1,
@@ -81,7 +79,6 @@ const OwnerList: React.FC = () => {
     }
   };
 
-  // Update owner status
   const handleStatusChange = (id: string, status: AccountStatus): void => {
     dispatch(
       updateOwnerStatus({
@@ -91,14 +88,12 @@ const OwnerList: React.FC = () => {
     );
   };
 
-  // Delete owner
   const handleDelete = (id: string): void => {
     if (window.confirm("Are you sure you want to delete this owner?")) {
       dispatch(deleteOwner(id));
     }
   };
 
-  // Format owner address
   const formatAddress = (owner: (typeof owners)[number]): string => {
     if (!owner.address) {
       return "N/A";
@@ -125,7 +120,6 @@ const OwnerList: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* Page Title */}
         <Typography
           variant="h5"
           sx={{
@@ -136,7 +130,6 @@ const OwnerList: React.FC = () => {
           Manage Owners
         </Typography>
 
-        {/* Search and Filter */}
         <Box
           sx={{
             display: "flex",
@@ -145,7 +138,6 @@ const OwnerList: React.FC = () => {
             flexWrap: "wrap",
           }}
         >
-          {/* Search */}
           <form onSubmit={handleSearch}>
             <TextField
               placeholder="Search by name, email, phone..."
@@ -158,7 +150,6 @@ const OwnerList: React.FC = () => {
             />
           </form>
 
-          {/* Status Filter */}
           <FormControl
             size="small"
             sx={{
@@ -183,12 +174,10 @@ const OwnerList: React.FC = () => {
           </FormControl>
         </Box>
 
-        {/* Loading */}
         {loading ? (
           <Loader message="Loading owners..." />
         ) : (
           <>
-            {/* Owner Table */}
             <TableContainer>
               <Table>
                 <TableHead>
@@ -219,7 +208,6 @@ const OwnerList: React.FC = () => {
                   ) : (
                     owners.map((owner) => (
                       <TableRow key={owner._id}>
-                        {/* Image */}
                         <TableCell>
                           <Avatar
                             src={owner.image || undefined}
@@ -233,19 +221,14 @@ const OwnerList: React.FC = () => {
                           </Avatar>
                         </TableCell>
 
-                        {/* Name */}
                         <TableCell>{owner.name}</TableCell>
 
-                        {/* Email */}
                         <TableCell>{owner.email}</TableCell>
 
-                        {/* Phone */}
                         <TableCell>{owner.phone}</TableCell>
 
-                        {/* Address */}
                         <TableCell>{formatAddress(owner)}</TableCell>
 
-                        {/* Status */}
                         <TableCell>
                           <Chip
                             label={owner.status}
@@ -260,9 +243,7 @@ const OwnerList: React.FC = () => {
                           />
                         </TableCell>
 
-                        {/* Actions */}
                         <TableCell align="center">
-                          {/* Activate */}
                           <IconButton
                             size="small"
                             color="success"
@@ -274,7 +255,6 @@ const OwnerList: React.FC = () => {
                             <CheckCircle />
                           </IconButton>
 
-                          {/* Deactivate */}
                           <IconButton
                             size="small"
                             color="warning"
@@ -286,7 +266,6 @@ const OwnerList: React.FC = () => {
                             <Block />
                           </IconButton>
 
-                          {/* Delete */}
                           <IconButton
                             size="small"
                             color="error"
@@ -303,7 +282,6 @@ const OwnerList: React.FC = () => {
               </Table>
             </TableContainer>
 
-            {/* Pagination */}
             <TablePagination
               component="div"
               count={pagination?.totalOwners || 0}

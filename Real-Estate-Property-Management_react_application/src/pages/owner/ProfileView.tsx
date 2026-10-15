@@ -31,9 +31,7 @@ import type { ObjectSchema } from "yup";
 import FormInput from "../../components/common/FormInput";
 import Loader from "../../components/common/Loader";
 
-/* =========================================================
-   TYPES
-========================================================= */
+
 
 interface ProfileField<T extends object> {
   name: keyof T;
@@ -48,31 +46,28 @@ interface ReadOnlyField<T extends object> {
 }
 
 interface ProfileViewProps<T extends object> {
-  /** The loaded profile object */
+ 
   profile: T | null;
 
-  /** Loading state */
   loading: boolean;
 
-  /** Yup schema for the update form */
+ 
   validationSchema: ObjectSchema<Record<string, unknown>>;
 
-  /** Called when user submits the form */
+  
   onSubmit: (data: T, imageFile: File | null) => void;
 
-  /** Which fields are editable */
+  
   editableFields?: ProfileField<T>[];
 
-  /** Optional extra read-only information */
+  
   readOnlyFields?: ReadOnlyField<T>[];
 
-  /** Role label */
+
   roleLabel?: string;
 }
 
-/* =========================================================
-   COMPONENT
-========================================================= */
+
 
 const ProfileView = <T extends object>({
   profile,
@@ -97,19 +92,12 @@ const ProfileView = <T extends object>({
 }: ProfileViewProps<T>) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  /*
-   * This state is ONLY for a newly selected image.
-   *
-   * We do NOT set it from useEffect.
-   * The existing profile image is derived directly from profile.
-   */
+  
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  /* =======================================================
-     REACT HOOK FORM
-  ======================================================= */
+ 
 
   const {
     control,
@@ -121,9 +109,7 @@ const ProfileView = <T extends object>({
     defaultValues: {},
   });
 
-  /* =======================================================
-     EXISTING PROFILE IMAGE
-  ======================================================= */
+
 
   const profileImage =
     profile &&
@@ -132,18 +118,9 @@ const ProfileView = <T extends object>({
       ? profile.image
       : null;
 
-  /*
-   * If user selected a new image:
-   *     show imagePreview
-   *
-   * Otherwise:
-   *     show existing profile image
-   */
+  
   const displayedImage = imagePreview ?? profileImage;
 
-  /* =======================================================
-     PREFILL FORM WHEN PROFILE CHANGES
-  ======================================================= */
 
   useEffect(() => {
     if (!profile) {
@@ -162,9 +139,7 @@ const ProfileView = <T extends object>({
     reset(defaults);
   }, [profile, reset, editableFields]);
 
-  /* =======================================================
-     IMAGE CHANGE
-  ======================================================= */
+ 
 
   const handleImageChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -187,15 +162,11 @@ const ProfileView = <T extends object>({
 
     reader.readAsDataURL(file);
 
-    /*
-     * Allow selecting the same file again.
-     */
+   
     e.target.value = "";
   };
 
-  /* =======================================================
-     SUBMIT
-  ======================================================= */
+ 
 
   const handleFormSubmit = (
     data: Record<string, unknown>,
@@ -207,9 +178,7 @@ const ProfileView = <T extends object>({
     setImagePreview(null);
   };
 
-  /* =======================================================
-     CANCEL
-  ======================================================= */
+ 
 
   const handleCancel = (): void => {
     setIsEditing(false);
@@ -232,17 +201,13 @@ const ProfileView = <T extends object>({
     reset(defaults);
   };
 
-  /* =======================================================
-     LOADING
-  ======================================================= */
+ 
 
   if (loading && !profile) {
     return <Loader message="Loading profile..." />;
   }
 
-  /* =======================================================
-     NO PROFILE
-  ======================================================= */
+ 
 
   if (!profile) {
     return (
@@ -265,9 +230,7 @@ const ProfileView = <T extends object>({
     );
   }
 
-  /* =======================================================
-     RENDER
-  ======================================================= */
+  
 
   return (
     <Paper
@@ -278,9 +241,7 @@ const ProfileView = <T extends object>({
         mx: "auto",
       }}
     >
-      {/* =================================================
-          HEADER
-      ================================================= */}
+     
 
       <Box
         sx={{
@@ -340,9 +301,7 @@ const ProfileView = <T extends object>({
         }}
       />
 
-      {/* =================================================
-          MAIN CONTENT
-      ================================================= */}
+      
 
       <Box
         sx={{
@@ -351,9 +310,7 @@ const ProfileView = <T extends object>({
           gap: 4,
         }}
       >
-        {/* =================================================
-            LEFT - AVATAR + PROFILE INFO
-        ================================================= */}
+        
 
         <Box
           sx={{
@@ -454,7 +411,7 @@ const ProfileView = <T extends object>({
 )}
             </Typography>
 
-            {/* Status Chips */}
+        
 
             <Stack
               direction="row"
@@ -498,9 +455,7 @@ const ProfileView = <T extends object>({
                 )}
             </Stack>
 
-            {/* =================================================
-                READ ONLY FIELDS
-            ================================================= */}
+         
 
             {readOnlyFields.length > 0 && (
               <Box
@@ -562,9 +517,7 @@ const ProfileView = <T extends object>({
           </Box>
         </Box>
 
-        {/* =================================================
-            RIGHT - FORM / DETAILS
-        ================================================= */}
+       
 
         <Box
           sx={{

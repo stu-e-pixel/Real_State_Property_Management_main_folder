@@ -45,12 +45,10 @@ const AdminProfile: React.FC = () => {
     },
   });
 
-  // Get profile
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
 
-  // Set form values when profile is available
   useEffect(() => {
     if (!profile) return;
 
@@ -60,7 +58,6 @@ const AdminProfile: React.FC = () => {
     });
   }, [profile, reset]);
 
-  // Create preview from selected image
   const imagePreview = imageFile
     ? URL.createObjectURL(imageFile)
     : profile?.image || undefined;
@@ -85,7 +82,6 @@ const AdminProfile: React.FC = () => {
     dispatch(updateProfile(payload));
   };
 
-  // Loading state
   if (loading && !profile) {
     return (
       <MainLayout>
@@ -102,7 +98,6 @@ const AdminProfile: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* Page Title */}
         <Typography
           variant="h5"
           sx={{
@@ -113,7 +108,6 @@ const AdminProfile: React.FC = () => {
           My Profile
         </Typography>
 
-        {/* Main Flex Container */}
         <Box
           sx={{
             display: "flex",
@@ -124,7 +118,6 @@ const AdminProfile: React.FC = () => {
             gap: 4,
           }}
         >
-          {/* Left Profile Section */}
           <Box
             sx={{
               width: {
@@ -136,7 +129,6 @@ const AdminProfile: React.FC = () => {
               alignItems: "center",
             }}
           >
-            {/* Profile Image */}
             <Avatar
               src={imagePreview}
               sx={{
@@ -149,7 +141,6 @@ const AdminProfile: React.FC = () => {
               {profile?.name?.charAt(0)}
             </Avatar>
 
-            {/* Hidden File Input */}
             <input
               accept="image/*"
               style={{ display: "none" }}
@@ -158,14 +149,12 @@ const AdminProfile: React.FC = () => {
               onChange={handleImageChange}
             />
 
-            {/* Upload Button */}
             <label htmlFor="profile-image-upload">
               <IconButton color="primary" component="span">
                 <PhotoCamera />
               </IconButton>
             </label>
 
-            {/* User Name */}
             <Typography
               variant="h6"
               sx={{
@@ -175,7 +164,6 @@ const AdminProfile: React.FC = () => {
               {profile?.name}
             </Typography>
 
-            {/* Email */}
             <Typography
               variant="body2"
               sx={{
@@ -185,7 +173,6 @@ const AdminProfile: React.FC = () => {
               {profile?.email}
             </Typography>
 
-            {/* User Information Chips */}
             <Box
               sx={{
                 mt: 2,
@@ -213,7 +200,6 @@ const AdminProfile: React.FC = () => {
             </Box>
           </Box>
 
-          {/* Right Form Section */}
           <Box
             sx={{
               width: {
@@ -229,7 +215,6 @@ const AdminProfile: React.FC = () => {
             />
 
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/* Form Inputs */}
               <Box
                 sx={{
                   display: "flex",
@@ -240,7 +225,6 @@ const AdminProfile: React.FC = () => {
                   gap: 2,
                 }}
               >
-                {/* Name */}
                 <Box
                   sx={{
                     width: {
@@ -256,7 +240,6 @@ const AdminProfile: React.FC = () => {
                   />
                 </Box>
 
-                {/* Phone */}
                 <Box
                   sx={{
                     width: {
@@ -273,7 +256,6 @@ const AdminProfile: React.FC = () => {
                 </Box>
               </Box>
 
-              {/* Save Button */}
               <LoadingButton
                 type="submit"
                 variant="contained"

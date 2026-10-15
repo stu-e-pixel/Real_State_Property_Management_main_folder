@@ -26,7 +26,7 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
       return;
     }
 
-    // FileList
+    
     if (
       key === "image" &&
       value instanceof FileList &&
@@ -36,18 +36,17 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
       return;
     }
 
-    // Ignore undefined/null
+    
     if (value === undefined || value === null) {
       return;
     }
 
-    // Object or Array → JSON string
+    
     if (typeof value === "object") {
       formData.append(key, JSON.stringify(value));
       return;
     }
 
-    // String / number / boolean
     formData.append(key, String(value));
   });
 

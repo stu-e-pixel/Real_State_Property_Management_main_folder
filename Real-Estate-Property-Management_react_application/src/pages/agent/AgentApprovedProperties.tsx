@@ -58,27 +58,15 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import type { PopulatedUser } from "../../typescript/type/property.types";
 import { IndianRupee } from "lucide-react";
 
-// ======================================================
-// CONSTANTS
-// ======================================================
-
 const PURPOSES = [
   { value: "", label: "All Purposes" },
   { value: "Sale", label: "For Sale" },
   { value: "Rent", label: "For Rent" },
 ];
 
-// ======================================================
-// HELPER
-// ======================================================
-
 const isPopulatedUser = (
   val: string | PopulatedUser | null | undefined,
 ): val is PopulatedUser => !!val && typeof val === "object" && "name" in val;
-
-// ======================================================
-// COMPONENT
-// ======================================================
 
 const AgentApprovedProperties: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -89,10 +77,6 @@ const AgentApprovedProperties: React.FC = () => {
 
   const agent = useAppSelector((state) => state.auth.user);
 
-  // ======================================================
-  // STATE
-  // ======================================================
-
   const [page, setPage] = useState<number>(0);
 
   const [rowsPerPage, setRowsPerPage] = useState<number>(9);
@@ -102,18 +86,6 @@ const AgentApprovedProperties: React.FC = () => {
   const [purpose, setPurpose] = useState<string>("");
 
   const [viewOpen, setViewOpen] = useState<boolean>(false);
-
-  // ======================================================
-  // FETCH PROPERTIES
-  // ======================================================
-
-  /*
-   * useCallback solves:
-   *
-   * "fetchProperties is accessed before it is declared"
-   *
-   * It also makes the function safe to use inside useEffect.
-   */
 
   const fetchProperties = useCallback((): void => {
     dispatch(
@@ -132,34 +104,15 @@ const AgentApprovedProperties: React.FC = () => {
     );
   }, [dispatch, page, rowsPerPage, search, purpose]);
 
-  // ======================================================
-  // EFFECT
-  // ======================================================
-
   useEffect(() => {
     fetchProperties();
   }, [fetchProperties]);
-
-  // ======================================================
-  // SEARCH
-  // ======================================================
 
   const handleSearch = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     setPage(0);
-
-    /*
-     * We do not need to manually call fetchProperties()
-     * here.
-     *
-     * page changes to 0 and useEffect will fetch again.
-     */
   };
-
-  // ======================================================
-  // RESET
-  // ======================================================
 
   const handleReset = (): void => {
     setSearch("");
@@ -167,29 +120,17 @@ const AgentApprovedProperties: React.FC = () => {
     setPage(0);
   };
 
-  // ======================================================
-  // VIEW PROPERTY
-  // ======================================================
-
   const handleView = async (id: string): Promise<void> => {
     await dispatch(getPropertyById(id));
 
     setViewOpen(true);
   };
 
-  // ======================================================
-  // CLOSE VIEW
-  // ======================================================
-
   const closeView = (): void => {
     setViewOpen(false);
 
     dispatch(clearSelectedProperty());
   };
-
-  // ======================================================
-  // RENDER
-  // ======================================================
 
   return (
     <MainLayout>
@@ -199,10 +140,6 @@ const AgentApprovedProperties: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* ==================================================
-            HEADER
-        ================================================== */}
-
         <Box
           sx={{
             display: "flex",
@@ -213,8 +150,6 @@ const AgentApprovedProperties: React.FC = () => {
             gap: 2,
           }}
         >
-          {/* Agent information */}
-
           <Box
             sx={{
               display: "flex",
@@ -254,8 +189,6 @@ const AgentApprovedProperties: React.FC = () => {
             </Box>
           </Box>
 
-          {/* Approved count */}
-
           <Stack
             direction="row"
             spacing={1}
@@ -278,10 +211,6 @@ const AgentApprovedProperties: React.FC = () => {
           }}
         />
 
-        {/* ==================================================
-            FILTERS
-        ================================================== */}
-
         <Box
           sx={{
             display: "flex",
@@ -291,8 +220,6 @@ const AgentApprovedProperties: React.FC = () => {
             alignItems: "center",
           }}
         >
-          {/* Search */}
-
           <Box component="form" onSubmit={handleSearch}>
             <TextField
               placeholder="Search by title..."
@@ -313,8 +240,6 @@ const AgentApprovedProperties: React.FC = () => {
               }}
             />
           </Box>
-
-          {/* Purpose */}
 
           <FormControl
             size="small"
@@ -340,8 +265,6 @@ const AgentApprovedProperties: React.FC = () => {
             </Select>
           </FormControl>
 
-          {/* Reset */}
-
           <Button
             variant="outlined"
             startIcon={<Refresh />}
@@ -351,13 +274,7 @@ const AgentApprovedProperties: React.FC = () => {
           </Button>
         </Box>
 
-        {/* ==================================================
-            CONTENT
-        ================================================== */}
-
         {loading && properties.length === 0 ? (
-          /* ================= SKELETON ================= */
-
           <Box
             sx={{
               display: "flex",
@@ -387,8 +304,6 @@ const AgentApprovedProperties: React.FC = () => {
             ))}
           </Box>
         ) : properties.length === 0 ? (
-          /* ================= EMPTY ================= */
-
           <Box
             sx={{
               textAlign: "center",
@@ -431,8 +346,6 @@ const AgentApprovedProperties: React.FC = () => {
             )}
           </Box>
         ) : (
-          /* ================= PROPERTY LIST ================= */
-
           <Box
             sx={{
               display: "flex",
@@ -465,8 +378,6 @@ const AgentApprovedProperties: React.FC = () => {
                     },
                   }}
                 >
-                  {/* IMAGE */}
-
                   <Box
                     sx={{
                       position: "relative",
@@ -482,8 +393,6 @@ const AgentApprovedProperties: React.FC = () => {
                       alt={p.title}
                     />
 
-                    {/* Purpose */}
-
                     <Chip
                       label={p.purpose}
                       size="small"
@@ -495,8 +404,6 @@ const AgentApprovedProperties: React.FC = () => {
                         fontWeight: 600,
                       }}
                     />
-
-                    {/* Approved */}
 
                     <Chip
                       label="Approved"
@@ -511,8 +418,6 @@ const AgentApprovedProperties: React.FC = () => {
                       }}
                     />
                   </Box>
-
-                  {/* CONTENT */}
 
                   <CardContent
                     sx={{
@@ -544,8 +449,6 @@ const AgentApprovedProperties: React.FC = () => {
                       {p.description}
                     </Typography>
 
-                    {/* Price */}
-
                     <Stack
                       direction="row"
                       spacing={0.5}
@@ -554,10 +457,7 @@ const AgentApprovedProperties: React.FC = () => {
                         mb: 1,
                       }}
                     >
-                      <IndianRupee
-                        fontSize="small"
-                        
-                      />
+                      <IndianRupee fontSize="small" />
 
                       <Typography
                         variant="h6"
@@ -569,8 +469,6 @@ const AgentApprovedProperties: React.FC = () => {
                         {p.price.toLocaleString()}
                       </Typography>
                     </Stack>
-
-                    {/* Property information */}
 
                     <Box
                       sx={{
@@ -616,8 +514,6 @@ const AgentApprovedProperties: React.FC = () => {
                         <Typography variant="caption">{p.area} sqft</Typography>
                       </Box>
                     </Box>
-
-                    {/* Owner */}
 
                     {isPopulatedUser(p.owner) && (
                       <Box
@@ -673,8 +569,6 @@ const AgentApprovedProperties: React.FC = () => {
 
                   <Divider />
 
-                  {/* CARD ACTIONS */}
-
                   <CardActions
                     sx={{
                       justifyContent: "space-between",
@@ -706,10 +600,6 @@ const AgentApprovedProperties: React.FC = () => {
           </Box>
         )}
 
-        {/* ==================================================
-            PAGINATION
-        ================================================== */}
-
         {pagination && properties.length > 0 && (
           <TablePagination
             component="div"
@@ -729,10 +619,6 @@ const AgentApprovedProperties: React.FC = () => {
         )}
       </Paper>
 
-      {/* ==================================================
-          VIEW DIALOG
-      ================================================== */}
-
       <Dialog open={viewOpen} onClose={closeView} maxWidth="md" fullWidth>
         <DialogTitle
           sx={{
@@ -750,8 +636,6 @@ const AgentApprovedProperties: React.FC = () => {
         <Divider />
 
         <DialogContent>
-          {/* Loading */}
-
           {loading && !property ? (
             <Box
               sx={{
@@ -773,8 +657,6 @@ const AgentApprovedProperties: React.FC = () => {
             </Box>
           ) : property ? (
             <>
-              {/* Images */}
-
               {property.images?.length > 0 && (
                 <Box
                   sx={{
@@ -802,8 +684,6 @@ const AgentApprovedProperties: React.FC = () => {
                 </Box>
               )}
 
-              {/* Title */}
-
               <Typography
                 variant="h6"
                 sx={{
@@ -814,8 +694,6 @@ const AgentApprovedProperties: React.FC = () => {
                 {property.title}
               </Typography>
 
-              {/* Property information */}
-
               <Box
                 sx={{
                   display: "flex",
@@ -824,8 +702,6 @@ const AgentApprovedProperties: React.FC = () => {
                   mt: 1,
                 }}
               >
-                {/* Description */}
-
                 <Box
                   sx={{
                     width: "100%",
@@ -840,8 +716,6 @@ const AgentApprovedProperties: React.FC = () => {
                     {property.description}
                   </Typography>
                 </Box>
-
-                {/* Type */}
 
                 <Box
                   sx={{
@@ -870,8 +744,6 @@ const AgentApprovedProperties: React.FC = () => {
                   </Typography>
                 </Box>
 
-                {/* Purpose */}
-
                 <Box
                   sx={{
                     width: {
@@ -898,8 +770,6 @@ const AgentApprovedProperties: React.FC = () => {
                     {property.purpose}
                   </Typography>
                 </Box>
-
-                {/* Price */}
 
                 <Box
                   sx={{
@@ -928,8 +798,6 @@ const AgentApprovedProperties: React.FC = () => {
                   </Typography>
                 </Box>
 
-                {/* Area */}
-
                 <Box
                   sx={{
                     width: {
@@ -956,8 +824,6 @@ const AgentApprovedProperties: React.FC = () => {
                     {property.area} sqft
                   </Typography>
                 </Box>
-
-                {/* Bedrooms */}
 
                 <Box
                   sx={{
@@ -986,8 +852,6 @@ const AgentApprovedProperties: React.FC = () => {
                   </Typography>
                 </Box>
 
-                {/* Bathrooms */}
-
                 <Box
                   sx={{
                     width: {
@@ -1014,8 +878,6 @@ const AgentApprovedProperties: React.FC = () => {
                     {property.bathrooms}
                   </Typography>
                 </Box>
-
-                {/* Furnishing */}
 
                 <Box
                   sx={{
@@ -1044,8 +906,6 @@ const AgentApprovedProperties: React.FC = () => {
                   </Typography>
                 </Box>
 
-                {/* Status */}
-
                 <Box
                   sx={{
                     width: {
@@ -1072,8 +932,6 @@ const AgentApprovedProperties: React.FC = () => {
                     {property.status}
                   </Typography>
                 </Box>
-
-                {/* Approval */}
 
                 <Box
                   sx={{
@@ -1105,10 +963,6 @@ const AgentApprovedProperties: React.FC = () => {
                     />
                   </Box>
                 </Box>
-
-                {/* ==================================================
-                    OWNER
-                ================================================== */}
 
                 {isPopulatedUser(property.owner) && (
                   <Box
@@ -1175,8 +1029,6 @@ const AgentApprovedProperties: React.FC = () => {
                             mt: 0.5,
                           }}
                         >
-                          {/* Email */}
-
                           <Box
                             sx={{
                               display: "flex",
@@ -1200,8 +1052,6 @@ const AgentApprovedProperties: React.FC = () => {
                               {property.owner.email}
                             </Typography>
                           </Box>
-
-                          {/* Phone */}
 
                           {property.owner.phone && (
                             <Box
@@ -1234,10 +1084,6 @@ const AgentApprovedProperties: React.FC = () => {
                   </Box>
                 )}
 
-                {/* ==================================================
-                    LOCATION
-                ================================================== */}
-
                 <Box
                   sx={{
                     width: "100%",
@@ -1258,10 +1104,6 @@ const AgentApprovedProperties: React.FC = () => {
                     </Typography>
                   </Box>
                 </Box>
-
-                {/* ==================================================
-                    AMENITIES
-                ================================================== */}
 
                 {property.amenities?.length > 0 && (
                   <Box

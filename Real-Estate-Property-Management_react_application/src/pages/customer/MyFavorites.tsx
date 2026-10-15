@@ -35,18 +35,14 @@ import type { Favorite } from "../../typescript/type/favorite.types";
 import type { Property } from "../../typescript/type/property.types";
 import { IndianRupee } from "lucide-react";
 
-// =====================================================
-// TYPE GUARD
-// =====================================================
+
 
 const isPopulatedProperty = (
   value: Property | string | undefined,
 ): value is Property =>
   !!value && typeof value === "object" && "title" in value;
 
-// =====================================================
-// PAGE
-// =====================================================
+
 
 const MyFavorites = () => {
   const dispatch = useAppDispatch();
@@ -56,17 +52,12 @@ const MyFavorites = () => {
 
   const [removingIds, setRemovingIds] = useState<string[]>([]);
 
-  // =====================================================
-  // FETCH FAVORITES
-  // =====================================================
-
+  
   useEffect(() => {
     dispatch(getMyFavorites());
   }, [dispatch]);
 
-  // =====================================================
-  // REMOVE FAVORITE
-  // =====================================================
+  
 
   const handleRemove = async (propertyId: string): Promise<void> => {
     if (removingIds.includes(propertyId)) return;
@@ -86,24 +77,18 @@ const MyFavorites = () => {
     }
   };
 
-  // =====================================================
-  // NAVIGATION
-  // =====================================================
+  
 
   const handleViewDetails = (propertyId: string): void => {
     navigate(`/user/properties/${propertyId}`);
   };
 
-  // =====================================================
-  // HELPERS
-  // =====================================================
+  
 
   const formatCurrency = (amount: number): string =>
     `₹${(amount ?? 0).toLocaleString()}`;
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+  
 
   return (
     <MainLayout>
@@ -113,7 +98,7 @@ const MyFavorites = () => {
           borderRadius: 3,
         }}
       >
-        {/* HEADER */}
+       
 
         <Box
           sx={{
@@ -145,7 +130,7 @@ const MyFavorites = () => {
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* LOADING */}
+        
 
         {loading && favorites.length === 0 ? (
           <Box
@@ -176,7 +161,7 @@ const MyFavorites = () => {
             ))}
           </Box>
         ) : favorites.length === 0 ? (
-          /* EMPTY STATE */
+          
 
           <Box
             sx={{
@@ -209,7 +194,7 @@ const MyFavorites = () => {
             </Button>
           </Box>
         ) : (
-          /* FAVORITES GRID */
+          
 
           <Box
             sx={{
@@ -259,7 +244,7 @@ const MyFavorites = () => {
                       },
                     }}
                   >
-                    {/* IMAGE */}
+                    
 
                     <Box sx={{ position: "relative" }}>
                       {imageUrl ? (
@@ -323,7 +308,7 @@ const MyFavorites = () => {
                         }}
                       />
 
-                      {/* REMOVE OVERLAY */}
+                      
 
                       <Tooltip title="Remove from favorites">
                         <span>
@@ -352,7 +337,7 @@ const MyFavorites = () => {
                       </Tooltip>
                     </Box>
 
-                    {/* PROPERTY CONTENT */}
+                    
 
                     <CardContent
                       sx={{
@@ -391,7 +376,7 @@ const MyFavorites = () => {
                         {property.description || "No description available."}
                       </Typography>
 
-                      {/* PRICE */}
+
 
                       <Box
                         sx={{
@@ -414,7 +399,7 @@ const MyFavorites = () => {
                         </Typography>
                       </Box>
 
-                      {/* PROPERTY STATS */}
+                      
 
                       <Box
                         sx={{
@@ -467,7 +452,7 @@ const MyFavorites = () => {
                         </Box>
                       </Box>
 
-                      {/* LOCATION */}
+                      
 
                       {coordinates && coordinates.length >= 2 && (
                         <Box
@@ -489,7 +474,7 @@ const MyFavorites = () => {
 
                     <Divider />
 
-                    {/* ACTIONS */}
+                    
 
                     <CardActions
                       sx={{

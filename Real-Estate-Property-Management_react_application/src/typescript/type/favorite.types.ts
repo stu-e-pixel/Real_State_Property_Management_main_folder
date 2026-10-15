@@ -1,9 +1,7 @@
 
 import type { Property } from "./property.types";
 
-// =====================================================
-// ENTITY
-// =====================================================
+
 
 export interface Favorite {
   _id: string;
@@ -13,9 +11,7 @@ export interface Favorite {
   updatedAt: string;
 }
 
-// =====================================================
-// RESPONSES
-// =====================================================
+
 
 export interface GetFavoritesResponse {
   status: boolean;
@@ -35,9 +31,7 @@ export interface RemoveFavoriteResponse {
   message: string;
 }
 
-// =====================================================
-// STATE
-// =====================================================
+
 
 export interface FavoriteState {
   favorites: Favorite[];

@@ -11,7 +11,7 @@ interface GetNotificationsResponse {
 }
 
 const notificationService = {
-  // Fetch paginated notifications
+  
   getMyNotifications: async (params?: {
     page?: number;
     limit?: number;
@@ -22,7 +22,7 @@ const notificationService = {
     return response.data;
   },
 
-  // Unread count for badge
+ 
   getUnreadCount: async (): Promise<{
     success: boolean;
     unreadCount: number;
@@ -31,7 +31,7 @@ const notificationService = {
     return response.data;
   },
 
-  // Mark single as read
+ 
   markAsRead: async (
     id: string
   ): Promise<{ success: boolean; data: AppNotification }> => {
@@ -39,7 +39,7 @@ const notificationService = {
     return response.data;
   },
 
-  // Mark all as read
+  
   markAllAsRead: async (): Promise<{
     success: boolean;
     message: string;
@@ -49,7 +49,7 @@ const notificationService = {
     return response.data;
   },
 
-  // Delete single
+  
   deleteNotification: async (
     id: string
   ): Promise<{ success: boolean }> => {
@@ -57,7 +57,7 @@ const notificationService = {
     return response.data;
   },
 
-  // Clear all
+  
   clearAll: async (): Promise<{ success: boolean; deletedCount: number }> => {
     const response = await api.delete(`${BASE}/clear-all`);
     return response.data;

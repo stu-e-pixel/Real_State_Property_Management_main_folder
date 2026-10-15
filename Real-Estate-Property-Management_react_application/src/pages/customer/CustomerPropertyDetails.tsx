@@ -33,7 +33,7 @@ import RentalApplicationModal from "./RentalApplicationModal";
 import MakeSaleOfferModal from "./MakeSaleOfferModal";
 import FavoriteButton from "./FavoriteButton";
 
-// ✅ NEW IMPORTS
+
 import ReviewModal from "./ReviewModal";
 import PropertyReviewsSection from "./PropertyReviewsSection";
 
@@ -47,18 +47,14 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import type { PopulatedUser } from "../../typescript/type/property.types";
 import { IndianRupee } from "lucide-react";
 
-// =====================================================
-// TYPE GUARD
-// =====================================================
+
 
 const isPopulatedUser = (
   value: string | PopulatedUser | null | undefined,
 ): value is PopulatedUser =>
   !!value && typeof value === "object" && "name" in value;
 
-// =====================================================
-// PAGE
-// =====================================================
+
 
 const CustomerPropertyDetails = () => {
   const { propertyId } = useParams<{ propertyId: string }>();
@@ -67,21 +63,17 @@ const CustomerPropertyDetails = () => {
 
   const { property, loading } = useAppSelector((state) => state.property);
 
-  // =====================================================
-  // MODAL STATES
-  // =====================================================
+ 
 
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [rentalOpen, setRentalOpen] = useState(false);
   const [saleOfferOpen, setSaleOfferOpen] = useState(false);
 
-  // ✅ NEW — Review modal state
+  
   const [reviewOpen, setReviewOpen] = useState(false);
 
-  // =====================================================
-  // FETCH PROPERTY
-  // =====================================================
+
 
   useEffect(() => {
     if (propertyId) {
@@ -93,9 +85,7 @@ const CustomerPropertyDetails = () => {
     };
   }, [dispatch, propertyId]);
 
-  // =====================================================
-  // LOADING STATE
-  // =====================================================
+
 
   if (loading && !property) {
     return (
@@ -125,9 +115,7 @@ const CustomerPropertyDetails = () => {
     );
   }
 
-  // =====================================================
-  // NOT FOUND STATE
-  // =====================================================
+
 
   if (!property) {
     return (
@@ -167,9 +155,7 @@ const CustomerPropertyDetails = () => {
     );
   }
 
-  // =====================================================
-  // PROPERTY HELPERS
-  // =====================================================
+ 
 
   const images = property.images ?? [];
   const amenities = property.amenities ?? [];
@@ -179,9 +165,7 @@ const CustomerPropertyDetails = () => {
   const formatCurrency = (amount: number): string =>
     `₹${(amount ?? 0).toLocaleString()}`;
 
-  // =====================================================
-  // MAIN RENDER
-  // =====================================================
+
 
   return (
     <MainLayout>
@@ -242,7 +226,7 @@ const CustomerPropertyDetails = () => {
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* PROPERTY IMAGES */}
+       
 
         {images.length > 0 ? (
           <Box
@@ -299,7 +283,7 @@ const CustomerPropertyDetails = () => {
           </Box>
         )}
 
-        {/* MAIN CONTENT */}
+    
 
         <Box
           sx={{
@@ -312,7 +296,7 @@ const CustomerPropertyDetails = () => {
             },
           }}
         >
-          {/* LEFT: PROPERTY DETAILS */}
+         
 
           <Box
             sx={{
@@ -323,7 +307,7 @@ const CustomerPropertyDetails = () => {
               minWidth: 0,
             }}
           >
-            {/* DESCRIPTION */}
+            
 
             <Paper
               variant="outlined"
@@ -345,7 +329,7 @@ const CustomerPropertyDetails = () => {
                 {property.description || "No description available."}
               </Typography>
 
-              {/* PRICE */}
+              
 
               <Box
                 sx={{
@@ -373,7 +357,7 @@ const CustomerPropertyDetails = () => {
                 </Typography>
               </Box>
 
-              {/* KEY STATS */}
+              
 
               <Box
                 sx={{
@@ -457,7 +441,7 @@ const CustomerPropertyDetails = () => {
               </Box>
             </Paper>
 
-            {/* PROPERTY DETAILS */}
+            
 
             <Paper
               variant="outlined"
@@ -513,7 +497,7 @@ const CustomerPropertyDetails = () => {
                   </Box>
                 ))}
 
-                {/* LOCATION */}
+              
 
                 <Box sx={{ width: "100%", mt: 1 }}>
                   <Box
@@ -544,7 +528,7 @@ const CustomerPropertyDetails = () => {
               </Box>
             </Paper>
 
-            {/* AMENITIES */}
+            
 
             {amenities.length > 0 && (
               <Paper
@@ -573,7 +557,7 @@ const CustomerPropertyDetails = () => {
             )}
           </Box>
 
-          {/* RIGHT: ACTIONS SIDEBAR */}
+          
 
           <Box
             sx={{
@@ -604,7 +588,7 @@ const CustomerPropertyDetails = () => {
                   gap: 2,
                 }}
               >
-                {/* INQUIRY */}
+                
 
                 <Button
                   fullWidth
@@ -621,7 +605,7 @@ const CustomerPropertyDetails = () => {
                   Send Inquiry
                 </Button>
 
-                {/* BOOK A VISIT */}
+                
 
                 <Button
                   fullWidth
@@ -638,8 +622,7 @@ const CustomerPropertyDetails = () => {
                   Book a Visit
                 </Button>
 
-                {/* RENTAL APPLICATION */}
-
+                
                 {property.purpose === "Rent" && (
                   <Button
                     fullWidth
@@ -657,7 +640,7 @@ const CustomerPropertyDetails = () => {
                   </Button>
                 )}
 
-                {/* SALE OFFER */}
+                
 
                 {property.purpose === "Sale" && (
                   <Button
@@ -676,7 +659,7 @@ const CustomerPropertyDetails = () => {
                   </Button>
                 )}
 
-                {/* ✅ NEW — WRITE A REVIEW */}
+                
 
                 <Button
                   fullWidth
@@ -696,7 +679,7 @@ const CustomerPropertyDetails = () => {
 
               <Divider sx={{ my: 3 }} />
 
-              {/* LISTED BY */}
+              
 
               {owner && (
                 <Box>
@@ -756,19 +739,14 @@ const CustomerPropertyDetails = () => {
           </Box>
         </Box>
 
-        {/* =====================================================
-            ✅ NEW — PROPERTY REVIEWS SECTION
-            Placed below the main grid, full width
-        ===================================================== */}
+        
 
         <Box sx={{ mt: 3 }}>
           <PropertyReviewsSection propertyId={property._id} />
         </Box>
       </Paper>
 
-      {/* =====================================================
-          MODALS
-      ===================================================== */}
+      
 
       {inquiryOpen && (
         <InquiryModal
@@ -802,7 +780,7 @@ const CustomerPropertyDetails = () => {
         />
       )}
 
-      {/* ✅ NEW — REVIEW MODAL */}
+      
 
       {reviewOpen && (
         <ReviewModal

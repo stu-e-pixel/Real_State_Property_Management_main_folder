@@ -66,9 +66,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
     },
   });
 
-  // =====================================================
-  // PREFILL FORM FROM LOGGED-IN USER
-  // =====================================================
+  
 
   useEffect(() => {
     if (open) {
@@ -81,9 +79,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
     }
   }, [open, user, reset]);
 
-  // =====================================================
-  // SUBMIT INQUIRY
-  // =====================================================
+  
 
   const onSubmit = async (
     data: InquiryFormValues
@@ -111,9 +107,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
       maxWidth="sm"
       fullWidth
     >
-      {/* =====================================================
-          DIALOG TITLE
-      ===================================================== */}
+      
 
       <DialogTitle
         sx={{
@@ -143,14 +137,10 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
 
       <Divider />
 
-      {/* =====================================================
-          DIALOG CONTENT
-      ===================================================== */}
+     
 
       <DialogContent>
-        {/* =====================================================
-            PROPERTY SNAPSHOT
-        ===================================================== */}
+        
 
         <Box
           sx={{
@@ -163,7 +153,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
             mb: 3,
           }}
         >
-          {/* Property Image */}
+          
           <Avatar
             src={property.images?.[0]?.image}
             variant="rounded"
@@ -176,7 +166,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
             <Home />
           </Avatar>
 
-          {/* Property Information */}
+          
           <Box
             sx={{
               minWidth: 0,
@@ -217,10 +207,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
           </Box>
         </Box>
 
-        {/* =====================================================
-            INQUIRY FORM
-        ===================================================== */}
-
+        
         <Box
           component="form"
           id="inquiry-form"
@@ -231,7 +218,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
             gap: 2,
           }}
         >
-          {/* Name + Email */}
+          
           <Box
             sx={{
               display: "flex",
@@ -239,7 +226,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
               gap: 2,
             }}
           >
-            {/* Name */}
+            
             <Box
               sx={{
                 width: {
@@ -255,7 +242,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
               />
             </Box>
 
-            {/* Email */}
+            
             <Box
               sx={{
                 width: {
@@ -273,7 +260,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
             </Box>
           </Box>
 
-          {/* Phone */}
+          
           <Box>
             <FormInput<InquiryFormValues>
               name="phone"
@@ -282,7 +269,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
             />
           </Box>
 
-          {/* Message */}
+          
           <Box>
             <FormInput<InquiryFormValues>
               name="message"
@@ -296,9 +283,7 @@ const InquiryModal: React.FC<InquiryModalProps> = ({
         </Box>
       </DialogContent>
 
-      {/* =====================================================
-          DIALOG ACTIONS
-      ===================================================== */}
+      
 
       <DialogActions
         sx={{

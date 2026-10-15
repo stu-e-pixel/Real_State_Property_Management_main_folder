@@ -88,7 +88,6 @@ const isPopulatedUser = (
 ): val is PopulatedUserLite =>
   !!val && typeof val === "object" && "name" in val;
 
-// Convert ISO date to datetime-local value
 const pad = (n: number): string => String(n).padStart(2, "0");
 
 const toInput = (iso: string): string => {
@@ -152,8 +151,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
     },
   });
 
-  // ================= FETCH =================
-
   useEffect(() => {
     if (mode === "owner") {
       dispatch(getOwnerLeases());
@@ -166,8 +163,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
     };
   }, [dispatch, mode]);
 
-  // ================= VIEW =================
-
   const handleView = async (id: string): Promise<void> => {
     await dispatch(getLeaseById(id));
     setViewOpen(true);
@@ -177,8 +172,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
     setViewOpen(false);
     dispatch(clearSelectedLease());
   };
-
-  // ================= CREATE =================
 
   const openCreate = (): void => {
     createForm.reset({
@@ -214,8 +207,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
       closeCreate();
     }
   };
-
-  // ================= EDIT =================
 
   const openEdit = (l: Lease): void => {
     setEditTarget(l);
@@ -259,8 +250,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
     }
   };
 
-  // ================= TERMINATE =================
-
   const openTerminate = (l: Lease): void => {
     setTerminateTarget(l);
 
@@ -297,8 +286,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
     }
   };
 
-  // ================= EXPIRE =================
-
   const handleExpire = (l: Lease): void => {
     if (window.confirm("Mark this lease as expired?")) {
       dispatch(
@@ -309,8 +296,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
     }
   };
 
-  // ================= MENU =================
-
   const openMenu = (e: React.MouseEvent<HTMLElement>, l: Lease): void => {
     setMenuAnchor(e.currentTarget);
     setMenuLease(l);
@@ -320,8 +305,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
     setMenuAnchor(null);
     setMenuLease(null);
   };
-
-  // ================= FILTER =================
 
   const filtered =
     tab === "all" ? leases : leases.filter((l) => l.status === tab);
@@ -341,8 +324,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
-
         <Box
           sx={{
             display: "flex",
@@ -400,8 +381,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
           }}
         />
 
-        {/* ================= TABS ================= */}
-
         <Tabs
           value={tab}
           onChange={(_e, value) => setTab(value)}
@@ -419,8 +398,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
 
           <Tab value="terminated" label={`Terminated (${counts.terminated})`} />
         </Tabs>
-
-        {/* ================= CONTENT ================= */}
 
         {loading && leases.length === 0 ? (
           <Box
@@ -500,8 +477,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                       flex: 1,
                     }}
                   >
-                    {/* ================= TENANT ================= */}
-
                     {isPopulatedUser(l.tenant) && (
                       <Box
                         sx={{
@@ -560,8 +535,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                       </Box>
                     )}
 
-                    {/* ================= PROPERTY ================= */}
-
                     {isPopulatedProperty(l.property) && (
                       <Box
                         sx={{
@@ -586,8 +559,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                         </Typography>
                       </Box>
                     )}
-
-                    {/* ================= LEASE INFO ================= */}
 
                     <Box
                       sx={{
@@ -646,8 +617,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                       </Box>
                     </Box>
 
-                    {/* ================= TERMINATION ================= */}
-
                     {l.terminationReason && (
                       <Alert
                         severity="error"
@@ -692,8 +661,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
           </Box>
         )}
       </Paper>
-
-      {/* ================= ROW MENU ================= */}
 
       <Menu
         anchorEl={menuAnchor}
@@ -746,8 +713,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
         </MenuItem>
       </Menu>
 
-      {/* ================= VIEW DIALOG ================= */}
-
       <Dialog
         open={viewOpen}
         onClose={closeView}
@@ -787,8 +752,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                 gap: 2,
               }}
             >
-              {/* Tenant */}
-
               {isPopulatedUser(lease.tenant) && (
                 <Box>
                   <Typography variant="caption" color="text.secondary">
@@ -869,8 +832,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                 </Box>
               )}
 
-              {/* Property */}
-
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Property
@@ -888,8 +849,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                 </Typography>
               </Box>
 
-              {/* Period */}
-
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Period
@@ -901,8 +860,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                 </Typography>
               </Box>
 
-              {/* Monthly Rent */}
-
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Monthly Rent
@@ -913,8 +870,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                 </Typography>
               </Box>
 
-              {/* Security Deposit */}
-
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Security Deposit
@@ -924,8 +879,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                   ₹{lease.securityDeposit.toLocaleString()}
                 </Typography>
               </Box>
-
-              {/* Status */}
 
               <Box>
                 <Typography variant="caption" color="text.secondary">
@@ -944,8 +897,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                   />
                 </Box>
               </Box>
-
-              {/* Agreement */}
 
               {typeof lease.agreementDocument === "string"
                 ? lease.agreementDocument && (
@@ -975,8 +926,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
                     </Button>
                   )}
 
-              {/* Termination reason */}
-
               {lease.terminationReason && (
                 <Alert severity="error">
                   <b>Termination reason:</b> {lease.terminationReason}
@@ -990,8 +939,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
           <Button onClick={closeView}>Close</Button>
         </DialogActions>
       </Dialog>
-
-      {/* ================= CREATE DIALOG ================= */}
 
       <Dialog
         open={createOpen}
@@ -1104,8 +1051,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
         </DialogActions>
       </Dialog>
 
-      {/* ================= EDIT DIALOG ================= */}
-
       <Dialog
         open={editOpen}
         onClose={closeEdit}
@@ -1200,8 +1145,6 @@ const ManageLeases: React.FC<ManageLeasesProps> = ({ mode }) => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      {/* ================= TERMINATE DIALOG ================= */}
 
       <Dialog
         open={terminateOpen}

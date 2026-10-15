@@ -7,10 +7,10 @@ import type {
   DeleteSaleOfferResponse,
 } from "../typescript/type/saleOffer.types";
 
-const BASE = "/v11/api"; // adjust to your mount prefix
+const BASE = "/v11/api"; 
 
 const saleOfferService = {
-  // ---------------- CREATE (customer) ----------------
+ 
   createSaleOffer: async (
     data: CreateSaleOfferData
   ): Promise<SaleOfferMutationResponse> => {
@@ -21,7 +21,7 @@ const saleOfferService = {
     return response.data;
   },
 
-  // ---------------- MY OFFERS (customer) ----------------
+  
   getMySaleOffers: async (): Promise<GetSaleOffersResponse> => {
     const response = await api.get<GetSaleOffersResponse>(
       `${BASE}/my-offers`
@@ -29,7 +29,7 @@ const saleOfferService = {
     return response.data;
   },
 
-  // ---------------- PROPERTY OFFERS (owner/agent) ----------------
+  
   getPropertySaleOffers: async (
     propertyId: string
   ): Promise<GetSaleOffersResponse> => {
@@ -39,7 +39,7 @@ const saleOfferService = {
     return response.data;
   },
 
-  // ---------------- RESPOND (owner/agent) ----------------
+ 
   respondToSaleOffer: async (
     data: RespondToSaleOfferData
   ): Promise<SaleOfferMutationResponse> => {
@@ -51,7 +51,7 @@ const saleOfferService = {
     return response.data;
   },
 
-  // ---------------- WITHDRAW (customer) ----------------
+ 
   withdrawSaleOffer: async (
     id: string
   ): Promise<SaleOfferMutationResponse> => {
@@ -61,7 +61,7 @@ const saleOfferService = {
     return response.data;
   },
 
-  // ---------------- DELETE (customer) ----------------
+ 
   deleteSaleOffer: async (id: string): Promise<DeleteSaleOfferResponse> => {
     const response = await api.delete<DeleteSaleOfferResponse>(
       `${BASE}/${id}`

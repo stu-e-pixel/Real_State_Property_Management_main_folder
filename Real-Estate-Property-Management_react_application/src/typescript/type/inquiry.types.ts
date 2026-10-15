@@ -1,9 +1,7 @@
 import type { Property } from "./property.types";
 
 
-// =====================================================
-// ENUMS
-// =====================================================
+
 
 export type InquiryStatus =
   | "pending"
@@ -11,9 +9,7 @@ export type InquiryStatus =
   | "resolved"
   | "closed";
 
-// =====================================================
-// POPULATED USER (for populated fields)
-// =====================================================
+
 
 export interface PopulatedUserLite {
   _id: string;
@@ -24,9 +20,7 @@ export interface PopulatedUserLite {
   image?: string;
 }
 
-// =====================================================
-// ENTITY
-// =====================================================
+
 
 export interface Inquiry {
   _id: string;
@@ -44,9 +38,7 @@ export interface Inquiry {
   updatedAt: string;
 }
 
-// =====================================================
-// PAYLOADS
-// =====================================================
+
 
 export interface CreateInquiryData {
   propertyId: string;
@@ -71,9 +63,7 @@ export interface ReplyInquiryData {
   reply: string;
 }
 
-// =====================================================
-// RESPONSES
-// =====================================================
+
 
 export interface GetInquiriesResponse {
   status: boolean;
@@ -107,9 +97,7 @@ export interface DeleteInquiryResponse {
   message: string;
 }
 
-// =====================================================
-// STATE
-// =====================================================
+
 
 export interface InquiryState {
   inquiries: Inquiry[];
@@ -118,9 +106,7 @@ export interface InquiryState {
   error: string | null;
 }
 
-// =====================================================
-// FORM VALUES
-// =====================================================
+
 
 export interface InquiryFormValues {
   name: string;

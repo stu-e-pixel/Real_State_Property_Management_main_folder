@@ -9,7 +9,11 @@ import { Box, Paper, Typography, Button, Divider } from "@mui/material";
 
 import { LoadingButton } from "@mui/lab";
 
-import { MarkEmailReadOutlined, Refresh, VerifiedUser } from "@mui/icons-material";
+import {
+  MarkEmailReadOutlined,
+  Refresh,
+  VerifiedUser,
+} from "@mui/icons-material";
 
 import FormInput from "../../components/common/FormInput";
 
@@ -38,7 +42,6 @@ const VerifyEmail: React.FC = () => {
 
   const email = (location.state as LocationState | null)?.email || "";
 
-  // React Hook Form
   const { control, handleSubmit, setValue } = useForm<VerifyEmailFormValues>({
     resolver: yupResolver(verifyEmailSchema),
 
@@ -48,21 +51,18 @@ const VerifyEmail: React.FC = () => {
     },
   });
 
-  // Set email from navigation state
   useEffect(() => {
     if (email) {
       setValue("email", email);
     }
   }, [email, setValue]);
 
-  // Clear auth error when leaving page
   useEffect(() => {
     return () => {
       dispatch(clearError());
     };
   }, [dispatch]);
 
-  // Verify email
   const onSubmit = async (data: VerifyEmailFormValues): Promise<void> => {
     const result = await dispatch(verifyEmail(data));
 
@@ -71,7 +71,6 @@ const VerifyEmail: React.FC = () => {
     }
   };
 
-  // Resend OTP
   const handleResendOTP = (): void => {
     dispatch(
       resendOTP({
@@ -111,7 +110,6 @@ const VerifyEmail: React.FC = () => {
           boxShadow: "0 20px 60px rgba(31, 55, 90, 0.10)",
         }}
       >
-        {/* Header */}
         <Box
           sx={{
             display: "flex",
@@ -129,8 +127,7 @@ const VerifyEmail: React.FC = () => {
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "24px",
-              background:
-                "linear-gradient(135deg, #e5efff 0%, #edf0ff 100%)",
+              background: "linear-gradient(135deg, #e5efff 0%, #edf0ff 100%)",
               mb: 2.5,
             }}
           >
@@ -170,13 +167,7 @@ const VerifyEmail: React.FC = () => {
           </Typography>
         </Box>
 
-        {/* Form */}
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          noValidate
-        >
-          {/* Email */}
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
           <Box sx={{ mb: 2.5 }}>
             <Typography
               sx={{
@@ -198,7 +189,6 @@ const VerifyEmail: React.FC = () => {
             />
           </Box>
 
-          {/* OTP */}
           <Box sx={{ mb: 3 }}>
             <Typography
               sx={{
@@ -235,7 +225,6 @@ const VerifyEmail: React.FC = () => {
             </Typography>
           </Box>
 
-          {/* Verify Button */}
           <LoadingButton
             type="submit"
             fullWidth
@@ -249,13 +238,11 @@ const VerifyEmail: React.FC = () => {
               textTransform: "none",
               fontSize: 16,
               fontWeight: 700,
-              background:
-                "linear-gradient(135deg, #3478f6 0%, #5145e5 100%)",
+              background: "linear-gradient(135deg, #3478f6 0%, #5145e5 100%)",
               boxShadow: "0 8px 20px rgba(59, 102, 240, 0.22)",
               transition: "all 0.25s ease",
               "&:hover": {
-                background:
-                  "linear-gradient(135deg, #2563eb 0%, #4338ca 100%)",
+                background: "linear-gradient(135deg, #2563eb 0%, #4338ca 100%)",
                 boxShadow: "0 10px 25px rgba(59, 102, 240, 0.3)",
                 transform: "translateY(-1px)",
               },
@@ -265,7 +252,6 @@ const VerifyEmail: React.FC = () => {
           </LoadingButton>
         </Box>
 
-        {/* Divider */}
         <Divider
           sx={{
             my: 3,
@@ -279,7 +265,6 @@ const VerifyEmail: React.FC = () => {
           OR
         </Divider>
 
-        {/* Resend OTP */}
         <Box
           sx={{
             textAlign: "center",
@@ -316,7 +301,6 @@ const VerifyEmail: React.FC = () => {
           </Button>
         </Box>
 
-        {/* Footer */}
         <Typography
           variant="caption"
           sx={{

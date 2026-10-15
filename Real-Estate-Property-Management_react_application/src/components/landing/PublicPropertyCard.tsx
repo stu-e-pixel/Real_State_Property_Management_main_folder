@@ -25,9 +25,7 @@ interface PublicPropertyCardProps {
   property: Property;
 }
 
-const PublicPropertyCard = ({
-  property,
-}: PublicPropertyCardProps) => {
+const PublicPropertyCard = ({ property }: PublicPropertyCardProps) => {
   const navigate = useNavigate();
 
   const coordinates = property.location?.coordinates ?? [];
@@ -57,7 +55,6 @@ const PublicPropertyCard = ({
         },
       }}
     >
-      {/* Property Image */}
       <Box sx={{ position: "relative", overflow: "hidden" }}>
         <CardMedia
           component="img"
@@ -79,7 +76,6 @@ const PublicPropertyCard = ({
           }}
         />
 
-        {/* Purpose Badge */}
         <Chip
           label={property.purpose || "Property"}
           size="small"
@@ -90,12 +86,10 @@ const PublicPropertyCard = ({
             fontWeight: 700,
             fontSize: 12,
             color: "#ffffff",
-            bgcolor:
-              property.purpose === "Sale" ? "#0f766e" : "#2563eb",
+            bgcolor: property.purpose === "Sale" ? "#0f766e" : "#2563eb",
           }}
         />
 
-        {/* Property Type Badge */}
         <Chip
           label={property.propertyType || "Other"}
           size="small"
@@ -116,7 +110,6 @@ const PublicPropertyCard = ({
         />
       </Box>
 
-      {/* Property Content */}
       <CardContent
         sx={{
           flexGrow: 1,
@@ -147,7 +140,6 @@ const PublicPropertyCard = ({
           {property.title || "Untitled Property"}
         </Typography>
 
-        {/* Location */}
         <Box
           sx={{
             display: "flex",
@@ -180,7 +172,6 @@ const PublicPropertyCard = ({
           </Typography>
         </Box>
 
-        {/* Price */}
         <Box
           sx={{
             display: "flex",
@@ -189,8 +180,6 @@ const PublicPropertyCard = ({
             mb: 2,
           }}
         >
-          
-
           <Typography
             component="p"
             variant="h5"
@@ -205,7 +194,6 @@ const PublicPropertyCard = ({
           </Typography>
         </Box>
 
-        {/* Property Features */}
         <Box
           sx={{
             display: "flex",
@@ -263,7 +251,6 @@ const PublicPropertyCard = ({
 
       <Divider sx={{ borderColor: "#e2e8f0" }} />
 
-      {/* Card Footer */}
       <CardActions
         sx={{
           p: 2,

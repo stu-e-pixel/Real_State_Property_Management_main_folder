@@ -77,7 +77,6 @@ const PropertySaleOffers: React.FC = () => {
 
   const [tab, setTab] = useState<string>("all");
 
-  // Kept as requested; currently not used for displaying a view dialog.
   const [viewOpen, setViewOpen] = useState<boolean>(false);
   const [viewTarget, setViewTarget] = useState<SaleOffer | null>(null);
 
@@ -480,7 +479,6 @@ const PropertySaleOffers: React.FC = () => {
         )}
       </Paper>
 
-      {/* View dialog */}
       <Dialog
         open={viewOpen}
         onClose={closeView}
@@ -602,7 +600,6 @@ const PropertySaleOffers: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Respond dialog */}
       <Dialog
         open={respondOpen}
         onClose={closeRespond}

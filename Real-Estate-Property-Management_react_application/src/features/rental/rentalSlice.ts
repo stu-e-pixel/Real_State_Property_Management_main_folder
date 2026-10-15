@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type{PayloadAction} from "@reduxjs/toolkit"
+import type { PayloadAction } from "@reduxjs/toolkit";
 import rentalService from "../../services/rentalService";
 import type {
   RentalState,
@@ -20,10 +20,6 @@ const initialState: RentalState = {
   error: null,
 };
 
-// =====================================================
-// THUNKS
-// =====================================================
-
 export const createRentalApplication = createAsyncThunk<
   RentalMutationResponse,
   CreateRentalApplicationData,
@@ -34,7 +30,7 @@ export const createRentalApplication = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to submit application"
+      err.response?.data?.message || "Failed to submit application",
     );
   }
 });
@@ -49,7 +45,7 @@ export const updateRentalApplication = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to update application"
+      err.response?.data?.message || "Failed to update application",
     );
   }
 });
@@ -64,7 +60,7 @@ export const getMyRentalApplications = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to fetch applications"
+      err.response?.data?.message || "Failed to fetch applications",
     );
   }
 });
@@ -79,7 +75,7 @@ export const getOwnerRentalApplications = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to fetch owner applications"
+      err.response?.data?.message || "Failed to fetch owner applications",
     );
   }
 });
@@ -94,7 +90,7 @@ export const getAgentRentalApplications = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to fetch agent applications"
+      err.response?.data?.message || "Failed to fetch agent applications",
     );
   }
 });
@@ -109,7 +105,7 @@ export const getRentalApplicationById = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to fetch application"
+      err.response?.data?.message || "Failed to fetch application",
     );
   }
 });
@@ -124,7 +120,7 @@ export const withdrawRentalApplication = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to withdraw application"
+      err.response?.data?.message || "Failed to withdraw application",
     );
   }
 });
@@ -139,26 +135,18 @@ export const rentalApplicationAction = createAsyncThunk<
   } catch (error: unknown) {
     const err = error as { response?: { data?: { message?: string } } };
     return rejectWithValue(
-      err.response?.data?.message || "Failed to process action"
+      err.response?.data?.message || "Failed to process action",
     );
   }
 });
 
-// =====================================================
-// HELPERS
-// =====================================================
-
 const replaceApplication = (
   state: RentalState,
-  updated: RentalApplication
+  updated: RentalApplication,
 ): void => {
   const index = state.applications.findIndex((a) => a._id === updated._id);
   if (index !== -1) state.applications[index] = updated;
 };
-
-// =====================================================
-// SLICE
-// =====================================================
 
 const rentalSlice = createSlice({
   name: "rental",
@@ -173,7 +161,7 @@ const rentalSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // -------- CREATE --------
+
       .addCase(createRentalApplication.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -191,7 +179,6 @@ const rentalSlice = createSlice({
         toast.error(action.payload ?? "Failed to submit application");
       })
 
-      // -------- UPDATE --------
       .addCase(updateRentalApplication.pending, (state) => {
         state.loading = true;
       })
@@ -207,7 +194,6 @@ const rentalSlice = createSlice({
         toast.error(action.payload ?? "Failed to update application");
       })
 
-      // -------- MY --------
       .addCase(getMyRentalApplications.pending, (state) => {
         state.loading = true;
       })
@@ -216,14 +202,13 @@ const rentalSlice = createSlice({
         (state, action: PayloadAction<GetRentalApplicationsResponse>) => {
           state.loading = false;
           state.applications = action.payload.data ?? [];
-        }
+        },
       )
       .addCase(getMyRentalApplications.rejected, (state, action) => {
         state.loading = false;
         toast.error(action.payload ?? "Failed to fetch applications");
       })
 
-      // -------- OWNER --------
       .addCase(getOwnerRentalApplications.pending, (state) => {
         state.loading = true;
       })
@@ -232,14 +217,13 @@ const rentalSlice = createSlice({
         (state, action: PayloadAction<GetRentalApplicationsResponse>) => {
           state.loading = false;
           state.applications = action.payload.data ?? [];
-        }
+        },
       )
       .addCase(getOwnerRentalApplications.rejected, (state, action) => {
         state.loading = false;
         toast.error(action.payload ?? "Failed to fetch applications");
       })
 
-      // -------- AGENT --------
       .addCase(getAgentRentalApplications.pending, (state) => {
         state.loading = true;
       })
@@ -248,14 +232,13 @@ const rentalSlice = createSlice({
         (state, action: PayloadAction<GetRentalApplicationsResponse>) => {
           state.loading = false;
           state.applications = action.payload.data ?? [];
-        }
+        },
       )
       .addCase(getAgentRentalApplications.rejected, (state, action) => {
         state.loading = false;
         toast.error(action.payload ?? "Failed to fetch applications");
       })
 
-      // -------- BY ID --------
       .addCase(getRentalApplicationById.pending, (state) => {
         state.loading = true;
       })
@@ -264,14 +247,13 @@ const rentalSlice = createSlice({
         (state, action: PayloadAction<GetRentalApplicationResponse>) => {
           state.loading = false;
           state.application = action.payload.data ?? null;
-        }
+        },
       )
       .addCase(getRentalApplicationById.rejected, (state, action) => {
         state.loading = false;
         toast.error(action.payload ?? "Failed to fetch application");
       })
 
-      // -------- WITHDRAW --------
       .addCase(withdrawRentalApplication.pending, (state) => {
         state.loading = true;
       })
@@ -287,7 +269,6 @@ const rentalSlice = createSlice({
         toast.error(action.payload ?? "Failed to withdraw application");
       })
 
-      // -------- ACTION (approve/reject) --------
       .addCase(rentalApplicationAction.pending, (state) => {
         state.loading = true;
       })

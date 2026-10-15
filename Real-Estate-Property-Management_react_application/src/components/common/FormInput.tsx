@@ -43,9 +43,7 @@ const FormInput = <T extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => {
-        // ============================================
-        // DEBUG LOG
-        // ============================================
+        
         console.log(`[FormInput:${name}] field:`, {
           name: field.name,
           value: field.value,

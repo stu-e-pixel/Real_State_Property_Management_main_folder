@@ -115,9 +115,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     (state) => state.property
   );
 
-  // =====================================================
-  // Local state
-  // =====================================================
+ 
 
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [newImagePreviews, setNewImagePreviews] = useState<string[]>([]);
@@ -128,17 +126,13 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
   const [amenities, setAmenities] = useState<string[]>([]);
   const [amenityInput, setAmenityInput] = useState<string>("");
 
-  // =====================================================
-  // Existing images
-  // =====================================================
+ 
 
   const existingImages = useMemo(() => {
     return initialData?.images ?? [];
   }, [initialData]);
 
-  // =====================================================
-  // All image previews
-  // =====================================================
+  
 
   const imagePreviews = useMemo(() => {
     const existingPreviewImages = existingImages
@@ -154,9 +148,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     newImagePreviews,
   ]);
 
-  // =====================================================
-  // React Hook Form
-  // =====================================================
+
 
   const { control, handleSubmit, reset } =
     useForm<PropertyFormValues>({
@@ -180,9 +172,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       },
     });
 
-  // =====================================================
-  // Prefill form when editing
-  // =====================================================
+  
 
   useEffect(() => {
     if (!initialData) {
@@ -223,9 +213,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     setAmenities(initialData.amenities);
   }, [initialData, reset]);
 
-  // =====================================================
-  // Image change
-  // =====================================================
+  
 
   const handleImageChange = (
     e: ChangeEvent<HTMLInputElement>
@@ -272,13 +260,11 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       reader.readAsDataURL(file);
     });
 
-    // Allow selecting the same file again
+    
     e.target.value = "";
   };
 
-  // =====================================================
-  // Remove image
-  // =====================================================
+
 
   const removeImage = (index: number): void => {
     const currentExistingImages = existingImages.filter(
@@ -310,9 +296,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     );
   };
 
-  // =====================================================
-  // Add amenity
-  // =====================================================
+ 
 
   const addAmenity = (): void => {
     const value = amenityInput.trim();
@@ -334,9 +318,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     setAmenityInput("");
   };
 
-  // =====================================================
-  // Remove amenity
-  // =====================================================
+  
 
   const removeAmenity = (
     value: string
@@ -346,9 +328,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     );
   };
 
-  // =====================================================
-  // Submit
-  // =====================================================
+
 
   const onSubmit = async (
     data: PropertyFormValues
@@ -389,9 +369,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       }),
     };
 
-    // ===================================================
-    // Create
-    // ===================================================
+  
 
     if (mode === "create") {
       const result = await dispatch(
@@ -407,16 +385,13 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       return;
     }
 
-    // ===================================================
-    // Update
-    // ===================================================
+
 
     if (mode === "update" && initialData) {
       const updatePayload: UpdatePropertyData = {
         ...payload,
 
-        // Send removed existing images if your backend
-        // supports removing individual images.
+       
         ...(removedExistingImages.length > 0 && {
           removedImages: removedExistingImages,
         }),
@@ -437,9 +412,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     }
   };
 
-  // =====================================================
-  // JSX
-  // =====================================================
+
 
   return (
     <MainLayout>
@@ -451,9 +424,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
           mx: "auto",
         }}
       >
-        {/* =================================================
-            HEADER
-        ================================================= */}
+       
 
         <Box
           sx={{
@@ -499,9 +470,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
         <form
           onSubmit={handleSubmit(onSubmit)}
         >
-          {/* =================================================
-              BASIC INFORMATION
-          ================================================= */}
+          
 
           <Typography
             variant="subtitle1"
@@ -691,9 +660,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
             </Box>
           </Box>
 
-          {/* =================================================
-              LOCATION
-          ================================================= */}
+         
 
           <Typography
             variant="subtitle1"
@@ -746,9 +713,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
             </Box>
           </Box>
 
-          {/* =================================================
-              AMENITIES
-          ================================================= */}
+         
 
           <Typography
             variant="subtitle1"
@@ -819,9 +784,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
             ))}
           </Box>
 
-          {/* =================================================
-              IMAGES
-          ================================================= */}
+         
 
           <Typography
             variant="subtitle1"
@@ -931,9 +894,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
             replaces all existing ones.
           </Typography>
 
-          {/* =================================================
-              ACTIONS
-          ================================================= */}
+          
 
           <Box
             sx={{

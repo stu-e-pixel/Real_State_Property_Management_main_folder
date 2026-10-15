@@ -62,9 +62,7 @@ import type { PopulatedUserLite } from "../../typescript/type/inquiry.types";
 import type { Property } from "../../typescript/type/property.types";
 import { IndianRupee } from "lucide-react";
 
-// =====================================================
-// STATUS COLORS
-// =====================================================
+
 
 const STATUS_COLORS: Record<
   string,
@@ -76,9 +74,7 @@ const STATUS_COLORS: Record<
   withdrawn: "default",
 };
 
-// =====================================================
-// TYPE GUARDS
-// =====================================================
+
 
 const isPopulatedProperty = (
   val: Property | string | undefined
@@ -89,17 +85,13 @@ const isPopulatedUser = (
 ): val is PopulatedUserLite =>
   !!val && typeof val === "object" && "name" in val;
 
-// =====================================================
-// PROPS
-// =====================================================
+
 
 interface ManageRentalApplicationsProps {
   mode: "owner" | "agent";
 }
 
-// =====================================================
-// COMPONENT
-// =====================================================
+
 
 const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
   mode,
@@ -117,7 +109,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
     null
   );
 
-  // ✅ NEW — tracks which application is being converted into a lease
+ 
   const [leaseApplication, setLeaseApplication] =
     useState<RentalApplication | null>(null);
 
@@ -128,9 +120,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
     },
   });
 
-  // =====================================================
-  // FETCH
-  // =====================================================
+  
 
   useEffect(() => {
     if (mode === "owner") {
@@ -144,9 +134,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
     };
   }, [dispatch, mode]);
 
-  // =====================================================
-  // VIEW
-  // =====================================================
+  
 
   const handleView = async (id: string): Promise<void> => {
     await dispatch(getRentalApplicationById(id));
@@ -158,9 +146,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
     dispatch(clearSelectedRental());
   };
 
-  // =====================================================
-  // APPROVE
-  // =====================================================
+  
 
   const handleApprove = (a: RentalApplication): void => {
     if (window.confirm(`Approve application from ${a.applicant}?`)) {
@@ -173,9 +159,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
     }
   };
 
-  // =====================================================
-  // REJECT
-  // =====================================================
+
 
   const openReject = (a: RentalApplication): void => {
     setRejectTarget(a);
@@ -214,9 +198,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
     }
   };
 
-  // =====================================================
-  // FILTER / COUNTS
-  // =====================================================
+ 
 
   const filtered =
     tab === "all" ? applications : applications.filter((a) => a.status === tab);
@@ -228,14 +210,12 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
     rejected: applications.filter((a) => a.status === "rejected").length,
   };
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+
 
   return (
     <MainLayout>
       <Paper sx={{ p: 4, borderRadius: 3 }}>
-        {/* ================= HEADER ================= */}
+       
 
         <Box
           sx={{
@@ -282,7 +262,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
 
         <Divider sx={{ mb: 2 }} />
 
-        {/* ================= TABS ================= */}
+        
 
         <Tabs
           value={tab}
@@ -297,7 +277,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
           <Tab value="rejected" label={`Rejected (${counts.rejected})`} />
         </Tabs>
 
-        {/* ================= CONTENT ================= */}
+        
 
         {loading && applications.length === 0 ? (
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
@@ -339,7 +319,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                   }}
                 >
                   <CardContent sx={{ flex: 1 }}>
-                    {/* ================= APPLICANT ================= */}
+                    
 
                     {isPopulatedUser(a.applicant) && (
                       <Box
@@ -384,7 +364,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                       </Box>
                     )}
 
-                    {/* ================= PROPERTY ================= */}
+                    
 
                     {isPopulatedProperty(a.property) && (
                       <Box
@@ -408,7 +388,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                       </Box>
                     )}
 
-                    {/* ================= APPLICATION INFO ================= */}
+                    
 
                     <Box
                       sx={{
@@ -472,7 +452,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
 
                   <Divider />
 
-                  {/* ================= ACTIONS ================= */}
+                 
 
                   <CardActions
                     sx={{
@@ -514,7 +494,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                         </>
                       )}
 
-                      {/* ✅ NEW — Create Lease button for approved applications */}
+                      
                       {a.status === "approved" && (
                         <Button
                           size="small"
@@ -536,9 +516,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
         )}
       </Paper>
 
-      {/* =====================================================
-          VIEW DIALOG
-      ===================================================== */}
+      
 
       <Dialog
         open={viewOpen}
@@ -642,7 +620,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                 </Box>
               )}
 
-              {/* Property */}
+              
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Property
@@ -654,7 +632,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                 </Typography>
               </Box>
 
-              {/* Monthly Income */}
+          
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Monthly Income
@@ -664,7 +642,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                 </Typography>
               </Box>
 
-              {/* Employment */}
+       
               {application.employmentStatus && (
                 <Box>
                   <Typography variant="caption" color="text.secondary">
@@ -676,7 +654,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                 </Box>
               )}
 
-              {/* Occupation */}
+        
               {application.occupation && (
                 <Box>
                   <Typography variant="caption" color="text.secondary">
@@ -688,7 +666,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                 </Box>
               )}
 
-              {/* Message */}
+         
               {application.message && (
                 <Box>
                   <Typography variant="caption" color="text.secondary">
@@ -700,14 +678,14 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
                 </Box>
               )}
 
-              {/* Rejection */}
+      
               {application.rejectionReason && (
                 <Alert severity="error">
                   <b>Rejection reason:</b> {application.rejectionReason}
                 </Alert>
               )}
 
-              {/* Status */}
+         
               <Box>
                 <Typography variant="caption" color="text.secondary">
                   Status
@@ -756,7 +734,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
               </>
             )}
 
-            {/* ✅ NEW — Create Lease from the dialog too */}
+            
             {application?.status === "approved" && (
               <Button
                 variant="contained"
@@ -775,9 +753,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
         </DialogActions>
       </Dialog>
 
-      {/* =====================================================
-          REJECT DIALOG
-      ===================================================== */}
+      
 
       <Dialog
         open={rejectOpen}
@@ -824,9 +800,7 @@ const ManageRentalApplications: React.FC<ManageRentalApplicationsProps> = ({
         </DialogActions>
       </Dialog>
 
-      {/* =====================================================
-          ✅ CREATE LEASE MODAL — rendered ONCE at the bottom
-      ===================================================== */}
+    
 
       {leaseApplication && (
         <CreateLeaseModal

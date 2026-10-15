@@ -3,9 +3,7 @@ import type { Property } from "./property.types";
 import type { PopulatedUserLite } from "./inquiry.types";
 import type { SaleOffer } from "./saleOffer.types";
 
-// =====================================================
-// ENUMS
-// =====================================================
+
 
 export type PaymentStatus = "unpaid" | "partial" | "paid";
 
@@ -16,9 +14,7 @@ export type TransactionStatus =
   | "completed"
   | "cancelled";
 
-// =====================================================
-// ENTITY
-// =====================================================
+
 
 export interface SaleTransaction {
   _id: string;
@@ -36,8 +32,6 @@ export interface SaleTransaction {
   notes: string;
   createdAt: string;
   updatedAt: string;
-
-  // Aggregated fields (from backend $lookup)
   propertyDetails?: Property;
   buyerDetails?: PopulatedUserLite;
   ownerDetails?: PopulatedUserLite;
@@ -45,9 +39,7 @@ export interface SaleTransaction {
   offerDetails?: SaleOffer | null;
 }
 
-// =====================================================
-// PAYLOADS
-// =====================================================
+
 
 export interface CreateSaleTransactionData {
   offerId: string;
@@ -62,9 +54,7 @@ export interface UpdateSaleTransactionData {
   notes?: string;
 }
 
-// =====================================================
-// RESPONSES
-// =====================================================
+
 
 export interface GetSaleTransactionsResponse {
   success: boolean;
@@ -85,9 +75,7 @@ export interface SaleTransactionMutationResponse {
   data?: SaleTransaction;
 }
 
-// =====================================================
-// STATE
-// =====================================================
+
 
 export interface SaleTransactionState {
   transactions: SaleTransaction[];
@@ -96,9 +84,7 @@ export interface SaleTransactionState {
   error: string | null;
 }
 
-// =====================================================
-// FORM VALUES
-// =====================================================
+
 
 export interface UpdateTransactionFormValues {
   transactionStatus: TransactionStatus;

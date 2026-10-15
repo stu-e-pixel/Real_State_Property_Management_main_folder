@@ -32,7 +32,7 @@ interface BookAppointmentModalProps {
   property: Property | null | undefined;
 }
 
-// Default: tomorrow at 10:00
+
 const defaultDateTime = (): string => {
   const d = new Date();
 
@@ -140,7 +140,7 @@ const BookAppointmentModal: React.FC<BookAppointmentModalProps> = ({
       <Divider />
 
       <DialogContent>
-        {/* Property snapshot */}
+       
         <Box
           sx={{
             display: "flex",

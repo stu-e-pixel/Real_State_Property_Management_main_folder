@@ -47,10 +47,6 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import type { Review } from "../../typescript/type/review.types";
 
-// =====================================================
-// CONFIG
-// =====================================================
-
 const STATUS_COLORS: Record<
   string,
   "default" | "success" | "error" | "warning"
@@ -67,36 +63,22 @@ interface ManagePropertyReviewsProps {
   mode: "owner" | "agent";
 }
 
-// =====================================================
-// PAGE
-// =====================================================
-
-const ManagePropertyReviews = ({
-  mode,
-}: ManagePropertyReviewsProps) => {
+const ManagePropertyReviews = ({ mode }: ManagePropertyReviewsProps) => {
   const dispatch = useAppDispatch();
   const { reviews, loading } = useAppSelector((state) => state.review);
 
   const [tab, setTab] = useState<ReviewTab>("all");
-
-  // ================= REPLY STATE =================
 
   const [replyOpen, setReplyOpen] = useState(false);
   const [replyTarget, setReplyTarget] = useState<Review | null>(null);
   const [replyText, setReplyText] = useState("");
   const [replySubmitting, setReplySubmitting] = useState(false);
 
-  // ================= STATUS STATE =================
-
   const [statusOpen, setStatusOpen] = useState(false);
   const [statusTarget, setStatusTarget] = useState<Review | null>(null);
   const [statusValue, setStatusValue] = useState<ReviewStatus>("approved");
   const [statusReason, setStatusReason] = useState("");
   const [statusSubmitting, setStatusSubmitting] = useState(false);
-
-  // =====================================================
-  // FETCH REVIEWS
-  // =====================================================
 
   useEffect(() => {
     if (mode === "owner") {
@@ -105,10 +87,6 @@ const ManagePropertyReviews = ({
       dispatch(getAgentReviews());
     }
   }, [dispatch, mode]);
-
-  // =====================================================
-  // FILTER AND COUNTS
-  // =====================================================
 
   const filteredReviews = useMemo(() => {
     if (tab === "all") return reviews;
@@ -123,7 +101,7 @@ const ManagePropertyReviews = ({
       approved: reviews.filter((review) => review.status === "approved").length,
       rejected: reviews.filter((review) => review.status === "rejected").length,
     }),
-    [reviews]
+    [reviews],
   );
 
   const avgRating = useMemo(() => {
@@ -131,15 +109,11 @@ const ManagePropertyReviews = ({
 
     const totalRating = reviews.reduce(
       (total, review) => total + review.rating,
-      0
+      0,
     );
 
     return totalRating / reviews.length;
   }, [reviews]);
-
-  // =====================================================
-  // HELPERS
-  // =====================================================
 
   const getPropertyTitle = (review: Review): string => {
     if (typeof review.property === "object" && review.property) {
@@ -181,10 +155,6 @@ const ManagePropertyReviews = ({
     return undefined;
   };
 
-  // =====================================================
-  // REPLY HANDLERS
-  // =====================================================
-
   const openReply = (review: Review): void => {
     setReplyTarget(review);
     setReplyText(review.reply ?? "");
@@ -213,7 +183,7 @@ const ManagePropertyReviews = ({
         replyToReview({
           id: replyTarget._id,
           reply: trimmedReply,
-        })
+        }),
       );
 
       if (replyToReview.fulfilled.match(result)) {
@@ -232,13 +202,9 @@ const ManagePropertyReviews = ({
     }
   };
 
-  // =====================================================
-  // STATUS HANDLERS
-  // =====================================================
-
   const openStatus = (
     review: Review,
-    defaultAction: ReviewStatus = "approved"
+    defaultAction: ReviewStatus = "approved",
   ): void => {
     setStatusTarget(review);
     setStatusValue(defaultAction);
@@ -275,7 +241,7 @@ const ManagePropertyReviews = ({
           id: statusTarget._id,
           status: statusValue,
           reason: statusValue === "rejected" ? trimmedReason : undefined,
-        })
+        }),
       );
 
       if (updateReviewStatusByOwner.fulfilled.match(result)) {
@@ -294,10 +260,6 @@ const ManagePropertyReviews = ({
       setStatusSubmitting(false);
     }
   };
-
-  // =====================================================
-  // RENDER
-  // =====================================================
 
   return (
     <MainLayout>
@@ -363,8 +325,6 @@ const ManagePropertyReviews = ({
 
         <Divider sx={{ mb: 2 }} />
 
-        {/* TABS */}
-
         <Tabs
           value={tab}
           onChange={(_event, value: ReviewTab) => setTab(value)}
@@ -377,8 +337,6 @@ const ManagePropertyReviews = ({
           <Tab value="approved" label={`Approved (${counts.approved})`} />
           <Tab value="rejected" label={`Rejected (${counts.rejected})`} />
         </Tabs>
-
-        {/* CONTENT */}
 
         {loading && reviews.length === 0 ? (
           <Box
@@ -487,8 +445,6 @@ const ManagePropertyReviews = ({
                       />
                     </Box>
 
-                    {/* REVIEWER */}
-
                     <Box
                       sx={{
                         display: "flex",
@@ -524,13 +480,9 @@ const ManagePropertyReviews = ({
                       </Box>
                     </Box>
 
-                    {/* RATING */}
-
                     <Box sx={{ mb: 1 }}>
                       <Rating value={review.rating} readOnly size="small" />
                     </Box>
-
-                    {/* COMMENT */}
 
                     <Typography
                       variant="body2"
@@ -547,8 +499,6 @@ const ManagePropertyReviews = ({
                       {review.comment}
                     </Typography>
 
-                    {/* REJECTION REASON */}
-
                     {review.status === "rejected" && review.reason && (
                       <Alert severity="error" sx={{ mt: 1, py: 0.5 }}>
                         <Typography variant="caption">
@@ -559,8 +509,6 @@ const ManagePropertyReviews = ({
                         </Typography>
                       </Alert>
                     )}
-
-                    {/* EXISTING REPLY */}
 
                     {review.reply && (
                       <Box
@@ -604,8 +552,6 @@ const ManagePropertyReviews = ({
                       </Box>
                     )}
 
-                    {/* DATE */}
-
                     <Typography
                       variant="caption"
                       color="text.secondary"
@@ -625,8 +571,6 @@ const ManagePropertyReviews = ({
                       gap: 1,
                     }}
                   >
-                    {/* STATUS INDICATOR */}
-
                     <Box
                       sx={{
                         display: "flex",
@@ -716,8 +660,6 @@ const ManagePropertyReviews = ({
         )}
       </Paper>
 
-      {/* REPLY DIALOG */}
-
       <Dialog
         open={replyOpen}
         onClose={closeReply}
@@ -783,11 +725,7 @@ const ManagePropertyReviews = ({
                       {getUserName(replyTarget)}
                     </Typography>
 
-                    <Rating
-                      value={replyTarget.rating}
-                      size="small"
-                      readOnly
-                    />
+                    <Rating value={replyTarget.rating} size="small" readOnly />
                   </Box>
                 </Box>
 
@@ -856,8 +794,6 @@ const ManagePropertyReviews = ({
         </DialogActions>
       </Dialog>
 
-      {/* STATUS DIALOG */}
-
       <Dialog
         open={statusOpen}
         onClose={closeStatus}
@@ -894,8 +830,6 @@ const ManagePropertyReviews = ({
 
         <DialogContent>
           <Box sx={{ pt: 2 }}>
-            {/* REVIEW SNAPSHOT */}
-
             {statusTarget && (
               <Box
                 sx={{
@@ -925,11 +859,7 @@ const ManagePropertyReviews = ({
                       {getUserName(statusTarget)}
                     </Typography>
 
-                    <Rating
-                      value={statusTarget.rating}
-                      size="small"
-                      readOnly
-                    />
+                    <Rating value={statusTarget.rating} size="small" readOnly />
                   </Box>
                 </Box>
 
@@ -942,8 +872,6 @@ const ManagePropertyReviews = ({
                 </Typography>
               </Box>
             )}
-
-            {/* STATUS TOGGLE */}
 
             <Typography
               variant="subtitle2"
@@ -1001,8 +929,6 @@ const ManagePropertyReviews = ({
               </ToggleButton>
             </ToggleButtonGroup>
 
-            {/* REJECTION REASON */}
-
             {statusValue === "rejected" && (
               <>
                 <Typography
@@ -1029,9 +955,7 @@ const ManagePropertyReviews = ({
                     `${statusReason.length}/1000` +
                     (!statusReason.trim() ? " — Reason is required" : "")
                   }
-                  error={
-                    !statusReason.trim() || statusReason.length > 1000
-                  }
+                  error={!statusReason.trim() || statusReason.length > 1000}
                 />
 
                 <Alert severity="warning" sx={{ mt: 2 }}>

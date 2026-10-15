@@ -10,9 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 
 interface FavoriteButtonProps {
   propertyId: string;
-  /** Optional size override */
   size?: "small" | "medium" | "large";
-  /** Optional style override for positioning */
   sx?: object;
 }
 
@@ -35,10 +33,10 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   const handleToggle = async (
     e: React.MouseEvent<HTMLButtonElement>
   ): Promise<void> => {
-    e.stopPropagation(); // prevent card click navigation
+    e.stopPropagation(); 
 
     if (!isAuthenticated || !isCustomer) {
-      return; // optionally: show login prompt
+      return; 
     }
 
     if (isFavorite) {
@@ -48,7 +46,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
     }
   };
 
-  // Only show for customers
+  
   if (!isCustomer) return null;
 
   return (

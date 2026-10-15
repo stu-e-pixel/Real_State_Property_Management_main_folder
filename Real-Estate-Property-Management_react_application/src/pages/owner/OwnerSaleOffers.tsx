@@ -38,9 +38,7 @@ import type { PopulatedUserLite } from "../../typescript/type/inquiry.types";
 import type { Property } from "../../typescript/type/property.types";
 import { IndianRupee } from "lucide-react";
 
-// =====================================================
-// STATUS COLORS
-// =====================================================
+
 
 const STATUS_COLORS: Record<
   string,
@@ -54,9 +52,7 @@ const STATUS_COLORS: Record<
   expired: "default",
 };
 
-// =====================================================
-// TYPE GUARDS
-// =====================================================
+
 
 const isPopulatedProperty = (
   value: Property | string | undefined
@@ -68,9 +64,7 @@ const isPopulatedUser = (
 ): value is PopulatedUserLite =>
   !!value && typeof value === "object" && "name" in value;
 
-// =====================================================
-// PROPERTY GROUP TYPE
-// =====================================================
+
 
 interface PropertyGroup {
   propertyId: string;
@@ -78,9 +72,7 @@ interface PropertyGroup {
   offers: SaleOffer[];
 }
 
-// =====================================================
-// GROUP OFFERS BY PROPERTY
-// =====================================================
+
 
 const groupByProperty = (offers: SaleOffer[]): PropertyGroup[] => {
   const map = new Map<string, PropertyGroup>();
@@ -109,9 +101,7 @@ const groupByProperty = (offers: SaleOffer[]): PropertyGroup[] => {
   );
 };
 
-// =====================================================
-// OWNER SALE OFFERS PAGE
-// =====================================================
+
 
 const OwnerSaleOffers: React.FC = () => {
   const navigate = useNavigate();
@@ -123,9 +113,7 @@ const OwnerSaleOffers: React.FC = () => {
 
   const [expanded, setExpanded] = useState<string | false>(false);
 
-  // =====================================================
-  // FETCH OFFERS
-  // =====================================================
+
 
   useEffect(() => {
     dispatch(getSaleOfferByOwner())
@@ -135,9 +123,7 @@ const OwnerSaleOffers: React.FC = () => {
       });
   }, [dispatch]);
 
-  // =====================================================
-  // DERIVED DATA
-  // =====================================================
+
 
   const propertyGroups = useMemo(
     () => groupByProperty(saleOffers),
@@ -147,16 +133,13 @@ const OwnerSaleOffers: React.FC = () => {
   const totalOffers = saleOffers.length;
   const totalProperties = propertyGroups.length;
 
-  // Responsive offer-card widths
   const offerCardWidth = {
     xs: "100%",
     sm: "calc(50% - 12px)",
     md: "calc(33.333% - 16px)",
   };
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+  
 
   return (
     <MainLayout>
@@ -178,7 +161,7 @@ const OwnerSaleOffers: React.FC = () => {
             boxShadow: "0 10px 35px rgba(15,23,42,0.05)",
           }}
         >
-          {/* ================= HEADER ================= */}
+          
 
           <Box
             sx={{
@@ -222,7 +205,7 @@ const OwnerSaleOffers: React.FC = () => {
               </Typography>
             </Box>
 
-            {/* SUMMARY CHIPS — BOX INSTEAD OF STACK */}
+           
 
             <Box
               sx={{
@@ -267,7 +250,7 @@ const OwnerSaleOffers: React.FC = () => {
 
           <Divider sx={{ mb: 3, borderColor: "#e2e8f0" }} />
 
-          {/* ================= CONTENT ================= */}
+         
 
           {loading && saleOffers.length === 0 ? (
             <Box
@@ -287,7 +270,7 @@ const OwnerSaleOffers: React.FC = () => {
               ))}
             </Box>
           ) : saleOffers.length === 0 ? (
-            /* ================= EMPTY STATE ================= */
+            
 
             <Box
               sx={{
@@ -339,8 +322,7 @@ const OwnerSaleOffers: React.FC = () => {
               </Typography>
             </Box>
           ) : (
-            /* ================= PROPERTY ACCORDIONS ================= */
-
+            
             <Box>
               {propertyGroups.map((group) => (
                 <Accordion
@@ -368,7 +350,7 @@ const OwnerSaleOffers: React.FC = () => {
                     },
                   }}
                 >
-                  {/* PROPERTY HEADER */}
+                 
 
                   <AccordionSummary
                     expandIcon={
@@ -476,7 +458,7 @@ const OwnerSaleOffers: React.FC = () => {
                     </Box>
                   </AccordionSummary>
 
-                  {/* ================= OFFERS ================= */}
+                  
 
                   <AccordionDetails
                     sx={{
@@ -484,7 +466,7 @@ const OwnerSaleOffers: React.FC = () => {
                       bgcolor: "#ffffff",
                     }}
                   >
-                    {/* FLEXBOX REPLACES GRID */}
+                   
 
                     <Box
                       sx={{
@@ -603,7 +585,7 @@ const OwnerSaleOffers: React.FC = () => {
 
                               <Divider sx={{ my: 1.5 }} />
 
-                              {/* OFFER DETAILS */}
+                             
 
                               <Box
                                 sx={{

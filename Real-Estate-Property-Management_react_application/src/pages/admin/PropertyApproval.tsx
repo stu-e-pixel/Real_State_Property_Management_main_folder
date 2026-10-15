@@ -81,10 +81,6 @@ const PropertyApproval: React.FC = () => {
     (state) => state.property,
   );
 
-  // ------------------------------------------------
-  // State
-  // ------------------------------------------------
-
   const [tab, setTab] = useState<TabValue>("Pending");
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(9);
@@ -97,10 +93,6 @@ const PropertyApproval: React.FC = () => {
   const [deleteTarget, setDeleteTarget] = useState<Property | null>(null);
 
   const [permanentDelete, setPermanentDelete] = useState<boolean>(false);
-
-  // ------------------------------------------------
-  // Fetch properties
-  // ------------------------------------------------
 
   const fetchProperties = useCallback((): void => {
     dispatch(
@@ -118,20 +110,11 @@ const PropertyApproval: React.FC = () => {
     fetchProperties();
   }, [fetchProperties]);
 
-  // ------------------------------------------------
-  // Search
-  // ------------------------------------------------
-
   const handleSearch = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    // Fetch will happen automatically because page changes.
     setPage(0);
   };
-
-  // ------------------------------------------------
-  // Actions
-  // ------------------------------------------------
 
   const handleApprove = (id: string): void => {
     if (window.confirm("Approve this property?")) {
@@ -168,10 +151,6 @@ const PropertyApproval: React.FC = () => {
     setDeleteTarget(null);
   };
 
-  // ------------------------------------------------
-  // Filtering
-  // ------------------------------------------------
-
   const filtered = properties.filter((p) => {
     if (tab === "all") return true;
 
@@ -186,10 +165,6 @@ const PropertyApproval: React.FC = () => {
     rejected: properties.filter((p) => p.approvalStatus === "rejected").length,
   };
 
-  // ------------------------------------------------
-  // Render
-  // ------------------------------------------------
-
   return (
     <MainLayout>
       <Paper
@@ -198,10 +173,6 @@ const PropertyApproval: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* =====================================================
-            HEADER
-        ===================================================== */}
-
         <Box
           sx={{
             display: "flex",
@@ -250,10 +221,6 @@ const PropertyApproval: React.FC = () => {
 
         <Divider sx={{ mb: 2 }} />
 
-        {/* =====================================================
-            TABS
-        ===================================================== */}
-
         <Tabs
           value={tab}
           onChange={(_event, value: TabValue) => {
@@ -266,10 +233,6 @@ const PropertyApproval: React.FC = () => {
             <Tab key={item.value} value={item.value} label={item.label} />
           ))}
         </Tabs>
-
-        {/* =====================================================
-            SEARCH
-        ===================================================== */}
 
         <Box
           sx={{
@@ -299,10 +262,6 @@ const PropertyApproval: React.FC = () => {
             Refresh
           </Button>
         </Box>
-
-        {/* =====================================================
-            PROPERTY LIST
-        ===================================================== */}
 
         {loading && properties.length === 0 ? (
           <Loader message="Loading properties..." />
@@ -345,8 +304,6 @@ const PropertyApproval: React.FC = () => {
                     position: "relative",
                   }}
                 >
-                  {/* IMAGE */}
-
                   <Box
                     sx={{
                       position: "relative",
@@ -393,8 +350,6 @@ const PropertyApproval: React.FC = () => {
                     />
                   </Box>
 
-                  {/* CONTENT */}
-
                   <CardContent
                     sx={{
                       flexGrow: 1,
@@ -419,8 +374,6 @@ const PropertyApproval: React.FC = () => {
                       {p.description}
                     </Typography>
 
-                    {/* PRICE */}
-
                     <Stack
                       direction="row"
                       spacing={1}
@@ -429,9 +382,7 @@ const PropertyApproval: React.FC = () => {
                         alignItems: "center",
                       }}
                     >
-                      <IndianRupee
-                        fontSize="small"
-                      />
+                      <IndianRupee fontSize="small" />
 
                       <Typography
                         variant="h6"
@@ -441,8 +392,6 @@ const PropertyApproval: React.FC = () => {
                         {p.price.toLocaleString()}
                       </Typography>
                     </Stack>
-
-                    {/* PROPERTY FEATURES */}
 
                     <Box
                       sx={{
@@ -489,8 +438,6 @@ const PropertyApproval: React.FC = () => {
                       </Box>
                     </Box>
 
-                    {/* OWNER */}
-
                     {isPopulatedUser(p.owner) && (
                       <Box
                         sx={{
@@ -532,8 +479,6 @@ const PropertyApproval: React.FC = () => {
                       </Box>
                     )}
 
-                    {/* REJECTION REASON */}
-
                     {p.rejectionReason && (
                       <Alert
                         severity="error"
@@ -550,8 +495,6 @@ const PropertyApproval: React.FC = () => {
                   </CardContent>
 
                   <Divider />
-
-                  {/* ACTIONS */}
 
                   <CardActions
                     sx={{
@@ -608,10 +551,6 @@ const PropertyApproval: React.FC = () => {
           </Box>
         )}
 
-        {/* =====================================================
-            PAGINATION
-        ===================================================== */}
-
         {pagination && (
           <TablePagination
             component="div"
@@ -627,10 +566,6 @@ const PropertyApproval: React.FC = () => {
           />
         )}
       </Paper>
-
-      {/* =====================================================
-          VIEW DIALOG
-      ===================================================== */}
 
       <Dialog open={viewOpen} onClose={closeView} maxWidth="md" fullWidth>
         <DialogTitle
@@ -653,8 +588,6 @@ const PropertyApproval: React.FC = () => {
             <Loader message="Loading property..." />
           ) : property ? (
             <>
-              {/* IMAGES */}
-
               {property.images?.length > 0 && (
                 <Box
                   sx={{
@@ -686,8 +619,6 @@ const PropertyApproval: React.FC = () => {
                 {property.title}
               </Typography>
 
-              {/* DETAILS */}
-
               <Box
                 sx={{
                   display: "flex",
@@ -696,8 +627,6 @@ const PropertyApproval: React.FC = () => {
                   mt: 1,
                 }}
               >
-                {/* DESCRIPTION */}
-
                 <Box
                   sx={{
                     width: "100%",
@@ -707,8 +636,6 @@ const PropertyApproval: React.FC = () => {
                     {property.description}
                   </Typography>
                 </Box>
-
-                {/* TYPE */}
 
                 <Box
                   sx={{
@@ -727,8 +654,6 @@ const PropertyApproval: React.FC = () => {
                   </Typography>
                 </Box>
 
-                {/* PURPOSE */}
-
                 <Box
                   sx={{
                     width: {
@@ -745,8 +670,6 @@ const PropertyApproval: React.FC = () => {
                     {property.purpose}
                   </Typography>
                 </Box>
-
-                {/* PRICE */}
 
                 <Box
                   sx={{
@@ -765,8 +688,6 @@ const PropertyApproval: React.FC = () => {
                   </Typography>
                 </Box>
 
-                {/* AREA */}
-
                 <Box
                   sx={{
                     width: {
@@ -783,8 +704,6 @@ const PropertyApproval: React.FC = () => {
                     {property.area} sqft
                   </Typography>
                 </Box>
-
-                {/* BEDROOMS */}
 
                 <Box
                   sx={{
@@ -803,8 +722,6 @@ const PropertyApproval: React.FC = () => {
                   </Typography>
                 </Box>
 
-                {/* BATHROOMS */}
-
                 <Box
                   sx={{
                     width: {
@@ -821,8 +738,6 @@ const PropertyApproval: React.FC = () => {
                     {property.bathrooms}
                   </Typography>
                 </Box>
-
-                {/* FURNISHING */}
 
                 <Box
                   sx={{
@@ -841,8 +756,6 @@ const PropertyApproval: React.FC = () => {
                   </Typography>
                 </Box>
 
-                {/* STATUS */}
-
                 <Box
                   sx={{
                     width: {
@@ -859,8 +772,6 @@ const PropertyApproval: React.FC = () => {
                     {property.status}
                   </Typography>
                 </Box>
-
-                {/* APPROVAL */}
 
                 <Box
                   sx={{
@@ -888,8 +799,6 @@ const PropertyApproval: React.FC = () => {
                     />
                   </Box>
                 </Box>
-
-                {/* OWNER */}
 
                 {isPopulatedUser(property.owner) && (
                   <Box
@@ -934,8 +843,6 @@ const PropertyApproval: React.FC = () => {
                   </Box>
                 )}
 
-                {/* AGENT */}
-
                 {isPopulatedUser(property.agentId) && (
                   <Box
                     sx={{
@@ -977,8 +884,6 @@ const PropertyApproval: React.FC = () => {
                   </Box>
                 )}
 
-                {/* REJECTION REASON */}
-
                 {property.rejectionReason && (
                   <Box
                     sx={{
@@ -990,8 +895,6 @@ const PropertyApproval: React.FC = () => {
                     </Alert>
                   </Box>
                 )}
-
-                {/* LOCATION */}
 
                 <Box
                   sx={{
@@ -1012,8 +915,6 @@ const PropertyApproval: React.FC = () => {
                     </Typography>
                   </Box>
                 </Box>
-
-                {/* AMENITIES */}
 
                 {property.amenities?.length > 0 && (
                   <Box
@@ -1066,10 +967,6 @@ const PropertyApproval: React.FC = () => {
           <Button onClick={closeView}>Close</Button>
         </DialogActions>
       </Dialog>
-
-      {/* =====================================================
-          DELETE DIALOG
-      ===================================================== */}
 
       <Dialog
         open={deleteOpen}

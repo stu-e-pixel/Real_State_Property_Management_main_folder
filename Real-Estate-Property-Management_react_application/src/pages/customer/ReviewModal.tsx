@@ -252,7 +252,7 @@ const ReviewModal = ({
             />
           </Box>
 
-          {/* Comment */}
+          
           <Box>
             <Typography
               variant="subtitle2"

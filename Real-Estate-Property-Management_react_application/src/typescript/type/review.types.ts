@@ -4,9 +4,7 @@ export type ReviewStatus = "pending" | "approved" | "rejected";
 
 export type ReviewAction = "approve" | "reject";
 
-// =====================================================
-// NESTED SHAPES (from aggregation)
-// =====================================================
+
 
 export interface ReviewPropertyLite {
   _id: string;
@@ -19,9 +17,7 @@ export interface ReviewUserLite {
   email?: string;
 }
 
-// =====================================================
-// ENTITY
-// =====================================================
+
 
 export interface Review {
   _id: string;
@@ -38,9 +34,7 @@ export interface Review {
   updatedAt: string;
 }
 
-// =====================================================
-// PAYLOADS
-// =====================================================
+
 
 export interface CreateReviewData {
   property: string;
@@ -67,9 +61,7 @@ export interface ReviewActionData {
   reason?: string;
 }
 
-// =====================================================
-// RESPONSES
-// =====================================================
+
 
 export interface GetReviewsResponse {
   success: boolean;
@@ -109,9 +101,7 @@ export interface DeleteReviewResponse {
   message: string;
 }
 
-// =====================================================
-// STATE
-// =====================================================
+
 
 export interface ReviewState {
   reviews: Review[];
@@ -122,9 +112,7 @@ export interface ReviewState {
   error: string | null;
 }
 
-// =====================================================
-// FORM VALUES
-// =====================================================
+
 
 export interface ReviewFormValues {
   rating: number;

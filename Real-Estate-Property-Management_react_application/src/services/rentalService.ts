@@ -8,10 +8,10 @@ import type {
   RentalMutationResponse,
 } from "../typescript/type/rental.types";
 
-// Adjust prefix to match your backend mount — from your logs it's /v5/api/rental
+
 
 const rentalService = {
-  // ---------------- CREATE (customer) ----------------
+ 
   createRentalApplication: async (
     data: CreateRentalApplicationData
   ): Promise<RentalMutationResponse> => {
@@ -22,7 +22,7 @@ const rentalService = {
     return response.data;
   },
 
-  // ---------------- UPDATE (customer) ----------------
+  
   updateRentalApplication: async (
     id: string,
     data: UpdateRentalApplicationData
@@ -34,7 +34,7 @@ const rentalService = {
     return response.data;
   },
 
-  // ---------------- MY APPLICATIONS (customer) ----------------
+ 
   getMyRentalApplications: async (): Promise<GetRentalApplicationsResponse> => {
     const response = await api.get<GetRentalApplicationsResponse>(
       "/v10/api/my-applications"
@@ -42,7 +42,7 @@ const rentalService = {
     return response.data;
   },
 
-  // ---------------- WITHDRAW (customer) ----------------
+  
   withdrawRentalApplication: async (
     id: string
   ): Promise<RentalMutationResponse> => {
@@ -52,7 +52,7 @@ const rentalService = {
     return response.data;
   },
 
-  // ---------------- OWNER ----------------
+  
   getOwnerRentalApplications: async (): Promise<GetRentalApplicationsResponse> => {
     const response = await api.get<GetRentalApplicationsResponse>(
       "/v10/api/owner/all"
@@ -60,7 +60,7 @@ const rentalService = {
     return response.data;
   },
 
-  // ---------------- AGENT ----------------
+  
   getAgentRentalApplications: async (): Promise<GetRentalApplicationsResponse> => {
     const response = await api.get<GetRentalApplicationsResponse>(
       "/v10/api/agent/all"
@@ -68,7 +68,7 @@ const rentalService = {
     return response.data;
   },
 
-  // ---------------- GET BY ID ----------------
+ 
   getRentalApplicationById: async (
     id: string
   ): Promise<GetRentalApplicationResponse> => {
@@ -78,7 +78,7 @@ const rentalService = {
     return response.data;
   },
 
-  // ---------------- ACTION (owner/agent) ----------------
+ 
   rentalApplicationAction: async (
     data: RentalActionData
   ): Promise<RentalMutationResponse> => {

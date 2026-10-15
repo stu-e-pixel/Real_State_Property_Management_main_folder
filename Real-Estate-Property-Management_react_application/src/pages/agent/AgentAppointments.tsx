@@ -64,10 +64,6 @@ import type {
 import type { Property } from "../../typescript/type/property.types";
 import type { PopulatedUserLite } from "../../typescript/type/inquiry.types";
 
-// =====================================================
-// CONFIG
-// =====================================================
-
 const STATUS_COLORS: Record<
   string,
   "default" | "warning" | "info" | "success" | "error"
@@ -81,18 +77,13 @@ const STATUS_COLORS: Record<
 };
 
 const isPopulatedProperty = (
-  val: Property | string | undefined
-): val is Property =>
-  !!val && typeof val === "object" && "title" in val;
+  val: Property | string | undefined,
+): val is Property => !!val && typeof val === "object" && "title" in val;
 
 const isPopulatedUser = (
-  val: PopulatedUserLite | string | null | undefined
+  val: PopulatedUserLite | string | null | undefined,
 ): val is PopulatedUserLite =>
   !!val && typeof val === "object" && "name" in val;
-
-// =====================================================
-// PROPS
-// =====================================================
 
 interface AgentAppointmentsProps {
   mode: "agent" | "owner";
@@ -104,35 +95,27 @@ const toLocalInput = (iso: string): string => {
   const d = new Date(iso);
 
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
-    d.getDate()
+    d.getDate(),
   )}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };
 
-// =====================================================
-// PAGE
-// =====================================================
-
-const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
-  mode,
-}) => {
+const AgentAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
   const dispatch = useAppDispatch();
 
   const { appointments, appointment, loading } = useAppSelector(
-    (state) => state.appointment
+    (state) => state.appointment,
   );
 
   const [tab, setTab] = useState<string>("all");
   const [viewOpen, setViewOpen] = useState<boolean>(false);
-  const [rescheduleOpen, setRescheduleOpen] =
-    useState<boolean>(false);
+  const [rescheduleOpen, setRescheduleOpen] = useState<boolean>(false);
   const [cancelOpen, setCancelOpen] = useState<boolean>(false);
   const [target, setTarget] = useState<Appointment | null>(null);
 
-  // Row action menu
-  const [menuAnchor, setMenuAnchor] =
-    useState<null | HTMLElement>(null);
-  const [menuAppointment, setMenuAppointment] =
-    useState<Appointment | null>(null);
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+  const [menuAppointment, setMenuAppointment] = useState<Appointment | null>(
+    null,
+  );
 
   const rescheduleForm = useForm<RescheduleFormValues>({
     resolver: yupResolver(rescheduleSchema),
@@ -150,10 +133,6 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
     },
   });
 
-  // =====================================================
-  // FETCH
-  // =====================================================
-
   useEffect(() => {
     if (mode === "agent") {
       dispatch(getAgentAppointments());
@@ -165,10 +144,6 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
       dispatch(clearSelectedAppointment());
     };
   }, [dispatch, mode]);
-
-  // =====================================================
-  // HANDLERS
-  // =====================================================
 
   const handleView = async (id: string): Promise<void> => {
     await dispatch(getAppointmentById(id));
@@ -182,17 +157,16 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
 
   const doAction = (
     a: Appointment,
-    action: "confirm" | "reject" | "complete"
+    action: "confirm" | "reject" | "complete",
   ): void => {
-    const verb =
-      action.charAt(0).toUpperCase() + action.slice(1);
+    const verb = action.charAt(0).toUpperCase() + action.slice(1);
 
     if (window.confirm(`${verb} this appointment?`)) {
       dispatch(
         appointmentAction({
           id: a._id,
           action,
-        })
+        }),
       );
     }
   };
@@ -221,7 +195,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
   };
 
   const submitReschedule = async (
-    data: RescheduleFormValues
+    data: RescheduleFormValues,
   ): Promise<void> => {
     if (!target) return;
 
@@ -229,12 +203,10 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
       appointmentAction({
         id: target._id,
         action: "reschedule",
-        appointmentDate: new Date(
-          data.appointmentDate
-        ).toISOString(),
+        appointmentDate: new Date(data.appointmentDate).toISOString(),
         duration: data.duration,
         message: data.message,
-      })
+      }),
     );
 
     if (appointmentAction.fulfilled.match(result)) {
@@ -261,16 +233,14 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
     });
   };
 
-  const submitCancel = async (
-    data: CancelFormValues
-  ): Promise<void> => {
+  const submitCancel = async (data: CancelFormValues): Promise<void> => {
     if (!target) return;
 
     const result = await dispatch(
       cancelAppointment({
         id: target._id,
         cancellationReason: data.cancellationReason,
-      })
+      }),
     );
 
     if (cancelAppointment.fulfilled.match(result)) {
@@ -278,14 +248,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
     }
   };
 
-  // =====================================================
-  // MENU
-  // =====================================================
-
-  const openMenu = (
-    e: React.MouseEvent<HTMLElement>,
-    a: Appointment
-  ): void => {
+  const openMenu = (e: React.MouseEvent<HTMLElement>, a: Appointment): void => {
     setMenuAnchor(e.currentTarget);
     setMenuAppointment(a);
   };
@@ -295,37 +258,17 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
     setMenuAppointment(null);
   };
 
-  // =====================================================
-  // TAB COUNTS
-  // =====================================================
-
   const filtered =
-    tab === "all"
-      ? appointments
-      : appointments.filter((a) => a.status === tab);
+    tab === "all" ? appointments : appointments.filter((a) => a.status === tab);
 
   const counts = {
     all: appointments.length,
-    pending: appointments.filter(
-      (a) => a.status === "pending"
-    ).length,
-    confirmed: appointments.filter(
-      (a) => a.status === "confirmed"
-    ).length,
-    rescheduled: appointments.filter(
-      (a) => a.status === "rescheduled"
-    ).length,
-    completed: appointments.filter(
-      (a) => a.status === "completed"
-    ).length,
-    cancelled: appointments.filter(
-      (a) => a.status === "cancelled"
-    ).length,
+    pending: appointments.filter((a) => a.status === "pending").length,
+    confirmed: appointments.filter((a) => a.status === "confirmed").length,
+    rescheduled: appointments.filter((a) => a.status === "rescheduled").length,
+    completed: appointments.filter((a) => a.status === "completed").length,
+    cancelled: appointments.filter((a) => a.status === "cancelled").length,
   };
-
-  // =====================================================
-  // RENDER
-  // =====================================================
 
   return (
     <MainLayout>
@@ -335,8 +278,6 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
-
         <Box
           sx={{
             display: "flex",
@@ -354,15 +295,10 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                 fontWeight: 700,
               }}
             >
-              {mode === "agent"
-                ? "Assigned Appointments"
-                : "Property Visits"}
+              {mode === "agent" ? "Assigned Appointments" : "Property Visits"}
             </Typography>
 
-            <Typography
-              variant="body2"
-              color="text.secondary"
-            >
+            <Typography variant="body2" color="text.secondary">
               Manage visits for{" "}
               {mode === "agent"
                 ? "your assigned properties"
@@ -383,8 +319,6 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
           }}
         />
 
-        {/* ================= TABS ================= */}
-
         <Tabs
           value={tab}
           onChange={(_event, value) => setTab(value)}
@@ -394,38 +328,21 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
             mb: 3,
           }}
         >
-          <Tab
-            value="all"
-            label={`All (${counts.all})`}
-          />
+          <Tab value="all" label={`All (${counts.all})`} />
 
-          <Tab
-            value="pending"
-            label={`Pending (${counts.pending})`}
-          />
+          <Tab value="pending" label={`Pending (${counts.pending})`} />
 
-          <Tab
-            value="confirmed"
-            label={`Confirmed (${counts.confirmed})`}
-          />
+          <Tab value="confirmed" label={`Confirmed (${counts.confirmed})`} />
 
           <Tab
             value="rescheduled"
             label={`Rescheduled (${counts.rescheduled})`}
           />
 
-          <Tab
-            value="completed"
-            label={`Completed (${counts.completed})`}
-          />
+          <Tab value="completed" label={`Completed (${counts.completed})`} />
 
-          <Tab
-            value="cancelled"
-            label={`Cancelled (${counts.cancelled})`}
-          />
+          <Tab value="cancelled" label={`Cancelled (${counts.cancelled})`} />
         </Tabs>
-
-        {/* ================= APPOINTMENTS ================= */}
 
         {loading && appointments.length === 0 ? (
           <Box
@@ -470,10 +387,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
               }}
             />
 
-            <Typography
-              variant="h6"
-              color="text.secondary"
-            >
+            <Typography variant="h6" color="text.secondary">
               No appointments in this category
             </Typography>
           </Box>
@@ -552,10 +466,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                               : "Property"}
                           </Typography>
 
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                          >
+                          <Typography variant="caption" color="text.secondary">
                             {isPopulatedProperty(a.property) &&
                               `${a.property.propertyType} • ${a.property.purpose}`}
                           </Typography>
@@ -564,15 +475,10 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
 
                       <Chip
                         label={a.status}
-                        color={
-                          STATUS_COLORS[a.status] ??
-                          "default"
-                        }
+                        color={STATUS_COLORS[a.status] ?? "default"}
                         size="small"
                       />
                     </Box>
-
-                    {/* Customer Info */}
 
                     {isPopulatedUser(a.user) && (
                       <Box
@@ -619,8 +525,6 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                       </Box>
                     )}
 
-                    {/* Date / Duration / Message */}
-
                     <Box
                       sx={{
                         display: "flex",
@@ -635,15 +539,10 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                           gap: 1,
                         }}
                       >
-                        <Event
-                          fontSize="small"
-                          color="action"
-                        />
+                        <Event fontSize="small" color="action" />
 
                         <Typography variant="body2">
-                          {new Date(
-                            a.appointmentDate
-                          ).toLocaleString()}
+                          {new Date(a.appointmentDate).toLocaleString()}
                         </Typography>
                       </Box>
 
@@ -654,10 +553,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                           gap: 1,
                         }}
                       >
-                        <Timer
-                          fontSize="small"
-                          color="action"
-                        />
+                        <Timer fontSize="small" color="action" />
 
                         <Typography variant="body2">
                           {a.duration} minutes
@@ -680,10 +576,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                             }}
                           />
 
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                          >
+                          <Typography variant="body2" color="text.secondary">
                             {a.message}
                           </Typography>
                         </Box>
@@ -702,9 +595,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                       <IconButton
                         size="small"
                         color="primary"
-                        onClick={() =>
-                          handleView(a._id)
-                        }
+                        onClick={() => handleView(a._id)}
                       >
                         <Visibility fontSize="small" />
                       </IconButton>
@@ -723,12 +614,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                             size="small"
                             color="success"
                             startIcon={<CheckCircle />}
-                            onClick={() =>
-                              doAction(
-                                a,
-                                "confirm"
-                              )
-                            }
+                            onClick={() => doAction(a, "confirm")}
                           >
                             Confirm
                           </Button>
@@ -737,12 +623,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                             size="small"
                             color="error"
                             startIcon={<Cancel />}
-                            onClick={() =>
-                              doAction(
-                                a,
-                                "reject"
-                              )
-                            }
+                            onClick={() => doAction(a, "reject")}
                           >
                             Reject
                           </Button>
@@ -755,12 +636,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                           variant="contained"
                           color="success"
                           startIcon={<TaskAlt />}
-                          onClick={() =>
-                            doAction(
-                              a,
-                              "complete"
-                            )
-                          }
+                          onClick={() => doAction(a, "complete")}
                         >
                           Complete
                         </Button>
@@ -771,9 +647,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                         a.status === "rescheduled") && (
                         <IconButton
                           size="small"
-                          onClick={(event) =>
-                            openMenu(event, a)
-                          }
+                          onClick={(event) => openMenu(event, a)}
                         >
                           <MoreVert fontSize="small" />
                         </IconButton>
@@ -786,8 +660,6 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
           </Box>
         )}
       </Paper>
-
-      {/* ================= ROW MENU ================= */}
 
       <Menu
         anchorEl={menuAnchor}
@@ -806,7 +678,6 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
           <ListItemIcon>
             <Schedule fontSize="small" />
           </ListItemIcon>
-
           Reschedule
         </MenuItem>
 
@@ -822,19 +693,11 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
           <ListItemIcon>
             <Cancel fontSize="small" />
           </ListItemIcon>
-
           Cancel Appointment
         </MenuItem>
       </Menu>
 
-      {/* ================= VIEW DIALOG ================= */}
-
-      <Dialog
-        open={viewOpen}
-        onClose={closeView}
-        maxWidth="sm"
-        fullWidth
-      >
+      <Dialog open={viewOpen} onClose={closeView} maxWidth="sm" fullWidth>
         <DialogTitle
           sx={{
             display: "flex",
@@ -843,11 +706,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
           }}
         >
           Appointment Details
-
-          <IconButton
-            onClick={closeView}
-            size="small"
-          >
+          <IconButton onClick={closeView} size="small">
             <Close />
           </IconButton>
         </DialogTitle>
@@ -856,10 +715,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
 
         <DialogContent>
           {loading && !appointment ? (
-            <Skeleton
-              variant="rounded"
-              height={220}
-            />
+            <Skeleton variant="rounded" height={220} />
           ) : appointment ? (
             <Box
               sx={{
@@ -869,10 +725,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
               }}
             >
               <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Property
                 </Typography>
 
@@ -882,22 +735,15 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                     fontWeight: 700,
                   }}
                 >
-                  {isPopulatedProperty(
-                    appointment.property
-                  )
+                  {isPopulatedProperty(appointment.property)
                     ? appointment.property.title
                     : "Property"}
                 </Typography>
               </Box>
 
-              {/* Customer */}
-
               {isPopulatedUser(appointment.user) && (
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                  >
+                  <Typography variant="caption" color="text.secondary">
                     Customer
                   </Typography>
 
@@ -919,9 +765,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                         height: 40,
                       }}
                     >
-                      {appointment.user.name?.charAt(
-                        0
-                      )}
+                      {appointment.user.name?.charAt(0)}
                     </Avatar>
 
                     <Box>
@@ -950,10 +794,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                             gap: 0.5,
                           }}
                         >
-                          <Email
-                            fontSize="small"
-                            color="action"
-                          />
+                          <Email fontSize="small" color="action" />
 
                           <Typography variant="caption">
                             {appointment.user.email}
@@ -968,10 +809,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                               gap: 0.5,
                             }}
                           >
-                            <Phone
-                              fontSize="small"
-                              color="action"
-                            />
+                            <Phone fontSize="small" color="action" />
 
                             <Typography variant="caption">
                               {appointment.user.phone}
@@ -984,30 +822,18 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                 </Box>
               )}
 
-              {/* Date */}
-
               <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Date & Time
                 </Typography>
 
                 <Typography variant="body1">
-                  {new Date(
-                    appointment.appointmentDate
-                  ).toLocaleString()}
+                  {new Date(appointment.appointmentDate).toLocaleString()}
                 </Typography>
               </Box>
 
-              {/* Duration */}
-
               <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Duration
                 </Typography>
 
@@ -1016,13 +842,8 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                 </Typography>
               </Box>
 
-              {/* Status */}
-
               <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Status
                 </Typography>
 
@@ -1033,48 +854,29 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                 >
                   <Chip
                     label={appointment.status}
-                    color={
-                      STATUS_COLORS[
-                        appointment.status
-                      ] ?? "default"
-                    }
+                    color={STATUS_COLORS[appointment.status] ?? "default"}
                     size="small"
                   />
                 </Box>
               </Box>
 
-              {/* Message */}
-
               {appointment.message && (
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                  >
+                  <Typography variant="caption" color="text.secondary">
                     Message
                   </Typography>
 
-                  <Typography variant="body2">
-                    {appointment.message}
-                  </Typography>
+                  <Typography variant="body2">{appointment.message}</Typography>
                 </Box>
               )}
 
-              {/* Cancellation */}
-
               {appointment.cancellationReason && (
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="error"
-                  >
+                  <Typography variant="caption" color="error">
                     Cancellation Reason
                   </Typography>
 
-                  <Typography
-                    variant="body2"
-                    color="error"
-                  >
+                  <Typography variant="body2" color="error">
                     {appointment.cancellationReason}
                   </Typography>
                 </Box>
@@ -1084,13 +886,9 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={closeView}>
-            Close
-          </Button>
+          <Button onClick={closeView}>Close</Button>
         </DialogActions>
       </Dialog>
-
-      {/* ================= RESCHEDULE DIALOG ================= */}
 
       <Dialog
         open={rescheduleOpen}
@@ -1105,9 +903,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
           },
         }}
       >
-        <DialogTitle>
-          Reschedule Appointment
-        </DialogTitle>
+        <DialogTitle>Reschedule Appointment</DialogTitle>
 
         <Divider />
 
@@ -1150,22 +946,16 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={closeReschedule}>
-            Cancel
-          </Button>
+          <Button onClick={closeReschedule}>Cancel</Button>
 
           <Button
             variant="contained"
-            onClick={rescheduleForm.handleSubmit(
-              submitReschedule
-            )}
+            onClick={rescheduleForm.handleSubmit(submitReschedule)}
           >
             Save New Time
           </Button>
         </DialogActions>
       </Dialog>
-
-      {/* ================= CANCEL DIALOG ================= */}
 
       <Dialog
         open={cancelOpen}
@@ -1180,9 +970,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
           },
         }}
       >
-        <DialogTitle>
-          Cancel Appointment
-        </DialogTitle>
+        <DialogTitle>Cancel Appointment</DialogTitle>
 
         <Divider />
 
@@ -1199,8 +987,7 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
                 mb: 2,
               }}
             >
-              The customer will be notified of this
-              cancellation.
+              The customer will be notified of this cancellation.
             </Typography>
 
             <FormInput<CancelFormValues>
@@ -1214,16 +1001,12 @@ const AgentAppointments: React.FC<AgentAppointmentsProps> = ({
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={closeCancel}>
-            Keep
-          </Button>
+          <Button onClick={closeCancel}>Keep</Button>
 
           <Button
             variant="contained"
             color="error"
-            onClick={cancelForm.handleSubmit(
-              submitCancel
-            )}
+            onClick={cancelForm.handleSubmit(submitCancel)}
           >
             Confirm Cancel
           </Button>

@@ -1,8 +1,6 @@
 import type { UserRole } from "./auth.types";
 
-// =====================================================
-// NOTIFICATION TYPES
-// =====================================================
+
 
 export type NotificationType =
   | "inquiry_created"

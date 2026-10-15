@@ -12,7 +12,7 @@ import type {
 } from "../typescript/type/inquiry.types";
 
 const inquiryService = {
-  // ---------------- CREATE (customer) ----------------
+  
   createInquiry: async (
     data: CreateInquiryData
   ): Promise<CreateInquiryResponse> => {
@@ -23,7 +23,7 @@ const inquiryService = {
     return response.data;
   },
 
-  // ---------------- UPDATE (customer) ----------------
+  
   updateInquiry: async (
     id: string,
     data: UpdateInquiryData
@@ -35,7 +35,7 @@ const inquiryService = {
     return response.data;
   },
 
-  // ---------------- MY INQUIRIES (customer) ----------------
+ 
   getMyInquiries: async (): Promise<GetInquiriesResponse> => {
     const response = await api.get<GetInquiriesResponse>(
       "/v4/api/getInquiry"
@@ -43,7 +43,7 @@ const inquiryService = {
     return response.data;
   },
 
-  // ---------------- BY ID (any role) ----------------
+  
   getInquiryById: async (id: string): Promise<GetInquiryResponse> => {
     const response = await api.get<GetInquiryResponse>(
       `/v4/api/getInquiryById/${id}`
@@ -51,7 +51,7 @@ const inquiryService = {
     return response.data;
   },
 
-  // ---------------- AGENT INQUIRIES ----------------
+  
   getAgentInquiries: async (): Promise<GetInquiriesResponse> => {
     const response = await api.get<GetInquiriesResponse>(
       "/v4/api/getAgentInquiries"
@@ -59,7 +59,7 @@ const inquiryService = {
     return response.data;
   },
 
-  // ---------------- ALL INQUIRIES (admin) ----------------
+  
   getAllInquiries: async (): Promise<GetInquiriesResponse> => {
     const response = await api.get<GetInquiriesResponse>(
       "/v4/api/getAllInquiry"
@@ -67,7 +67,7 @@ const inquiryService = {
     return response.data;
   },
 
-  // ---------------- UPDATE STATUS (agent) ----------------
+ 
   updateInquiryStatus: async (
     id: string,
     data: UpdateInquiryStatusData
@@ -79,7 +79,7 @@ const inquiryService = {
     return response.data;
   },
 
-  // ---------------- REPLY (agent) ----------------
+ 
   replyToInquiry: async (
     id: string,
     data: ReplyInquiryData
@@ -91,7 +91,7 @@ const inquiryService = {
     return response.data;
   },
 
-  // ---------------- DELETE ----------------
+ 
   deleteInquiry: async (id: string): Promise<DeleteInquiryResponse> => {
     const response = await api.delete<DeleteInquiryResponse>(
       `/v4/api/deleteInquiry/${id}`

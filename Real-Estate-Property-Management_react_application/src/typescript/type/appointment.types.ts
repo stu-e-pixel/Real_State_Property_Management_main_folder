@@ -1,9 +1,7 @@
 
 import type { Property } from "./property.types";
 
-// =====================================================
-// ENUMS
-// =====================================================
+
 
 export type AppointmentStatus =
   | "pending"
@@ -19,9 +17,7 @@ export type AppointmentAction =
   | "reschedule"
   | "complete";
 
-// =====================================================
-// ENTITY
-// =====================================================
+
 
 export interface Appointment {
   _id: string;
@@ -37,9 +33,7 @@ export interface Appointment {
   updatedAt: string;
 }
 
-// =====================================================
-// PAYLOADS
-// =====================================================
+
 
 export interface CreateAppointmentData {
   property: string;
@@ -61,9 +55,7 @@ export interface CancelAppointmentData {
   cancellationReason?: string;
 }
 
-// =====================================================
-// RESPONSES
-// =====================================================
+
 
 export interface GetAppointmentsResponse {
   success: boolean;
@@ -86,9 +78,7 @@ export interface AppointmentMutationResponse {
   appointment?: Appointment;
 }
 
-// =====================================================
-// STATE
-// =====================================================
+
 
 export interface AppointmentState {
   appointments: Appointment[];
@@ -97,12 +87,10 @@ export interface AppointmentState {
   error: string | null;
 }
 
-// =====================================================
-// FORM VALUES
-// =====================================================
+
 
 export interface AppointmentFormValues {
-  appointmentDate: string; // yyyy-MM-ddTHH:mm for datetime-local input
+  appointmentDate: string; 
   duration: number;
   message: string;
 }

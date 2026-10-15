@@ -89,7 +89,7 @@ const PropertyReviewsSection = ({
         Customer Reviews
       </Typography>
 
-      {/* Review Statistics */}
+      
       {propertyStatistics &&
         propertyStatistics.totalReviews > 0 && (
           <Box
@@ -104,7 +104,7 @@ const PropertyReviewsSection = ({
               gap: 3,
             }}
           >
-            {/* Average Rating */}
+            
             <Box
               sx={{
                 flex: "1 1 160px",
@@ -139,7 +139,7 @@ const PropertyReviewsSection = ({
               </Typography>
             </Box>
 
-            {/* Highest Rating */}
+            
             <Box sx={{ flex: "1 1 100px" }}>
               <Typography
                 variant="caption"
@@ -156,7 +156,7 @@ const PropertyReviewsSection = ({
               </Typography>
             </Box>
 
-            {/* Lowest Rating */}
+            
             <Box sx={{ flex: "1 1 100px" }}>
               <Typography
                 variant="caption"
@@ -177,7 +177,7 @@ const PropertyReviewsSection = ({
 
       <Divider sx={{ mb: 2 }} />
 
-      {/* Reviews List */}
+      
       {loading ? (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {[1, 2].map((item) => (
@@ -217,7 +217,7 @@ const PropertyReviewsSection = ({
                   bgcolor: "background.paper",
                 }}
               >
-                {/* Reviewer Information */}
+                
                 <Box
                   sx={{
                     display: "flex",
@@ -266,7 +266,7 @@ const PropertyReviewsSection = ({
                   />
                 </Box>
 
-                {/* Review Comment */}
+                
                 <Typography
                   variant="body2"
                   color="text.secondary"

@@ -27,10 +27,6 @@ const initialState: PropertyState = {
   },
 };
 
-// =====================================================
-// THUNKS
-// =====================================================
-
 export const createProperty = createAsyncThunk<
   PropertyResponse,
   CreatePropertyData,
@@ -223,10 +219,6 @@ export const getOwnerProperties = createAsyncThunk<
   }
 });
 
-// =====================================================
-// SLICE
-// =====================================================
-
 const propertySlice = createSlice({
   name: "property",
   initialState,
@@ -250,7 +242,7 @@ const propertySlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      // -------- CREATE --------
+
       .addCase(createProperty.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -270,7 +262,6 @@ const propertySlice = createSlice({
         toast.error(action.payload ?? "Failed to create property");
       })
 
-      // -------- UPDATE --------
       .addCase(updateProperty.pending, (state) => {
         state.loading = true;
       })
@@ -291,7 +282,6 @@ const propertySlice = createSlice({
         toast.error(action.payload ?? "Failed to update property");
       })
 
-      // -------- GET ALL --------
       .addCase(getAllProperties.pending, (state) => {
         state.loading = true;
       })
@@ -313,7 +303,6 @@ const propertySlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch properties");
       })
 
-      // -------- SOFT DELETE --------
       .addCase(softDeleteProperty.fulfilled, (state, action) => {
         state.properties = state.properties.filter(
           (p) => p._id !== action.payload,
@@ -325,7 +314,6 @@ const propertySlice = createSlice({
         toast.error(action.payload ?? "Failed to delete property");
       })
 
-      // -------- RESTORE --------
       .addCase(restoreProperty.fulfilled, (state, action) => {
         state.properties = [action.payload.data, ...state.properties];
         toast.success("Property restored successfully!");
@@ -335,7 +323,6 @@ const propertySlice = createSlice({
         toast.error(action.payload ?? "Failed to restore property");
       })
 
-      // -------- PERMANENT DELETE --------
       .addCase(permanentDeleteProperty.fulfilled, (state, action) => {
         state.properties = state.properties.filter(
           (p) => p._id !== action.payload,
@@ -347,7 +334,6 @@ const propertySlice = createSlice({
         toast.error(action.payload ?? "Failed to delete property");
       })
 
-      // -------- APPROVE --------
       .addCase(approveProperty.pending, (state) => {
         state.loading = true;
       })

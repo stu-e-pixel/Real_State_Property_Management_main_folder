@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
       gap: 2,
     }}
   >
-    {/* BRAND */}
+    
     <Box
       component={Link}
       to="/"
@@ -118,10 +118,10 @@ const Navbar: React.FC = () => {
       </Box>
     </Box>
 
-    {/* AUTHENTICATED USER */}
+    
     {isAuthenticated ? (
       <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1, sm: 2 } }}>
-        {/* Welcome text */}
+       
         <NotificationBell />
         <Box sx={{ textAlign: "right", display: { xs: "none", sm: "block" } }}>
           
@@ -150,7 +150,7 @@ const Navbar: React.FC = () => {
           </Typography>
         </Box>
 
-        {/* Profile button */}
+        
         <Button
           onClick={handleMenu}
           aria-label="Open profile menu"
@@ -188,7 +188,7 @@ const Navbar: React.FC = () => {
           </Avatar>
         </Button>
 
-        {/* PROFILE MENU */}
+        
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -225,7 +225,7 @@ const Navbar: React.FC = () => {
             },
           }}
         >
-          {/* Menu header */}
+          
           <Box sx={{ px: 2.2, py: 2, mb: 0.5, bgcolor: "#f0fdfa" }}>
             <Typography sx={{ fontWeight: 800, color: "#134e4a" }}>
               {user?.name || "Agent"}
@@ -278,7 +278,7 @@ const Navbar: React.FC = () => {
         </Menu>
       </Box>
     ) : (
-      /* GUEST USER */
+      
       <Box
         sx={{
           display: "flex",

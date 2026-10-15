@@ -64,18 +64,12 @@ const AgentList: React.FC = () => {
 
   const [statusFilter, setStatusFilter] = useState<string>("");
 
-  // Selected agent for view dialog
   const [selectedAgent, setSelectedAgent] = useState<
     (typeof agents)[number] | null
   >(null);
 
-  // Dialog state
   const [viewDialogOpen, setViewDialogOpen] = useState<boolean>(false);
 
-  /*
-   * Fetch agents whenever pagination
-   * or status filter changes.
-   */
   useEffect(() => {
     const params = {
       page: page + 1,
@@ -93,18 +87,11 @@ const AgentList: React.FC = () => {
     };
   }, [dispatch, page, rowsPerPage, statusFilter]);
 
-  /*
-   * Search
-   */
   const handleSearch = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     setPage(0);
 
-    /*
-     * If already on page 0, the page does not change,
-     * so manually fetch with the current search value.
-     */
     if (page === 0) {
       const params = {
         page: 1,
@@ -119,25 +106,16 @@ const AgentList: React.FC = () => {
     }
   };
 
-  /*
-   * View agent details
-   */
   const handleViewAgent = (agent: (typeof agents)[number]): void => {
     setSelectedAgent(agent);
     setViewDialogOpen(true);
   };
 
-  /*
-   * Close agent details dialog
-   */
   const handleCloseDialog = (): void => {
     setViewDialogOpen(false);
     setSelectedAgent(null);
   };
 
-  /*
-   * Update agent status
-   */
   const handleStatusChange = (id: string, status: AccountStatus): void => {
     dispatch(
       updateAgentStatus({
@@ -147,18 +125,12 @@ const AgentList: React.FC = () => {
     );
   };
 
-  /*
-   * Delete agent
-   */
   const handleDelete = (id: string): void => {
     if (window.confirm("Are you sure you want to delete this agent?")) {
       dispatch(deleteAgent(id));
     }
   };
 
-  /*
-   * Format address
-   */
   const formatAddress = (
     address: (typeof agents)[number]["address"],
   ): string => {
@@ -187,7 +159,6 @@ const AgentList: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* Page Title */}
         <Typography
           variant="h5"
           sx={{
@@ -198,7 +169,6 @@ const AgentList: React.FC = () => {
           Manage Agents
         </Typography>
 
-        {/* Search and Filter */}
         <Box
           sx={{
             display: "flex",
@@ -207,7 +177,6 @@ const AgentList: React.FC = () => {
             flexWrap: "wrap",
           }}
         >
-          {/* Search */}
           <form onSubmit={handleSearch}>
             <TextField
               placeholder="Search by name, email, phone..."
@@ -220,7 +189,6 @@ const AgentList: React.FC = () => {
             />
           </form>
 
-          {/* Status Filter */}
           <FormControl
             size="small"
             sx={{
@@ -245,12 +213,10 @@ const AgentList: React.FC = () => {
           </FormControl>
         </Box>
 
-        {/* Loading */}
         {loading ? (
           <Loader message="Loading agents..." />
         ) : (
           <>
-            {/* Agent Table */}
             <TableContainer>
               <Table>
                 <TableHead>
@@ -283,7 +249,6 @@ const AgentList: React.FC = () => {
                   ) : (
                     agents.map((agent) => (
                       <TableRow key={agent._id}>
-                        {/* Image */}
                         <TableCell>
                           <Avatar
                             src={agent.image || undefined}
@@ -297,22 +262,16 @@ const AgentList: React.FC = () => {
                           </Avatar>
                         </TableCell>
 
-                        {/* Name */}
                         <TableCell>{agent.name}</TableCell>
 
-                        {/* Email */}
                         <TableCell>{agent.email}</TableCell>
 
-                        {/* Phone */}
                         <TableCell>{agent.phone}</TableCell>
 
-                        {/* Agency */}
                         <TableCell>{agent.agencyName || "N/A"}</TableCell>
 
-                        {/* Experience */}
                         <TableCell>{agent.experience} years</TableCell>
 
-                        {/* Status */}
                         <TableCell>
                           <Chip
                             label={agent.status}
@@ -327,9 +286,7 @@ const AgentList: React.FC = () => {
                           />
                         </TableCell>
 
-                        {/* Actions */}
                         <TableCell align="center">
-                          {/* View */}
                           <IconButton
                             size="small"
                             color="primary"
@@ -339,7 +296,6 @@ const AgentList: React.FC = () => {
                             <Visibility />
                           </IconButton>
 
-                          {/* Activate */}
                           <IconButton
                             size="small"
                             color="success"
@@ -351,7 +307,6 @@ const AgentList: React.FC = () => {
                             <CheckCircle />
                           </IconButton>
 
-                          {/* Deactivate */}
                           <IconButton
                             size="small"
                             color="warning"
@@ -363,7 +318,6 @@ const AgentList: React.FC = () => {
                             <Block />
                           </IconButton>
 
-                          {/* Delete */}
                           <IconButton
                             size="small"
                             color="error"
@@ -380,7 +334,6 @@ const AgentList: React.FC = () => {
               </Table>
             </TableContainer>
 
-            {/* Pagination */}
             <TablePagination
               component="div"
               count={pagination?.totalAgents || 0}
@@ -399,10 +352,6 @@ const AgentList: React.FC = () => {
           </>
         )}
       </Paper>
-
-      {/* ================================================= */}
-      {/* Agent Details Dialog */}
-      {/* ================================================= */}
 
       <Dialog
         open={viewDialogOpen}
@@ -431,7 +380,6 @@ const AgentList: React.FC = () => {
         <DialogContent>
           {selectedAgent && (
             <Box>
-              {/* Profile Header */}
               <Box
                 sx={{
                   display: "flex",
@@ -489,7 +437,6 @@ const AgentList: React.FC = () => {
 
               <Divider sx={{ mb: 3 }} />
 
-              {/* Personal Information */}
               <Typography
                 variant="h6"
                 sx={{
@@ -631,7 +578,6 @@ const AgentList: React.FC = () => {
                 </Box>
               </Box>
 
-              {/* Specialization */}
               <Typography
                 variant="h6"
                 sx={{
@@ -673,7 +619,6 @@ const AgentList: React.FC = () => {
                 )}
               </Box>
 
-              {/* Bio */}
               <Typography
                 variant="h6"
                 sx={{
@@ -693,7 +638,6 @@ const AgentList: React.FC = () => {
                 {selectedAgent.bio || "No bio provided"}
               </Typography>
 
-              {/* Address */}
               <Typography
                 variant="h6"
                 sx={{
@@ -713,7 +657,6 @@ const AgentList: React.FC = () => {
                 {formatAddress(selectedAgent.address)}
               </Typography>
 
-              {/* Account Information */}
               <Typography
                 variant="h6"
                 sx={{

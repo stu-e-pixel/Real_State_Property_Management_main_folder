@@ -502,7 +502,7 @@ const MySaleOffers: React.FC = () => {
         )}
       </Paper>
 
-      {/* View offer dialog */}
+      
       <Dialog
         open={viewOpen}
         onClose={closeView}
@@ -689,7 +689,7 @@ const MySaleOffers: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Respond to counteroffer dialog */}
+      
       <Dialog
         open={respondOpen}
         onClose={closeRespond}

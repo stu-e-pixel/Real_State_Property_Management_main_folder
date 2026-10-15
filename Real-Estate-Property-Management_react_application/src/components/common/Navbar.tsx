@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
           RealEstate
         </Typography>
 
-        {/* Authenticated User */}
+        
         {isAuthenticated ? (
           <Box
             sx={{
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
               gap: 2,
             }}
           >
-            {/* Dashboard Button */}
+            
             <Button
               component={Link}
               to="/admin/dashboard"
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
               Dashboard
             </Button>
 
-            {/* Profile Icon */}
+            
             <IconButton onClick={handleMenu} size="large">
               {user?.image ? (
                 <Avatar
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
               )}
             </IconButton>
 
-            {/* Profile Menu */}
+           
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
@@ -105,7 +105,7 @@ const Navbar: React.FC = () => {
                 horizontal: "right",
               }}
             >
-              {/* Profile */}
+              
               <MenuItem
                 onClick={() => {
                   handleClose();
@@ -115,7 +115,7 @@ const Navbar: React.FC = () => {
                 Profile
               </MenuItem>
 
-              {/* Change Password */}
+              
               <MenuItem
                 onClick={() => {
                   handleClose();
@@ -125,7 +125,7 @@ const Navbar: React.FC = () => {
                 Change Password
               </MenuItem>
 
-              {/* Logout */}
+              
               <MenuItem onClick={handleLogout}>
                 <Logout fontSize="small" sx={{ mr: 1 }} />
                 Logout
@@ -133,19 +133,19 @@ const Navbar: React.FC = () => {
             </Menu>
           </Box>
         ) : (
-          /* Guest User */
+          
           <Box
             sx={{
               display: "flex",
               gap: 1,
             }}
           >
-            {/* Login */}
+            
             <Button component={Link} to="/login" color="inherit">
               Login
             </Button>
 
-            {/* Register */}
+            
             <Button component={Link} to="/register" variant="contained">
               Register
             </Button>

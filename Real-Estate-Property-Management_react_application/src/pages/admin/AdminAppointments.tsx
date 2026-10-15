@@ -31,9 +31,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import type { PopulatedUserLite } from "../../typescript/type/inquiry.types";
 import type { Property } from "../../typescript/type/property.types";
 
-// =====================================================
-// STATUS COLORS
-// =====================================================
+
 
 const STATUS_COLORS: Record<
   string,
@@ -47,9 +45,7 @@ const STATUS_COLORS: Record<
   rescheduled: "info",
 };
 
-// =====================================================
-// TYPE GUARDS
-// =====================================================
+
 
 const isPopulatedProperty = (
   val: Property | string | undefined,
@@ -60,9 +56,7 @@ const isPopulatedUser = (
 ): val is PopulatedUserLite =>
   !!val && typeof val === "object" && "name" in val;
 
-// =====================================================
-// COMPONENT
-// =====================================================
+
 
 const AdminAppointments: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -73,13 +67,13 @@ const AdminAppointments: React.FC = () => {
 
   const [search, setSearch] = useState<string>("");
 
-  // ================= FETCH =================
+  
 
   useEffect(() => {
     dispatch(getAllAppointments());
   }, [dispatch]);
 
-  // ================= SEARCH =================
+  
 
   const searchTerm = search.trim().toLowerCase();
 
@@ -100,15 +94,13 @@ const AdminAppointments: React.FC = () => {
     );
   });
 
-  // ================= REFRESH =================
+ 
 
   const handleRefresh = (): void => {
     dispatch(getAllAppointments());
   };
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+  
 
   return (
     <MainLayout>
@@ -122,7 +114,7 @@ const AdminAppointments: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
+        
 
         <Box
           sx={{
@@ -167,7 +159,7 @@ const AdminAppointments: React.FC = () => {
           }}
         />
 
-        {/* ================= SEARCH AND REFRESH ================= */}
+        
 
         <Box
           sx={{
@@ -204,8 +196,7 @@ const AdminAppointments: React.FC = () => {
           </IconButton>
         </Box>
 
-        {/* ================= CONTENT ================= */}
-
+        
         {loading && appointments.length === 0 ? (
           <Loader message="Loading appointments..." />
         ) : filtered.length === 0 ? (
@@ -251,7 +242,7 @@ const AdminAppointments: React.FC = () => {
               <TableBody>
                 {filtered.map((a) => (
                   <TableRow key={a._id} hover>
-                    {/* ============ CUSTOMER ============ */}
+                    
 
                     <TableCell>
                       <Box
@@ -367,7 +358,7 @@ const AdminAppointments: React.FC = () => {
                       </Box>
                     </TableCell>
 
-                    {/* ============ PROPERTY ============ */}
+                    
 
                     <TableCell>
                       <Box
@@ -401,7 +392,7 @@ const AdminAppointments: React.FC = () => {
                       </Box>
                     </TableCell>
 
-                    {/* ============ AGENT ============ */}
+                    
 
                     <TableCell>
                       {isPopulatedUser(a.agent) ? (
@@ -440,7 +431,7 @@ const AdminAppointments: React.FC = () => {
                       )}
                     </TableCell>
 
-                    {/* ============ DATE & TIME ============ */}
+                    
 
                     <TableCell>
                       <Typography variant="body2" sx={{ whiteSpace: "nowrap" }}>
@@ -448,7 +439,7 @@ const AdminAppointments: React.FC = () => {
                       </Typography>
                     </TableCell>
 
-                    {/* ============ DURATION ============ */}
+                    
 
                     <TableCell>
                       <Typography variant="body2" sx={{ whiteSpace: "nowrap" }}>
@@ -456,7 +447,7 @@ const AdminAppointments: React.FC = () => {
                       </Typography>
                     </TableCell>
 
-                    {/* ============ MESSAGE ============ */}
+                    
 
                     <TableCell>
                       <Tooltip title={a.message || "No message"}>
@@ -472,7 +463,7 @@ const AdminAppointments: React.FC = () => {
                       </Tooltip>
                     </TableCell>
 
-                    {/* ============ STATUS ============ */}
+                    
 
                     <TableCell>
                       <Chip
@@ -482,7 +473,7 @@ const AdminAppointments: React.FC = () => {
                       />
                     </TableCell>
 
-                    {/* ============ CREATED ============ */}
+                    
 
                     <TableCell>
                       <Typography

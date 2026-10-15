@@ -61,7 +61,6 @@ const LandingFooter = () => {
             mb: 4,
           }}
         >
-          {/* Brand */}
           <Box sx={{ flex: "1 1 240px", minWidth: 0 }}>
             <Box
               sx={{
@@ -116,7 +115,6 @@ const LandingFooter = () => {
             </Box>
           </Box>
 
-          {/* Quick Links */}
           <Box sx={{ flex: "1 1 130px", minWidth: 0 }}>
             <Typography
               component="h3"
@@ -145,7 +143,6 @@ const LandingFooter = () => {
             </Box>
           </Box>
 
-          {/* Support */}
           <Box sx={{ flex: "1 1 130px", minWidth: 0 }}>
             <Typography
               component="h3"
@@ -174,7 +171,6 @@ const LandingFooter = () => {
             </Box>
           </Box>
 
-          {/* Contact */}
           <Box sx={{ flex: "1 1 240px", minWidth: 0 }}>
             <Typography
               component="h3"

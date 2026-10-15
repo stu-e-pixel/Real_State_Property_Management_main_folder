@@ -61,14 +61,14 @@ const STATUS_COLORS: Record<
 };
 
 const isPopulatedProperty = (
-  val: Property | string | undefined
+  val: Property | string | undefined,
 ): val is Property => !!val && typeof val === "object" && "title" in val;
 
 const MyAppointments: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { appointments, appointment, loading } = useAppSelector(
-    (state) => state.appointment
+    (state) => state.appointment,
   );
 
   const [tab, setTab] = useState<string>("all");
@@ -117,16 +117,14 @@ const MyAppointments: React.FC = () => {
     });
   };
 
-  const submitCancel = async (
-    data: CancelFormValues
-  ): Promise<void> => {
+  const submitCancel = async (data: CancelFormValues): Promise<void> => {
     if (!cancelTarget) return;
 
     const result = await dispatch(
       cancelAppointment({
         id: cancelTarget._id,
         cancellationReason: data.cancellationReason,
-      })
+      }),
     );
 
     if (cancelAppointment.fulfilled.match(result)) {
@@ -135,12 +133,9 @@ const MyAppointments: React.FC = () => {
   };
 
   const filtered =
-    tab === "all"
-      ? appointments
-      : appointments.filter((a) => a.status === tab);
+    tab === "all" ? appointments : appointments.filter((a) => a.status === tab);
 
-      console.log("filtered",filtered);
-      
+  console.log("filtered", filtered);
 
   const counts = {
     all: appointments.length,
@@ -161,7 +156,6 @@ const MyAppointments: React.FC = () => {
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
         <Box
           sx={{
             display: "flex",
@@ -182,10 +176,7 @@ const MyAppointments: React.FC = () => {
               My Appointments
             </Typography>
 
-            <Typography
-              variant="body2"
-              color="text.secondary"
-            >
+            <Typography variant="body2" color="text.secondary">
               Track your scheduled property visits
             </Typography>
           </Box>
@@ -203,7 +194,6 @@ const MyAppointments: React.FC = () => {
           }}
         />
 
-        {/* ================= TABS ================= */}
         <Tabs
           value={tab}
           onChange={(_event, value) => setTab(value)}
@@ -213,29 +203,13 @@ const MyAppointments: React.FC = () => {
             mb: 3,
           }}
         >
-          <Tab
-            value="all"
-            label={`All (${counts.all})`}
-          />
-          <Tab
-            value="pending"
-            label={`Pending (${counts.pending})`}
-          />
-          <Tab
-            value="confirmed"
-            label={`Confirmed (${counts.confirmed})`}
-          />
-          <Tab
-            value="completed"
-            label={`Completed (${counts.completed})`}
-          />
-          <Tab
-            value="cancelled"
-            label={`Cancelled (${counts.cancelled})`}
-          />
+          <Tab value="all" label={`All (${counts.all})`} />
+          <Tab value="pending" label={`Pending (${counts.pending})`} />
+          <Tab value="confirmed" label={`Confirmed (${counts.confirmed})`} />
+          <Tab value="completed" label={`Completed (${counts.completed})`} />
+          <Tab value="cancelled" label={`Cancelled (${counts.cancelled})`} />
         </Tabs>
 
-        {/* ================= CONTENT ================= */}
         {loading && appointments.length === 0 ? (
           <Box
             sx={{
@@ -279,10 +253,7 @@ const MyAppointments: React.FC = () => {
               }}
             />
 
-            <Typography
-              variant="h6"
-              color="text.secondary"
-            >
+            <Typography variant="h6" color="text.secondary">
               No appointments found
             </Typography>
           </Box>
@@ -311,7 +282,6 @@ const MyAppointments: React.FC = () => {
                   }}
                 >
                   <CardContent>
-                    {/* Property Header */}
                     <Box
                       sx={{
                         display: "flex",
@@ -360,10 +330,7 @@ const MyAppointments: React.FC = () => {
                               : "Property"}
                           </Typography>
 
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                          >
+                          <Typography variant="caption" color="text.secondary">
                             {isPopulatedProperty(a.property) &&
                               `${a.property.propertyType} • ${a.property.purpose}`}
                           </Typography>
@@ -372,14 +339,11 @@ const MyAppointments: React.FC = () => {
 
                       <Chip
                         label={a.status}
-                        color={
-                          STATUS_COLORS[a.status] ?? "default"
-                        }
+                        color={STATUS_COLORS[a.status] ?? "default"}
                         size="small"
                       />
                     </Box>
 
-                    {/* Appointment Information */}
                     <Box
                       sx={{
                         display: "flex",
@@ -394,15 +358,10 @@ const MyAppointments: React.FC = () => {
                           gap: 1,
                         }}
                       >
-                        <Event
-                          fontSize="small"
-                          color="action"
-                        />
+                        <Event fontSize="small" color="action" />
 
                         <Typography variant="body2">
-                          {new Date(
-                            a.appointmentDate
-                          ).toLocaleString()}
+                          {new Date(a.appointmentDate).toLocaleString()}
                         </Typography>
                       </Box>
 
@@ -413,10 +372,7 @@ const MyAppointments: React.FC = () => {
                           gap: 1,
                         }}
                       >
-                        <Timer
-                          fontSize="small"
-                          color="action"
-                        />
+                        <Timer fontSize="small" color="action" />
 
                         <Typography variant="body2">
                           {a.duration} minutes
@@ -456,12 +412,8 @@ const MyAppointments: React.FC = () => {
                       )}
 
                       {a.cancellationReason && (
-                        <Typography
-                          variant="caption"
-                          color="error"
-                        >
-                          <b>Cancelled:</b>{" "}
-                          {a.cancellationReason}
+                        <Typography variant="caption" color="error">
+                          <b>Cancelled:</b> {a.cancellationReason}
                         </Typography>
                       )}
                     </Box>
@@ -502,13 +454,7 @@ const MyAppointments: React.FC = () => {
         )}
       </Paper>
 
-      {/* ================= VIEW DIALOG ================= */}
-      <Dialog
-        open={viewOpen}
-        onClose={closeView}
-        maxWidth="sm"
-        fullWidth
-      >
+      <Dialog open={viewOpen} onClose={closeView} maxWidth="sm" fullWidth>
         <DialogTitle
           sx={{
             display: "flex",
@@ -517,11 +463,7 @@ const MyAppointments: React.FC = () => {
           }}
         >
           Appointment Details
-
-          <IconButton
-            onClick={closeView}
-            size="small"
-          >
+          <IconButton onClick={closeView} size="small">
             <Close />
           </IconButton>
         </DialogTitle>
@@ -530,10 +472,7 @@ const MyAppointments: React.FC = () => {
 
         <DialogContent>
           {loading && !appointment ? (
-            <Skeleton
-              variant="rounded"
-              height={200}
-            />
+            <Skeleton variant="rounded" height={200} />
           ) : appointment ? (
             <Box
               sx={{
@@ -543,10 +482,7 @@ const MyAppointments: React.FC = () => {
               }}
             >
               <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Property
                 </Typography>
 
@@ -563,25 +499,17 @@ const MyAppointments: React.FC = () => {
               </Box>
 
               <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Date & Time
                 </Typography>
 
                 <Typography variant="body1">
-                  {new Date(
-                    appointment.appointmentDate
-                  ).toLocaleString()}
+                  {new Date(appointment.appointmentDate).toLocaleString()}
                 </Typography>
               </Box>
 
               <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Duration
                 </Typography>
 
@@ -591,10 +519,7 @@ const MyAppointments: React.FC = () => {
               </Box>
 
               <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                >
+                <Typography variant="caption" color="text.secondary">
                   Status
                 </Typography>
 
@@ -605,11 +530,7 @@ const MyAppointments: React.FC = () => {
                 >
                   <Chip
                     label={appointment.status}
-                    color={
-                      STATUS_COLORS[
-                        appointment.status
-                      ] ?? "default"
-                    }
+                    color={STATUS_COLORS[appointment.status] ?? "default"}
                     size="small"
                   />
                 </Box>
@@ -617,32 +538,21 @@ const MyAppointments: React.FC = () => {
 
               {appointment.message && (
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                  >
+                  <Typography variant="caption" color="text.secondary">
                     Your Message
                   </Typography>
 
-                  <Typography variant="body2">
-                    {appointment.message}
-                  </Typography>
+                  <Typography variant="body2">{appointment.message}</Typography>
                 </Box>
               )}
 
               {appointment.cancellationReason && (
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="error"
-                  >
+                  <Typography variant="caption" color="error">
                     Cancellation Reason
                   </Typography>
 
-                  <Typography
-                    variant="body2"
-                    color="error"
-                  >
+                  <Typography variant="body2" color="error">
                     {appointment.cancellationReason}
                   </Typography>
                 </Box>
@@ -652,22 +562,12 @@ const MyAppointments: React.FC = () => {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={closeView}>
-            Close
-          </Button>
+          <Button onClick={closeView}>Close</Button>
         </DialogActions>
       </Dialog>
 
-      {/* ================= CANCEL DIALOG ================= */}
-      <Dialog
-        open={cancelOpen}
-        onClose={closeCancel}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>
-          Cancel Appointment
-        </DialogTitle>
+      <Dialog open={cancelOpen} onClose={closeCancel} maxWidth="sm" fullWidth>
+        <DialogTitle>Cancel Appointment</DialogTitle>
 
         <Divider />
 
@@ -684,8 +584,7 @@ const MyAppointments: React.FC = () => {
                 mb: 2,
               }}
             >
-              Are you sure you want to cancel this
-              appointment?
+              Are you sure you want to cancel this appointment?
             </Typography>
 
             <FormInput<CancelFormValues>
@@ -699,9 +598,7 @@ const MyAppointments: React.FC = () => {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={closeCancel}>
-            Keep
-          </Button>
+          <Button onClick={closeCancel}>Keep</Button>
 
           <Button
             variant="contained"

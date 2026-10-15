@@ -68,9 +68,7 @@ export interface Property {
   rejectionReason:string;
 }
 
-// =====================================================
-// PAYLOADS
-// =====================================================
+
 
 export interface CreatePropertyData {
   title: string;
@@ -96,9 +94,7 @@ export interface UpdatePropertyData extends Partial<CreatePropertyData> {
   approvalStatus?: ApprovalStatus;
 }
 
-// =====================================================
-// RESPONSES
-// =====================================================
+
 
 export interface GetAllPropertiesResponse {
   status: boolean;
@@ -121,9 +117,7 @@ export interface DeletePropertyResponse {
   message: string;
 }
 
-// =====================================================
-// STATE
-// =====================================================
+
 
 export interface PropertyState {
   properties: Property[];
@@ -146,9 +140,7 @@ export interface PropertyState {
   };
 }
 
-// =====================================================
-// FORM VALUES
-// =====================================================
+
 
 export interface PropertyFormValues {
   title: string;

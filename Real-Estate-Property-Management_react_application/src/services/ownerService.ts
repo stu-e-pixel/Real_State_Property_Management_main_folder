@@ -16,7 +16,7 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
   Object.keys(data).forEach((key) => {
     const value = data[key];
 
-    // Image array
+    
     if (
       key === "image" &&
       Array.isArray(value) &&
@@ -26,7 +26,7 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
       return;
     }
 
-    // FileList
+   
     if (
       key === "image" &&
       value instanceof FileList &&
@@ -36,18 +36,18 @@ const buildFormData = (data: Record<string, unknown>): FormData => {
       return;
     }
 
-    // Ignore undefined/null
+    
     if (value === undefined || value === null) {
       return;
     }
 
-    // Object / Array
+    
     if (typeof value === "object") {
       formData.append(key, JSON.stringify(value));
       return;
     }
 
-    // String / Number / Boolean
+   
     formData.append(key, String(value));
   });
 

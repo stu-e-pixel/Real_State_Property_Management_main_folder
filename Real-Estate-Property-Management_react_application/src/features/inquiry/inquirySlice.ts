@@ -22,10 +22,6 @@ const initialState: InquiryState = {
   error: null,
 };
 
-// =====================================================
-// THUNKS
-// =====================================================
-
 export const createInquiry = createAsyncThunk<
   CreateInquiryResponse,
   CreateInquiryData,
@@ -179,10 +175,6 @@ export const getOwnerInquiries = createAsyncThunk<
   }
 });
 
-// =====================================================
-// HELPERS
-// =====================================================
-
 const getInquiriesArray = (payload: GetInquiriesResponse): Inquiry[] =>
   payload.data ?? payload.inquiries ?? [];
 
@@ -191,10 +183,6 @@ const replaceInquiry = (state: InquiryState, updated: Inquiry): void => {
   if (index !== -1) state.inquiries[index] = updated;
   else state.inquiries.unshift(updated);
 };
-
-// =====================================================
-// SLICE
-// =====================================================
 
 const inquirySlice = createSlice({
   name: "inquiry",
@@ -209,7 +197,7 @@ const inquirySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // -------- CREATE --------
+
       .addCase(createInquiry.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -225,7 +213,6 @@ const inquirySlice = createSlice({
         toast.error(action.payload ?? "Failed to send inquiry");
       })
 
-      // -------- UPDATE --------
       .addCase(updateInquiry.pending, (state) => {
         state.loading = true;
       })
@@ -240,7 +227,6 @@ const inquirySlice = createSlice({
         toast.error(action.payload ?? "Failed to update inquiry");
       })
 
-      // -------- MY INQUIRIES --------
       .addCase(getMyInquiries.pending, (state) => {
         state.loading = true;
       })
@@ -257,7 +243,6 @@ const inquirySlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch your inquiries");
       })
 
-      // -------- BY ID --------
       .addCase(getInquiryById.pending, (state) => {
         state.loading = true;
       })
@@ -270,7 +255,6 @@ const inquirySlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch inquiry");
       })
 
-      // -------- AGENT INQUIRIES --------
       .addCase(getAgentInquiries.pending, (state) => {
         state.loading = true;
       })
@@ -286,7 +270,6 @@ const inquirySlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch agent inquiries");
       })
 
-      // -------- ALL INQUIRIES (ADMIN) --------
       .addCase(getAllInquiries.pending, (state) => {
         state.loading = true;
       })
@@ -302,7 +285,6 @@ const inquirySlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch inquiries");
       })
 
-      // -------- UPDATE STATUS --------
       .addCase(updateInquiryStatus.fulfilled, (state, action) => {
         const index = state.inquiries.findIndex(
           (i) => i._id === action.payload.id,
@@ -317,7 +299,6 @@ const inquirySlice = createSlice({
         toast.error(action.payload ?? "Failed to update status");
       })
 
-      // -------- REPLY --------
       .addCase(replyToInquiry.fulfilled, (state, action) => {
         const index = state.inquiries.findIndex(
           (i) => i._id === action.payload.id,
@@ -334,7 +315,6 @@ const inquirySlice = createSlice({
         toast.error(action.payload ?? "Failed to send reply");
       })
 
-      // -------- DELETE --------
       .addCase(deleteInquiry.fulfilled, (state, action) => {
         state.inquiries = state.inquiries.filter(
           (i) => i._id !== action.payload,

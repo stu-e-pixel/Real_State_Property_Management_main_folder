@@ -17,10 +17,6 @@ const initialState: SaleOfferState = {
   error: null,
 };
 
-// =====================================================
-// THUNKS
-// =====================================================
-
 export const createSaleOffer = createAsyncThunk<
   SaleOfferMutationResponse,
   CreateSaleOfferData,
@@ -142,18 +138,10 @@ export const getSaleOfferByAgent = createAsyncThunk<
   }
 });
 
-// =====================================================
-// HELPERS
-// =====================================================
-
 const replaceOffer = (state: SaleOfferState, updated: SaleOffer): void => {
   const index = state.saleOffers.findIndex((o) => o._id === updated._id);
   if (index !== -1) state.saleOffers[index] = updated;
 };
-
-// =====================================================
-// SLICE
-// =====================================================
 
 const saleOfferSlice = createSlice({
   name: "saleOffer",
@@ -168,7 +156,7 @@ const saleOfferSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // -------- CREATE --------
+
       .addCase(createSaleOffer.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -186,7 +174,6 @@ const saleOfferSlice = createSlice({
         toast.error(action.payload ?? "Failed to submit offer");
       })
 
-      // -------- MY --------
       .addCase(getMySaleOffers.pending, (state) => {
         state.loading = true;
       })
@@ -199,7 +186,6 @@ const saleOfferSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch offers");
       })
 
-      // -------- PROPERTY --------
       .addCase(getPropertySaleOffers.pending, (state) => {
         state.loading = true;
       })
@@ -212,7 +198,6 @@ const saleOfferSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch offers");
       })
 
-      // -------- RESPOND --------
       .addCase(respondToSaleOffer.pending, (state) => {
         state.loading = true;
       })
@@ -228,7 +213,6 @@ const saleOfferSlice = createSlice({
         toast.error(action.payload ?? "Failed to respond");
       })
 
-      // -------- WITHDRAW --------
       .addCase(withdrawSaleOffer.pending, (state) => {
         state.loading = true;
       })
@@ -244,7 +228,6 @@ const saleOfferSlice = createSlice({
         toast.error(action.payload ?? "Failed to withdraw");
       })
 
-      // -------- DELETE --------
       .addCase(deleteSaleOffer.fulfilled, (state, action) => {
         state.saleOffers = state.saleOffers.filter(
           (o) => o._id !== action.payload,
@@ -255,7 +238,7 @@ const saleOfferSlice = createSlice({
         state.loading = false;
         toast.error(action.payload ?? "Failed to delete offer");
       })
-      // -------- OWNER --------
+
       .addCase(getSaleOfferByOwner.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -270,7 +253,6 @@ const saleOfferSlice = createSlice({
         toast.error(action.payload ?? "Failed to fetch offers");
       })
 
-      // -------- AGENT --------
       .addCase(getSaleOfferByAgent.pending, (state) => {
         state.loading = true;
         state.error = null;

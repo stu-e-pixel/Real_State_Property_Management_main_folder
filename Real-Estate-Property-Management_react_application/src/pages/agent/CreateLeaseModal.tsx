@@ -165,7 +165,7 @@ const CreateLeaseModal: React.FC<CreateLeaseModalProps> = ({
       <Divider />
 
       <DialogContent>
-        {/* Application snapshot */}
+        
         <Box
           sx={{
             display: "flex",

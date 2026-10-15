@@ -42,10 +42,6 @@ import { getSaleOfferByAgent } from "../../features/saleOffer/saleOfferSlice";
 import { getAgentReviews } from "../../features/review/reviewSlice";
 import { IndianRupee } from "lucide-react";
 
-// =====================================================
-// TYPES
-// =====================================================
-
 interface StatCardProps {
   icon: React.ReactNode;
   label: string;
@@ -61,10 +57,6 @@ interface QuickAction {
   path: string;
   color: string;
 }
-
-// =====================================================
-// HELPERS
-// =====================================================
 
 const getInitial = (name?: string) =>
   name?.trim()?.charAt(0)?.toUpperCase() || "?";
@@ -82,8 +74,6 @@ const formatDate = (date: string | Date | undefined) => {
     year: "numeric",
   });
 };
-
-
 
 const formatTime = (date: string | Date | undefined) => {
   if (!date) return "Time unavailable";
@@ -110,10 +100,6 @@ const getPropertyTitle = (property: unknown): string => {
 
   return "Property";
 };
-
-// =====================================================
-// STAT CARD
-// =====================================================
 
 const StatCard: React.FC<StatCardProps> = ({
   icon,
@@ -169,10 +155,9 @@ const StatCard: React.FC<StatCardProps> = ({
               justifyContent: "center",
             }}
           >
-            {React.cloneElement(
-              icon as React.ReactElement<{ sx?: object }>,
-              { sx: { fontSize: 25 } }
-            )}
+            {React.cloneElement(icon as React.ReactElement<{ sx?: object }>, {
+              sx: { fontSize: 25 },
+            })}
           </Box>
 
           <ArrowOutward
@@ -229,21 +214,13 @@ const StatCard: React.FC<StatCardProps> = ({
   );
 };
 
-// =====================================================
-// SECTION HEADER
-// =====================================================
-
 interface SectionHeaderProps {
   icon: React.ReactNode;
   title: string;
   path: string;
 }
 
-const SectionHeader: React.FC<SectionHeaderProps> = ({
-  icon,
-  title,
-  path,
-}) => {
+const SectionHeader: React.FC<SectionHeaderProps> = ({ icon, title, path }) => {
   const navigate = useNavigate();
 
   return (
@@ -302,10 +279,6 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   );
 };
 
-// =====================================================
-// EMPTY STATE
-// =====================================================
-
 const EmptyState: React.FC<{ message: string }> = ({ message }) => (
   <Box
     sx={{
@@ -323,10 +296,6 @@ const EmptyState: React.FC<{ message: string }> = ({ message }) => (
   </Box>
 );
 
-// =====================================================
-// AGENT DASHBOARD
-// =====================================================
-
 const AgentDashboard: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -336,14 +305,13 @@ const AgentDashboard: React.FC = () => {
   const { properties } = useAppSelector((state) => state.property);
 
   const { inquiries, loading: loadingInquiries } = useAppSelector(
-    (state) => state.inquiry
+    (state) => state.inquiry,
   );
 
   const { appointments } = useAppSelector((state) => state.appointment);
   const { saleOffers } = useAppSelector((state) => state.saleOffer);
   const { reviews } = useAppSelector((state) => state.review);
 
-  // Fetch dashboard data
   useEffect(() => {
     dispatch(getMyApprovedProperties({ page: 1, limit: 100 }));
     dispatch(getAgentInquiries());
@@ -352,60 +320,52 @@ const AgentDashboard: React.FC = () => {
     dispatch(getAgentReviews());
   }, [dispatch]);
 
-  // Safe array values
   const propertyList = properties ?? [];
   const inquiryList = inquiries ?? [];
   const appointmentList = appointments ?? [];
   const offerList = saleOffers ?? [];
   const reviewList = reviews ?? [];
 
-  // Property statistics
   const totalProperties = propertyList.length;
 
   const rentedProperties = propertyList.filter(
-    (property) => property.status === "Rented"
+    (property) => property.status === "Rented",
   ).length;
 
   const totalValue = propertyList.reduce(
     (sum, property) => sum + (Number(property.price) || 0),
-    0
+    0,
   );
 
   const totalValueFormatted =
-    totalValue > 0
-      ? `₹${(totalValue / 1_000_000).toFixed(2)}M`
-      : "₹0";
+    totalValue > 0 ? `₹${(totalValue / 1_000_000).toFixed(2)}M` : "₹0";
 
-  // Inquiry statistics
   const totalInquiries = inquiryList.length;
 
   const pendingInquiries = inquiryList.filter(
-    (inquiry) => inquiry.status === "pending"
+    (inquiry) => inquiry.status === "pending",
   ).length;
 
-  // Appointment statistics
   const totalAppointments = appointmentList.length;
 
   const activeAppointments = appointmentList.filter((appointment) =>
-    ["pending", "confirmed", "rescheduled"].includes(appointment.status)
+    ["pending", "confirmed", "rescheduled"].includes(appointment.status),
   ).length;
 
   const completedAppointments = appointmentList.filter(
-    (appointment) => appointment.status === "completed"
+    (appointment) => appointment.status === "completed",
   ).length;
 
-  // Sale offer statistics
   const totalOffers = offerList.length;
 
   const activeOffers = offerList.filter((offer) =>
-    ["pending", "countered"].includes(offer.status)
+    ["pending", "countered"].includes(offer.status),
   ).length;
 
   const acceptedOffers = offerList.filter(
-    (offer) => offer.status === "accepted"
+    (offer) => offer.status === "accepted",
   ).length;
 
-  // Review statistics
   const totalReviews = reviewList.length;
 
   const avgRating =
@@ -416,25 +376,20 @@ const AgentDashboard: React.FC = () => {
         ).toFixed(1)
       : "—";
 
-  // Recent inquiries
   const recentInquiries = [...inquiryList]
     .sort(
       (a, b) =>
-        new Date(b.createdAt).getTime() -
-        new Date(a.createdAt).getTime()
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     )
     .slice(0, 3);
 
-  // Recent appointments
   const recentAppointments = [...appointmentList]
     .sort(
       (a, b) =>
-        new Date(b.createdAt).getTime() -
-        new Date(a.createdAt).getTime()
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     )
     .slice(0, 3);
 
-  // Primary statistics
   const primaryStats: StatCardProps[] = [
     {
       icon: <Apartment />,
@@ -470,7 +425,6 @@ const AgentDashboard: React.FC = () => {
     },
   ];
 
-  // Secondary statistics
   const secondaryStats: StatCardProps[] = [
     {
       icon: <IndianRupee />,
@@ -506,7 +460,6 @@ const AgentDashboard: React.FC = () => {
     },
   ];
 
-  // Quick actions
   const quickActions: QuickAction[] = [
     {
       icon: <Apartment />,
@@ -555,10 +508,6 @@ const AgentDashboard: React.FC = () => {
         pb: 4,
       }}
     >
-      {/* ==========================================
-          WELCOME BANNER
-      ========================================== */}
-
       <Paper
         elevation={0}
         sx={{
@@ -671,8 +620,8 @@ const AgentDashboard: React.FC = () => {
                   lineHeight: 1.7,
                 }}
               >
-                Manage assigned properties, build client relationships, and
-                keep every appointment moving forward.
+                Manage assigned properties, build client relationships, and keep
+                every appointment moving forward.
               </Typography>
             </Box>
           </Box>
@@ -765,16 +714,9 @@ const AgentDashboard: React.FC = () => {
         </Box>
       </Paper>
 
-      {/* ==========================================
-          PRIMARY STATISTICS
-      ========================================== */}
-
       <Box sx={{ mb: 3 }}>
         <Box sx={{ mb: 2 }}>
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: 800, color: "#0f172a" }}
-          >
+          <Typography variant="h6" sx={{ fontWeight: 800, color: "#0f172a" }}>
             Performance overview
           </Typography>
 
@@ -800,16 +742,9 @@ const AgentDashboard: React.FC = () => {
         </Box>
       </Box>
 
-      {/* ==========================================
-          SECONDARY STATISTICS
-      ========================================== */}
-
       <Box sx={{ mb: 4 }}>
         <Box sx={{ mb: 2 }}>
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: 800, color: "#0f172a" }}
-          >
+          <Typography variant="h6" sx={{ fontWeight: 800, color: "#0f172a" }}>
             Business insights
           </Typography>
 
@@ -835,10 +770,6 @@ const AgentDashboard: React.FC = () => {
         </Box>
       </Box>
 
-      {/* ==========================================
-          RECENT ACTIVITY
-      ========================================== */}
-
       <Box
         sx={{
           display: "grid",
@@ -850,7 +781,6 @@ const AgentDashboard: React.FC = () => {
           alignItems: "stretch",
         }}
       >
-        {/* RECENT INQUIRIES */}
         <Paper
           elevation={0}
           sx={{
@@ -989,7 +919,6 @@ const AgentDashboard: React.FC = () => {
           )}
         </Paper>
 
-        {/* RECENT APPOINTMENTS */}
         <Paper
           elevation={0}
           sx={{
@@ -1103,10 +1032,6 @@ const AgentDashboard: React.FC = () => {
         </Paper>
       </Box>
 
-      {/* ==========================================
-          QUICK ACTIONS
-      ========================================== */}
-
       <Paper
         elevation={0}
         sx={{
@@ -1118,10 +1043,7 @@ const AgentDashboard: React.FC = () => {
         }}
       >
         <Box sx={{ mb: 2.5 }}>
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: 800, color: "#0f172a" }}
-          >
+          <Typography variant="h6" sx={{ fontWeight: 800, color: "#0f172a" }}>
             Quick Actions
           </Typography>
 
@@ -1183,7 +1105,7 @@ const AgentDashboard: React.FC = () => {
                 >
                   {React.cloneElement(
                     action.icon as React.ReactElement<{ sx?: object }>,
-                    { sx: { fontSize: 25 } }
+                    { sx: { fontSize: 25 } },
                   )}
                 </Box>
 

@@ -27,9 +27,7 @@ const PropertyEdit: React.FC = () => {
     (state) => state.property
   );
 
-  // =========================
-  // Load property
-  // =========================
+ 
   useEffect(() => {
     if (id) {
       dispatch(getPropertyById(id));
@@ -40,9 +38,7 @@ const PropertyEdit: React.FC = () => {
     };
   }, [dispatch, id]);
 
-  // =========================
-  // Loading
-  // =========================
+  
   if (loading && !property) {
     return (
       <MainLayout>
@@ -51,9 +47,7 @@ const PropertyEdit: React.FC = () => {
     );
   }
 
-  // =========================
-  // Error / Not Found
-  // =========================
+  
   if (error || !property) {
     return (
       <MainLayout>
@@ -105,9 +99,7 @@ const PropertyEdit: React.FC = () => {
     );
   }
 
-  // =========================
-  // Property Edit Form
-  // =========================
+ 
   return (
     <PropertyForm
       mode="update"

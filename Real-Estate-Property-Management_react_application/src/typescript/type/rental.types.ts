@@ -1,9 +1,7 @@
 
 import type { Property } from "./property.types";
 
-// =====================================================
-// ENUMS
-// =====================================================
+
 
 export type RentalApplicationStatus =
   | "pending"
@@ -13,9 +11,7 @@ export type RentalApplicationStatus =
 
 export type RentalApplicationAction = "approve" | "reject";
 
-// =====================================================
-// POPULATED USER
-// =====================================================
+
 
 export interface PopulatedUserLite {
   _id: string;
@@ -26,9 +22,7 @@ export interface PopulatedUserLite {
   image?: string;
 }
 
-// =====================================================
-// ENTITY
-// =====================================================
+
 
 export interface RentalApplication {
   _id: string;
@@ -47,9 +41,7 @@ export interface RentalApplication {
   updatedAt: string;
 }
 
-// =====================================================
-// PAYLOADS
-// =====================================================
+
 
 export interface CreateRentalApplicationData {
   property: string;
@@ -74,9 +66,7 @@ export interface RentalActionData {
   rejectionReason?: string;
 }
 
-// =====================================================
-// RESPONSES
-// =====================================================
+
 
 export interface GetRentalApplicationsResponse {
   success: boolean;
@@ -97,9 +87,7 @@ export interface RentalMutationResponse {
   data?: RentalApplication;
 }
 
-// =====================================================
-// STATE
-// =====================================================
+
 
 export interface RentalState {
   applications: RentalApplication[];
@@ -108,9 +96,7 @@ export interface RentalState {
   error: string | null;
 }
 
-// =====================================================
-// FORM VALUES
-// =====================================================
+
 
 export interface RentalApplicationFormValues {
   monthlyIncome: number;

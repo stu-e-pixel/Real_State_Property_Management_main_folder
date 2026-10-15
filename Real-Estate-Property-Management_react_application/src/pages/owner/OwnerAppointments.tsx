@@ -64,9 +64,7 @@ import type {
 import type { Property } from "../../typescript/type/property.types";
 import type { PopulatedUserLite } from "../../typescript/type/inquiry.types";
 
-// =====================================================
-// CONFIG
-// =====================================================
+
 
 const STATUS_COLORS: Record<
   string,
@@ -89,9 +87,7 @@ const isPopulatedUser = (
 ): val is PopulatedUserLite =>
   !!val && typeof val === "object" && "name" in val;
 
-// =====================================================
-// PROPS
-// =====================================================
+
 
 interface AgentAppointmentsProps {
   mode: "agent" | "owner";
@@ -107,9 +103,7 @@ const toLocalInput = (iso: string): string => {
   )}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };
 
-// =====================================================
-// PAGE
-// =====================================================
+
 
 const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
   const dispatch = useAppDispatch();
@@ -124,7 +118,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
   const [cancelOpen, setCancelOpen] = useState<boolean>(false);
   const [target, setTarget] = useState<Appointment | null>(null);
 
-  // Row action menu
+  
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const [menuAppointment, setMenuAppointment] = useState<Appointment | null>(
     null,
@@ -146,9 +140,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
     },
   });
 
-  // =====================================================
-  // FETCH
-  // =====================================================
+  
 
   useEffect(() => {
     if (mode === "agent") {
@@ -162,9 +154,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
     };
   }, [dispatch, mode]);
 
-  // =====================================================
-  // HANDLERS
-  // =====================================================
+  
 
   const handleView = async (id: string): Promise<void> => {
     await dispatch(getAppointmentById(id));
@@ -269,9 +259,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
     }
   };
 
-  // =====================================================
-  // MENU
-  // =====================================================
+
 
   const openMenu = (e: React.MouseEvent<HTMLElement>, a: Appointment): void => {
     setMenuAnchor(e.currentTarget);
@@ -283,9 +271,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
     setMenuAppointment(null);
   };
 
-  // =====================================================
-  // TAB COUNTS
-  // =====================================================
+
 
   const filtered =
     tab === "all" ? appointments : appointments.filter((a) => a.status === tab);
@@ -299,9 +285,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
     cancelled: appointments.filter((a) => a.status === "cancelled").length,
   };
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+
 
   return (
     <MainLayout>
@@ -311,7 +295,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
           borderRadius: 3,
         }}
       >
-        {/* ================= HEADER ================= */}
+        
 
         <Box
           sx={{
@@ -354,7 +338,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
           }}
         />
 
-        {/* ================= TABS ================= */}
+        
 
         <Tabs
           value={tab}
@@ -381,7 +365,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
           <Tab value="cancelled" label={`Cancelled (${counts.cancelled})`} />
         </Tabs>
 
-        {/* ================= APPOINTMENTS ================= */}
+       
 
         {loading && appointments.length === 0 ? (
           <Box
@@ -455,7 +439,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
                   }}
                 >
                   <CardContent>
-                    {/* Header */}
+                
 
                     <Box
                       sx={{
@@ -519,7 +503,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
                       />
                     </Box>
 
-                    {/* Customer Info */}
+                  
 
                     {isPopulatedUser(a.user) && (
                       <Box
@@ -566,7 +550,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
                       </Box>
                     )}
 
-                    {/* Date / Duration / Message */}
+                    
 
                     <Box
                       sx={{
@@ -704,7 +688,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
         )}
       </Paper>
 
-      {/* ================= ROW MENU ================= */}
+      
 
       <Menu
         anchorEl={menuAnchor}
@@ -742,7 +726,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
         </MenuItem>
       </Menu>
 
-      {/* ================= VIEW DIALOG ================= */}
+      
 
       <Dialog open={viewOpen} onClose={closeView} maxWidth="sm" fullWidth>
         <DialogTitle
@@ -788,7 +772,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
                 </Typography>
               </Box>
 
-              {/* Customer */}
+        
 
               {isPopulatedUser(appointment.user) && (
                 <Box>
@@ -871,7 +855,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
                 </Box>
               )}
 
-              {/* Date */}
+             
 
               <Box>
                 <Typography variant="caption" color="text.secondary">
@@ -883,7 +867,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
                 </Typography>
               </Box>
 
-              {/* Duration */}
+            
 
               <Box>
                 <Typography variant="caption" color="text.secondary">
@@ -895,7 +879,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
                 </Typography>
               </Box>
 
-              {/* Status */}
+         
 
               <Box>
                 <Typography variant="caption" color="text.secondary">
@@ -915,7 +899,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
                 </Box>
               </Box>
 
-              {/* Message */}
+          
 
               {appointment.message && (
                 <Box>
@@ -927,7 +911,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
                 </Box>
               )}
 
-              {/* Cancellation */}
+         
 
               {appointment.cancellationReason && (
                 <Box>
@@ -949,7 +933,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
         </DialogActions>
       </Dialog>
 
-      {/* ================= RESCHEDULE DIALOG ================= */}
+  
 
       <Dialog
         open={rescheduleOpen}
@@ -1018,7 +1002,7 @@ const OwnerAppointments: React.FC<AgentAppointmentsProps> = ({ mode }) => {
         </DialogActions>
       </Dialog>
 
-      {/* ================= CANCEL DIALOG ================= */}
+   
 
       <Dialog
         open={cancelOpen}

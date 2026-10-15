@@ -51,10 +51,6 @@ import type {
   ReviewActionFormValues,
 } from "../../typescript/type/review.types";
 
-// =====================================================
-// STATUS COLORS
-// =====================================================
-
 const STATUS_COLORS: Record<
   string,
   "default" | "success" | "error" | "warning"
@@ -63,10 +59,6 @@ const STATUS_COLORS: Record<
   approved: "success",
   rejected: "error",
 };
-
-// =====================================================
-// PAGE
-// =====================================================
 
 const AdminReviews = () => {
   const dispatch = useAppDispatch();
@@ -90,10 +82,6 @@ const AdminReviews = () => {
 
   const selectedAction = watch("action");
 
-  // =====================================================
-  // FETCH REVIEWS
-  // =====================================================
-
   const fetchReviews = useCallback((): void => {
     if (tab === "pending") {
       dispatch(getPendingReviews());
@@ -105,10 +93,6 @@ const AdminReviews = () => {
   useEffect(() => {
     fetchReviews();
   }, [fetchReviews]);
-
-  // =====================================================
-  // APPROVE / REJECT
-  // =====================================================
 
   const openAction = (review: Review, action: "approve" | "reject"): void => {
     setActionTarget(review);
@@ -163,10 +147,6 @@ const AdminReviews = () => {
     }
   };
 
-  // =====================================================
-  // DELETE REVIEW
-  // =====================================================
-
   const handleDelete = async (id: string): Promise<void> => {
     if (deletingIds.includes(id) || !window.confirm("Delete this review?")) {
       return;
@@ -186,10 +166,6 @@ const AdminReviews = () => {
       );
     }
   };
-
-  // =====================================================
-  // SEARCH AND COUNTS
-  // =====================================================
 
   const searchTerm = search.trim().toLowerCase();
 
@@ -221,10 +197,6 @@ const AdminReviews = () => {
     rejected: reviews.filter((review) => review.status === "rejected").length,
   };
 
-  // =====================================================
-  // RENDER
-  // =====================================================
-
   return (
     <MainLayout>
       <Paper
@@ -233,7 +205,6 @@ const AdminReviews = () => {
           borderRadius: 3,
         }}
       >
-        {/* Header */}
         <Box
           sx={{
             display: "flex",
@@ -283,7 +254,6 @@ const AdminReviews = () => {
 
         <Divider sx={{ mb: 2 }} />
 
-        {/* Tabs */}
         <Tabs
           value={tab}
           onChange={(_event, value: "all" | "pending") => setTab(value)}
@@ -293,7 +263,6 @@ const AdminReviews = () => {
           <Tab value="pending" label={`Pending (${counts.pending})`} />
         </Tabs>
 
-        {/* Search */}
         <Box
           sx={{
             display: "flex",
@@ -333,7 +302,6 @@ const AdminReviews = () => {
           </Tooltip>
         </Box>
 
-        {/* Loading State */}
         {loading && reviews.length === 0 ? (
           <Box
             sx={{
@@ -352,7 +320,6 @@ const AdminReviews = () => {
             ))}
           </Box>
         ) : filteredReviews.length === 0 ? (
-          /* Empty State */
           <Box
             sx={{
               py: 8,
@@ -362,7 +329,6 @@ const AdminReviews = () => {
             <Typography color="text.secondary">No reviews found.</Typography>
           </Box>
         ) : (
-          /* Reviews Table */
           <TableContainer sx={{ overflowX: "auto" }}>
             <Table sx={{ minWidth: 1000 }}>
               <TableHead>
@@ -392,7 +358,6 @@ const AdminReviews = () => {
 
                   return (
                     <TableRow key={review._id} hover>
-                      {/* User */}
                       <TableCell>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>
                           {user?.name ?? "Unknown"}
@@ -405,7 +370,6 @@ const AdminReviews = () => {
                         )}
                       </TableCell>
 
-                      {/* Property */}
                       <TableCell>
                         <Typography
                           variant="body2"
@@ -416,12 +380,10 @@ const AdminReviews = () => {
                         </Typography>
                       </TableCell>
 
-                      {/* Rating */}
                       <TableCell>
                         <Rating value={review.rating} size="small" readOnly />
                       </TableCell>
 
-                      {/* Comment */}
                       <TableCell>
                         <Tooltip title={review.comment}>
                           <Typography
@@ -434,7 +396,6 @@ const AdminReviews = () => {
                         </Tooltip>
                       </TableCell>
 
-                      {/* Status */}
                       <TableCell>
                         <Chip
                           label={review.status}
@@ -443,14 +404,12 @@ const AdminReviews = () => {
                         />
                       </TableCell>
 
-                      {/* Date */}
                       <TableCell>
                         <Typography variant="caption">
                           {new Date(review.createdAt).toLocaleDateString()}
                         </Typography>
                       </TableCell>
 
-                      {/* Actions */}
                       <TableCell align="center">
                         {review.status === "pending" && (
                           <>
@@ -503,7 +462,6 @@ const AdminReviews = () => {
         )}
       </Paper>
 
-      {/* Approve / Reject Dialog */}
       <Dialog
         open={actionOpen}
         onClose={closeAction}

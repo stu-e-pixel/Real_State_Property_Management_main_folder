@@ -52,9 +52,7 @@ import {
 import type { Property } from "../../typescript/type/property.types";
 import { IndianRupee } from "lucide-react";
 
-// =====================================================
-// DEBOUNCE HOOK
-// =====================================================
+
 
 const useDebounce = <T,>(value: T, delay = 500): T => {
   const [debounced, setDebounced] = useState<T>(value);
@@ -70,9 +68,7 @@ const useDebounce = <T,>(value: T, delay = 500): T => {
   return debounced;
 };
 
-// =====================================================
-// PAGE
-// =====================================================
+
 
 const PropertySearch: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -83,9 +79,7 @@ const PropertySearch: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  // =====================================================
-  // REDUX STATE
-  // =====================================================
+  
 
   const { properties, pagination, loading } = useAppSelector(
     (state) => state.property
@@ -93,10 +87,7 @@ const PropertySearch: React.FC = () => {
 
   const { user } = useAppSelector((state) => state.auth);
 
-  // =====================================================
-  // FILTER STATE
-  // Initialize URL-backed filters from the URL
-  // =====================================================
+
 
   const [searchInput, setSearchInput] = useState(
     () => searchParams.get("search") ?? ""
@@ -123,9 +114,7 @@ const PropertySearch: React.FC = () => {
 
   const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
 
-  // =====================================================
-  // FETCH FAVORITES
-  // =====================================================
+ 
 
   useEffect(() => {
     if (user?.role === "customer") {
@@ -133,9 +122,7 @@ const PropertySearch: React.FC = () => {
     }
   }, [dispatch, user?.role]);
 
-  // =====================================================
-  // FETCH PROPERTIES
-  // =====================================================
+  
 
   useEffect(() => {
     const [sortBy, sortOrder] = sort.split("-");
@@ -181,9 +168,7 @@ const PropertySearch: React.FC = () => {
     sort,
   ]);
 
-  // =====================================================
-  // HANDLERS
-  // =====================================================
+  
 
   
 
@@ -237,9 +222,7 @@ const PropertySearch: React.FC = () => {
     setFilterDrawerOpen(false);
   };
 
-  // =====================================================
-  // SHARED INPUT STYLES
-  // =====================================================
+  
 
   const fieldSx = {
     "& .MuiOutlinedInput-root": {
@@ -257,9 +240,7 @@ const PropertySearch: React.FC = () => {
     },
   };
 
-  // =====================================================
-  // FILTER FIELDS
-  // =====================================================
+ 
 
   const FilterFields = (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -415,9 +396,7 @@ const PropertySearch: React.FC = () => {
     </Box>
   );
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+
 
   return (
     <MainLayout>
@@ -440,7 +419,7 @@ const PropertySearch: React.FC = () => {
             boxShadow: "0 10px 35px rgba(15,23,42,0.05)",
           }}
         >
-          {/* HEADER */}
+          
           <Box
             sx={{
               display: "flex",
@@ -529,7 +508,7 @@ const PropertySearch: React.FC = () => {
 
           
 
-          {/* SIDEBAR + RESULTS */}
+        
           <Box
             sx={{
               display: "flex",
@@ -537,7 +516,7 @@ const PropertySearch: React.FC = () => {
               alignItems: "flex-start",
             }}
           >
-            {/* DESKTOP SIDEBAR */}
+          
             {!isMobile && (
               <Paper
                 variant="outlined"
@@ -596,10 +575,10 @@ const PropertySearch: React.FC = () => {
               </Paper>
             )}
 
-            {/* RESULTS */}
+           
             <Box sx={{ flex: 1, minWidth: 0 }}>
               {loading && properties.length === 0 ? (
-                /* LOADING SKELETONS — FLEXBOX */
+                
                 <Box
                   sx={{
                     display: "flex",
@@ -627,7 +606,7 @@ const PropertySearch: React.FC = () => {
                   ))}
                 </Box>
               ) : properties.length === 0 ? (
-                /* EMPTY STATE */
+              
                 <Box
                   sx={{
                     textAlign: "center",
@@ -687,7 +666,7 @@ const PropertySearch: React.FC = () => {
                 </Box>
               ) : (
                 <>
-                  {/* PROPERTY CARDS — FLEXBOX */}
+                  
                   <Box
                     sx={{
                       display: "flex",
@@ -727,7 +706,7 @@ const PropertySearch: React.FC = () => {
                             },
                           }}
                         >
-                          {/* IMAGE */}
+                          
                           <Box
                             sx={{
                               position: "relative",
@@ -796,7 +775,7 @@ const PropertySearch: React.FC = () => {
                             </Box>
                           </Box>
 
-                          {/* CONTENT */}
+                          
                           <CardContent
                             sx={{
                               flexGrow: 1,
@@ -837,7 +816,7 @@ const PropertySearch: React.FC = () => {
                               {p.description}
                             </Typography>
 
-                            {/* PRICE */}
+                           
                             <Box
                               sx={{
                                 display: "flex",
@@ -866,7 +845,7 @@ const PropertySearch: React.FC = () => {
                               </Typography>
                             </Box>
 
-                            {/* PROPERTY DETAILS */}
+                           
                             <Box
                               sx={{
                                 display: "flex",
@@ -936,7 +915,7 @@ const PropertySearch: React.FC = () => {
                               sx={{ mb: 1.5, borderColor: "#edf2f7" }}
                             />
 
-                            {/* LOCATION */}
+                          
                             <Box
                               sx={{
                                 display: "flex",
@@ -966,7 +945,7 @@ const PropertySearch: React.FC = () => {
 
                           <Divider sx={{ borderColor: "#edf2f7" }} />
 
-                          {/* ACTIONS */}
+                       
                           <CardActions
                             sx={{
                               justifyContent: "flex-end",
@@ -1001,7 +980,7 @@ const PropertySearch: React.FC = () => {
                     ))}
                   </Box>
 
-                  {/* PAGINATION */}
+                 
                   {pagination && (
                     <Box
                       sx={{
@@ -1035,7 +1014,7 @@ const PropertySearch: React.FC = () => {
         </Paper>
       </Box>
 
-      {/* MOBILE FILTER DRAWER */}
+     
       <Drawer
         anchor="left"
         open={filterDrawerOpen}
